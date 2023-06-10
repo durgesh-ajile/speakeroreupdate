@@ -7,6 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -41,6 +44,23 @@ const rows = [
 ];
 
 export default function CouponTable() {
+  const [couponData, setCouponData] = useState("");
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "https://www.sobacke.in/api/getallcoupons",
+      withCredentials: true,
+    })
+      .then((res) => {
+        setCouponData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  
+  console.log(couponData)
   return (
     <div className='table-container'>
     <TableContainer component={Paper}>

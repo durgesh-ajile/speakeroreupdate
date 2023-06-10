@@ -79,6 +79,12 @@ export default function PersistentDrawerLeft() {
   const [exclusive, setExclusive] = useState(false);
   const [pagiData, setPagiData] = useState();
   const [page, setPage] = React.useState(1);
+  const [mode, setMode] = React.useState();
+  const [category, setCategory] = React.useState();
+  const [date, setDate] = React.useState();
+  const [speakerExclusive, setSpeakerExclusive] = React.useState();
+  const [filter, setFilter] = useState();
+
   const handleChange = (event, value) => {
     setPage(value);
   };
@@ -87,18 +93,28 @@ export default function PersistentDrawerLeft() {
 
   const handleExclusive = () => {
     setExclusive(!exclusive);
+    
   };
   const handleOnline = () => {
-    setOnline(!online);
+    setMode('Online Event')
+    setOnline(true);
+    setHybrid(false);
+    setInperson(false);
   };
 
   const handleInperson = () => {
-    setInperson(!inperson);
+    setMode('Offline Event')
+    setOnline(false);
+    setHybrid(false);
+    setInperson(true);
   };
 
   const handleHybrid = () => {
-    setHybrid(!hybrid);
-  };
+    setMode('Hybrid')
+    setHybrid(true);
+    setOnline(false);
+    setInperson(false);
+    };
 
   const StyledCalendar = styled(Calendar)`
     --moedim-primary: #f00;
@@ -117,7 +133,7 @@ export default function PersistentDrawerLeft() {
   useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getallapprovedevent?page=${page}`,
+      url: `https://www.sobacke.in/api/getallapprovedevent?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -131,18 +147,44 @@ export default function PersistentDrawerLeft() {
   console.log(approvedEvent);
 
   useEffect(() => {
+    if (mode || category || date || speakerExclusive){
+    const apiUrl = `https://www.sobacke.in/api/geteventsbyfilter?${getQueryParams()}`;
+
+    function getQueryParams() {
+      const queryParams = [];
+
+      if (mode) {
+        queryParams.push(`mode=${mode}`);
+      }
+
+      if (category) {
+        queryParams.push(`category=${category}`);
+      }
+
+      if (date) {
+        queryParams.push(`date=${date}`);
+      }
+
+      if (speakerExclusive !== undefined) {
+        queryParams.push(`speakeroreExclusive=${speakerExclusive}`);
+      }
+      return queryParams.join("&");
+    }
+
     axios({
       method: "get",
-      url: `http://localhost:5000/api/geteventsbyfilter?mode=&category=${"Musician"}&date=${"2023-06-19T13:00:00"}&speakeroreExclusive=${true}`,
+      url: apiUrl,
       withCredentials: true,
     })
       .then((res) => {
         console.log(res);
+        setFilter(res.data.savedEvents)
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+    }
+  }, [mode, category, date, speakerExclusive]);
 
   const returnOnline = () => { 
     return 'Online Event'
@@ -292,9 +334,67 @@ export default function PersistentDrawerLeft() {
       <Main open={open}>
         <DrawerHeader />
         <div>
-          {approvedEvent ? (
+        {filter ? 
+          <div>
+              <div className="card-container">
+
+                {approvedEvent.savedEvents.map((e) => (
+                  <div className="card">
+                    <div className="card-1">
+                      <small
+                        style={{
+                          margin: "20px  0 0 2rem",
+                          fontSize: "1rem",
+                          fontWeight: "500",
+                          color: "#24754F",
+                        }}
+                      >
+                        {e.Category}{" "}
+                      </small>
+                      <bold>{e.OrganizerName}</bold>
+                      <span>{e.City}</span>
+                    </div>
+                    <div className="card-2">
+                      <span>
+                        <MdLocationOn size={20} />
+                        <h>{e.Mode}</h>
+                      </span>
+
+                      <date>
+                        {" "}
+                        <MdWatchLater size={20} />
+                        <q>{convertDate(e.EventEndDateAndTime)}</q>
+                      </date>
+                      <p></p>
+                    </div>
+                    <div className="desc">
+                      <p>{e.ShortDescriptionOfTheEvent}</p>
+                    </div>
+                    <div className="card-3">
+                      <button
+                        onClick={() => {
+                          navigate(`/event/${e._id}`);
+                        }}
+                      >
+                        View Details
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <Stack spacing={2} >
+                <Pagination
+                style={{justifyContent:'center', marginTop:'20px'}}
+                  count={approvedEvent.totalPages}
+                  page={page}
+                  onChange={handleChange}
+                />
+                <Typography >Page: {page}</Typography>
+              </Stack>
+            </div> : approvedEvent ? (
             <div>
               <div className="card-container">
+
                 {approvedEvent.savedEvents.map((e) => (
                   <div className="card">
                     <div className="card-1">
@@ -352,6 +452,7 @@ export default function PersistentDrawerLeft() {
           ) : (
             ""
           )}
+          
         </div>
       </Main>
     </Box>

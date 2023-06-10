@@ -5,92 +5,29 @@ import { MdWatchLater } from "react-icons/md";
 import { IoMdLogOut } from "react-icons/io";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Admin from "../Admin/Admin";
 const data = {
   name: "Divya Devendar",
   email: "example123@gmail.com",
 };
 
-const cardData = [
-  {
-    event_catogary: "Education",
-    organizer: "Indian Business School",
-    location: "Hyderabad",
-    event_type: "Online Event",
-    date: "Jan 2 , 2023 | 12:31 pm",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sint consectetur nemo volup",
-  },
-  {
-    event_catogary: "Education",
-    organizer: "Indian Business School",
-    location: "Hyderabad",
-    event_type: "Online Event",
-    date: "Jan 2 , 2023 | 12:31 pm",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sint consectetur nemo volup",
-  },
-  {
-    event_catogary: "Education",
-    organizer: "Indian Business School",
-    location: "Hyderabad",
-    event_type: "Online Event",
-    date: "Jan 2 , 2023 | 12:31 pm",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sint consectetur nemo volup",
-  },
-  {
-    event_catogary: "Education",
-    organizer: "Indian Business School",
-    location: "Hyderabad",
-    event_type: "Online Event",
-    date: "Jan 2 , 2023 | 12:31 pm",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sint consectetur nemo volup",
-  },
-  {
-    event_catogary: "Education",
-    organizer: "Indian Business School",
-    location: "Hyderabad",
-    event_type: "Online Event",
-    date: "Jan 2 , 2023 | 12:31 pm",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sint consectetur nemo volup",
-  },
-  {
-    event_catogary: "Education",
-    organizer: "Indian Business School",
-    location: "Hyderabad",
-    event_type: "Online Event",
-    date: "Jan 2 , 2023 | 12:31 pm",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sint consectetur nemo volup",
-  },
-  {
-    event_catogary: "Education",
-    organizer: "Indian Business School",
-    location: "Hyderabad",
-    event_type: "Online Event",
-    date: "Jan 2 , 2023 | 12:31 pm",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sint consectetur nemo volup",
-  },
-  {
-    event_catogary: "Education",
-    organizer: "Indian Business School",
-    location: "Hyderabad",
-    event_type: "Online Event",
-    date: "Jan 2 , 2023 | 12:31 pm",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sint consectetur nemo volup",
-  },
-];
 const Profile = () => {
   const [subs, setSubs] = useState(false);
   const [userData, setUserData] = useState("");
   const [userEvent, setUserEvent] = useState("");
 
+  const [role, setRole] = useState("");
+
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://localhost:5000/api/getprofile",
+      url: "https://www.sobacke.in/api/getprofile",
       withCredentials: true,
     })
       .then((res) => {
         if (res.data.status) {
           setUserData(res.data.response);
-          
+          setRole(res.data.response.role)
         }
       })
       .catch((err) => {
@@ -102,7 +39,7 @@ const Profile = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://localhost:5000/api/geteventforcurrentuser",
+      url: "https://www.sobacke.in/api/geteventforcurrentuser",
       withCredentials: true,
     })
       .then((res) => {
@@ -128,8 +65,9 @@ const Profile = () => {
     const date = new Date(e).toLocaleString()
     return date
   }
-
+console.log(role)
   return (
+    role === 'admin'? <Admin/> :
     <div className="profile-container">
     {userData ?
       <div className="left-container">

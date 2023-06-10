@@ -1,107 +1,50 @@
-import axios from "axios";
-import React, { useState } from "react";
+import axios from 'axios';
+import React from 'react'
+import { useEffect } from 'react';
 import { MdLocationOn } from "react-icons/md";
 import { MdWatchLater } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useEffect } from "react";
+import { useState } from 'react';
 
+const Trash = () => {
+    const [trashData, setTrashData] = useState("");
+    const [page, setPage] = React.useState(1);
 
-const EventAdmin = () => {
-  const [eventId, setEventId] = useState("");
-  const [eventsForApproval, setEventsForApproval] = useState("");
-  const [page, setPage] = React.useState(1);
+    const handleChange = (event, value) => {
+      setPage(value);
+    };
 
-  const handleChange = (event, value) => {
-    setPage(value);
-  };
+    useEffect(() => {
+        axios({
+          method: "get",
+          url: "https://www.sobacke.in/api/getalltrashevents",
+          withCredentials: true,
+        })
+          .then((res) => {
+            setTrashData(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }, []);
 
-  let navigate = useNavigate();
-
-  function convertDate(e) {
-    const date = new Date(e).toLocaleString();
-    return date;
-  }
-
-  
-    const geteventforapproval = () => {
-    axios({
-        method: "get",
-      url: "https://www.sobacke.in/api/geteventforapproval",
-      withCredentials: true,
-    })
-      .then((res) => {
-        setEventsForApproval(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    }
-
-  useEffect(() => {
-    geteventforapproval()
-  }, [])
-  
-
-  const handleSingleView = () => {
-    axios({
-      method: "get",
-      url: `https://www.sobacke.in/api/getsingleevent/${eventId}`,
-      withCredentials: true,
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const handleEventDelete = (id) => {
-    axios({
-      method: "patch",
-      url: "https://www.sobacke.in/api/makeeventdecline",
-      data: {
-        eventId: id,
-      },
-      withCredentials: true,
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const handleApproveEvent = (id) => {
-    axios({
-      method: "patch",
-      url: "https://www.sobacke.in/api/makeeventapprove",
-      data: {
-        eventId: id, 
-      },
-      withCredentials: true,
-    })
-      .then((res) => {
-        console.log(res);
-        geteventforapproval(  )
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+      function convertDate(e) {
+        const date = new Date(e).toLocaleString();
+        return date;
+      }
+      
 
   return (
     <div>
       <div className="allevent" style={{ flexWrap: "wrap" }}>
         <div>
-          {eventsForApproval ? (
+          {trashData ? (
             <div>
               <div className="card-container">
-                {eventsForApproval.savedEvents.map((e) => (
+                {trashData.savedEvents.map((e) => (
                   <div className="card">
                     <div className="card-1">
                       <small
@@ -135,18 +78,18 @@ const EventAdmin = () => {
                     </div>
                     <div className="card-4">
                       <button onClick={()=>{
-                        handleEventDelete(e._id)
-                      }}>Delete Event</button>
+                        // handleEventDelete(e._id)
+                      }}>Delete permanently</button>
                       <button
                         style={{
                           color: "#24754F",
                           border: "#24754F 1px solid",
                         }}
                         onClick={()=>{
-                          handleApproveEvent(e._id)
+                        //   handleApproveEvent(e._id)
                       }}
                       >
-                        Approve Event
+                        Move To
                       </button>
                     </div>
                   </div>
@@ -155,7 +98,7 @@ const EventAdmin = () => {
               <Stack spacing={2}>
                 <Pagination
                   style={{ justifyContent: "center", marginTop: "20px" }}
-                  count={eventsForApproval.totalPages}
+                  count={trashData.totalPages}
                   page={page}
                   onChange={handleChange}
                 />
@@ -168,7 +111,7 @@ const EventAdmin = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default EventAdmin;
+export default Trash

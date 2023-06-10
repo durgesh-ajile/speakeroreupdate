@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { BiSearchAlt } from 'react-icons/bi';
+import axios from 'axios';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -42,6 +43,24 @@ const rows = [
 ];
 
 export default function TeamMembers() {
+  const [teamMemberData, setTeamMemberData] = React.useState("");
+
+  React.useEffect(() => {
+    axios ({
+      method: "get",
+      url: "https://www.sobacke.in/api/getallteammembers",
+      withCredentials: true,
+    })
+      .then((res) => {
+        setTeamMemberData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  console.log(teamMemberData)
+
   return (
     <div className='table-container'>
     <div className='input-div'>

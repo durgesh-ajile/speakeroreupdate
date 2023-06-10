@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import UserTable from "../../components/Tables/UserTable";
 import "./Admin.css";
 import { IoMdLogOut } from "react-icons/io";
@@ -6,54 +7,46 @@ import { IoMdLogOut } from "react-icons/io";
 import TeamMembers from "../../components/Tables/TeamMembers";
 import CouponTable from "../../components/Tables/CouponTable";
 import EventAdmin from "../../components/Tables/EventAdmin";
-import axios from "axios";
+import CreateCoupon from "../../components/Tables/CreateCoupon";
+import Trash from "../../components/Tables/Trash";
+import Archived from "../../components/Tables/Archived";
 const data = {
   name: "Divya Devendar",
   email: "example123@gmail.com",
 };
 
 const Admin = () => {
-  const [event, setevent] = useState(true);
-  const [user, setUser] = useState(false);
-  const [members, setMembers] = useState(false);
-  const [coupon, setCoupon] = useState(false);
-  const [eventsForApproval, setEventsForApproval] = useState("");
-  const [userData, setUserData] = useState("");
-  const [teamMemberData, setTeamMemberData] = useState("");
-  const [couponData, setCouponData] = useState("");
-  const [trashData, setTrashData] = useState("");
-  const [archivedData, setArchivedData] = useState("");
+  const [select, setSelect] = useState('event');
+ 
   const [profile, setProfile] = useState('')
 
   const handleUser = () => {
-    setUser(true);
-    setevent(false);
-    setCoupon(false);
-    setMembers(false);
+    setSelect('user'); 
   };
   const handleMember = () => {
-    setUser(false);
-    setevent(false);
-    setCoupon(false);
-    setMembers(true);
+    setSelect('member')
   };
   const handleEvent = () => {
-    setUser(false);
-    setevent(true);
-    setCoupon(false);
-    setMembers(false);
+   setSelect('event')
   };
   const handleCoupon = () => {
-    setUser(false);
-    setevent(false);
-    setCoupon(true);
-    setMembers(false);
+    setSelect('coupon')
   };
+  const handleCreateCoupon = () => {
+    setSelect('createCoupon')
+  };
+  const handleTrash = () => {
+    setSelect('trash')
+  };
+  const handleArchieved = () => {
+    setSelect('archieved')
+  };
+  
 
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://localhost:5000/api/getprofile",
+      url: "https://www.sobacke.in/api/getprofile",
       withCredentials: true,
     })
       .then((res) => {
@@ -66,129 +59,74 @@ const Admin = () => {
       });
   }, []);
 
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: "http://localhost:5000/api/geteventforapproval",
-      withCredentials: true,
-    })
-      .then((res) => {
-        setEventsForApproval(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-  console.log(eventsForApproval)
+ 
+  // console.log(eventsForApproval)
 
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: "http://localhost:5000/api/getallregularuser",
-      withCredentials: true,
-    })
-      .then((res) => {
-        setUserData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: "http://localhost:5000/api/getallteammembers",
-      withCredentials: true,
-    })
-      .then((res) => {
-        setTeamMemberData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: "http://localhost:5000/api/getallcoupons",
-      withCredentials: true,
-    })
-      .then((res) => {
-        setCoupon(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: "http://localhost:5000/api/getalltrashevents",
-      withCredentials: true,
-    })
-      .then((res) => {
-        setTrashData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: "http://localhost:5000/api/getallarchievedevent",
-      withCredentials: true,
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
+  
   console.log(profile)
 
   return (
     <div className="admin">
       <div className="left-container">
-        <div className="profile-pic">
-          {/* <div className="img">{userData.first_name[0]}</div> */}
+      {profile ? <div className="profile-pic">
+          <div className="img">{profile.first_name[0]}</div>
           <div className="name-deatils">
-            <h3>{userData.first_name} {userData.last_name}</h3>
-            <span>{userData.email}</span>
+            <h3>{profile.first_name} {profile.last_name}</h3>
+            <span>{profile.email}</span>
           </div>
         </div>
+        :
+        <>
+        </>
+        }
+        
 
         <div className="subs-button">
           <div className="subsbutton">
             <button
               onClick={handleEvent}
-              className={event == true ? "backgreen" : ""}
+              className={select === 'event' ? "backgreen" : ""}
             >
               {" "}
               Events
             </button>
             <button
               onClick={handleUser}
-              className={user == true ? "backgreen" : ""}
+              className={select == 'user' ? "backgreen" : ""}
             >
               Users
             </button>
             <button
               onClick={handleMember}
-              className={members == true ? "backgreen" : ""}
+              className={select == 'member' ? "backgreen" : ""}
             >
               Team Members
             </button>
             <button
               onClick={handleCoupon}
-              className={coupon == true ? "backgreen" : ""}
+              className={select == 'coupon' ? "backgreen" : ""}
             >
               Coupons
+            </button>
+            <button
+              onClick={handleTrash}
+              className={select == 'trash' ? "backgreen" : ""}
+            >
+              Trash
+            </button>
+            <button
+              onClick={handleArchieved}
+              className={select == 'archieved' ? "backgreen" : ""}
+            >
+              Archieved
+            </button>
+            <button
+              onClick={handleCreateCoupon}
+              className={select == 'createCoupon' ? "backgreen" : ""}
+            >
+              Create Coupon
             </button>
           </div>
         </div>
@@ -198,10 +136,13 @@ const Admin = () => {
         </div>
       </div>
       <div className="events-content">
-        {event == true ? <EventAdmin  eventsForApproval = {eventsForApproval}/> : ""}
-        {user == true ? <UserTable /> : ""}
-        {members == true ? <TeamMembers /> : ""}
-        {coupon == true ? <CouponTable /> : ""}
+        {select === 'event' ? <EventAdmin /> : ""}
+        {select === 'user'  ? <UserTable /> : ""}
+        {select === 'member'  ? <TeamMembers /> : ""}
+        {select === 'trash'  ? <Trash /> : ""}
+        {select === 'coupon' ? <CouponTable /> : ""}
+        {select === 'createCoupon' ? <CreateCoupon /> : ""}
+        {select === 'archieved' ? <Archived /> : ""}
       </div>
     </div>
   );

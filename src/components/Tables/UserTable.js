@@ -8,7 +8,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { BiSearchAlt } from 'react-icons/bi';
-
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -44,6 +45,29 @@ const rows = [
 ];
 
 export default function UserTable() {
+  const [userData, setUserData] = useState("");
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "https://www.sobacke.in/api/getallregularuser",
+      withCredentials: true,
+    })
+      .then((res) => {
+        setUserData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  function convertDate(e) {
+    const date = new Date(e).toLocaleDateString();
+    return date;
+  }
+
+  console.log(userData)
+
   return (
 <div className='table-container'>
     <div className='input-div'>
@@ -64,18 +88,18 @@ export default function UserTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
-                {row.name}
+          {userData ? userData.savedUser.map((row) => (
+            <StyledTableRow key={row.alphaUnqiueId}>
+              <StyledTableCell align="">{row.alphaUnqiueId}</StyledTableCell>
+              <StyledTableCell component="th" align="right" scope="row">
+                {row.email}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
-              <StyledTableCell align="right" sx={{color:'red'}}><span>{row.action}</span></StyledTableCell>
+              <StyledTableCell align="right">{row.subcription.Subcription_Type}</StyledTableCell>
+              <StyledTableCell align="right">{convertDate(row.subcription.StartDate)}</StyledTableCell>
+              <StyledTableCell align="right">{convertDate(row.subcription.EndDate)}</StyledTableCell>
+              <StyledTableCell align="right" sx={{color:'red'}}><span>backlist</span></StyledTableCell>
             </StyledTableRow>
-          ))}
+          )) : <></>}
         </TableBody>
       </Table>
     </TableContainer>

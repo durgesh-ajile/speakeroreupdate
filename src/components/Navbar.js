@@ -89,7 +89,7 @@ const Navbar = () => {
     setLoading(true);
     axios({
       method: "get",
-      url: "http://localhost:5000/api/auth/check",
+      url: "https://www.sobacke.in/api/auth/check",
       withCredentials: true,
     })
       .then((res) => {
@@ -111,7 +111,7 @@ const Navbar = () => {
     if (isAuthenticated) {
       axios({
         method: "get",
-        url: "http://localhost:5000/api/getprofile",
+        url: "https://www.sobacke.in/api/getprofile",
         withCredentials: true,
       })
         .then((res) => {
@@ -124,7 +124,7 @@ const Navbar = () => {
         });
     }
   }, [loading]);
-  console.log(userData)
+  // console.log(userData)
 
   const handleSignInClick = () => {
     setShowPopup(true);

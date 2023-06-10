@@ -17,22 +17,43 @@ import Profile from './utilities/UserProfile/Profile';
 import Categories from './utilities/Categories/Categories';
 import Navbar from './components/Navbar';
 import Appp from './utilities/Pop/LoginPopup';
+import AuthHOC from './utilities/Auth/AuthHOC'
 function App() {
   return (
     <BrowserRouter>
     <Navbar/>
-      <Routes>
-      <Route path='/login' element={<Appp/>}></Route>
-      <Route path='/' element={<Landing/>}></Route>
-      <Route exact path='/event' element={<PersistentDrawerLeft/>}></Route>
-      <Route path='/subscription' element={<Subscription/>}></Route>
-      <Route path='/explore' element={<Explore/>}></Route>
-      <Route path='/createnewevent' element={<ListYourEvent />}></Route>
-      <Route path='/categories' element={<Categories />}></Route>
-      <Route path='/event/:eventId' element={<Viewdetails />}></Route>
-      <Route path='/admin' element={<Admin />}></Route>
-      <Route path='/profile' element={<Profile />}></Route>
-
+    <Routes>
+        <Route path="/login" element={<Appp />}></Route>
+        <Route path="/" element={<Landing />}></Route>
+        <Route
+          path="/event"
+          element={<AuthHOC WrappedComponent={PersistentDrawerLeft} />}
+        />
+        <Route
+          path="/subscription"
+          element={<AuthHOC WrappedComponent={Subscription} />}
+        ></Route>
+        <Route
+          path="/explore"
+          element={<AuthHOC WrappedComponent={Explore} />}
+        ></Route>
+        <Route
+          path="/createnewevent"
+          element={<AuthHOC WrappedComponent={ListYourEvent} />}
+        ></Route>
+        <Route path="/categories" element={<Categories />}></Route>
+        <Route
+          path="/event/:eventId"
+          element={<AuthHOC WrappedComponent={Viewdetails} />}
+        ></Route>
+        <Route
+          path="/admin"
+          element={<AuthHOC WrappedComponent={Admin} />}
+        ></Route>
+        <Route
+          path="/profile"
+          element={<AuthHOC WrappedComponent={Profile} />}
+        ></Route>
       </Routes>
     </BrowserRouter>
   );
