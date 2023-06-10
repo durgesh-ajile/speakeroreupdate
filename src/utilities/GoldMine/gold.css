@@ -1,0 +1,43 @@
+.gold-top{
+    display: flex;
+    gap: 3rem;
+}
+.gold-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width:100px;
+    gap: 1rem;
+    align-items: center;
+}
+.gold-box img{
+    width: 70px;
+}
+.gold-box span{
+    text-align: center;
+    color:#444444;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.gold-left{
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin: 2rem;
+}
+.gold-right{
+    display: flex;
+    flex-direction: column;
+
+}
+.gold-container{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 2rem;
+}
+.gold-right li {
+    color:#444444;
+    line-height:34px
+}

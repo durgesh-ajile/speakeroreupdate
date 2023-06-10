@@ -1,0 +1,130 @@
+.Navbar_coontainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media screen and (min-width: 651px) {
+.Navbar_coontainer {
+    display: none;
+}
+
+}
+@media screen and (max-width: 650px) {
+    .bg-navbar{
+        display: none;
+    }
+    .in-swap{
+        width:300px
+    }
+    .swapbutton button {
+        width:139px;
+        padding: 0.31rem;
+    font-size: .71rem;
+    }
+}
+.Navbar_logo>img {
+    margin: 0px 0px 0px 10px;
+    height: 60px;
+}
+.Navbar_logo{
+    height: 60px;
+}
+a:-webkit-any-link{
+    text-decoration: none;
+}
+
+.Navbar_hambergure_icon {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.Navbar_hambergure_icon>h6 {
+    color: rgb(30, 109, 39);
+    font-family: sans-serif;
+
+}
+
+.Navbar_hambergure_icon>img {
+    width: 20px;
+    margin: 5px;
+}
+
+/* -----------------Navbar_sidebar-------------- */
+
+.Navbar_sidebar {
+    width: 70%;
+    height: 100vh;
+    background-color: #E4E4E4;
+    position: fixed;
+    /* top: 36px; */
+    right: -70%;
+    display: none;
+    /* box-shadow: -20px 30px 100px 0px #e4ffd8; */
+
+    /* transition: transform 0.3s; */
+}
+.nav-name{
+    /* font-family: Inter; */
+font-size: 24px;
+font-weight: 800;
+line-height: 70px;
+letter-spacing: 0.04em;
+text-align: left;
+color:#24754F;
+margin-left: 15px;
+}
+.Navbar_sidebar>div>div {
+    position: relative;
+}
+
+.Navbar_sidebar>div>div>img {
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    margin-top: 40px;
+
+}
+
+.Navbar_inputfield {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+}
+
+.Navbar_inputfield>div {
+    width: 80%;
+    margin-top: 100px;
+    /* justify-content: center; */
+}
+
+.Navbar_inputfield>div>input {
+    height: 30px;
+    width: 90%;
+    margin: 10px 0px 10px 0px;
+    border-radius: 5px;
+    border: none;
+    padding: 0px 10px 0px 10px;
+}
+.nav-select{
+    height: 30px;
+    width: 90%;
+    background-color: white;
+    padding: 10px 10px 0px 10px;
+    border-radius: 5px;
+    border: none;
+    margin: 10px 0px 10px 0px;
+    color: #666666;
+}
+
+.Navbar_inputfield>div>input:nth-child(1) {
+    background-color: #EF7676;
+}
+
+
+.white_text::placeholder {
+    color: white !important;
+}

@@ -1,0 +1,164 @@
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  flex-direction: column; /* Display the content in a column */
+  align-items: center; /* Center align the content horizontally */
+  gap: 25px; /* Add gap between the buttons */
+}
+
+.popup-content h2 {
+  margin-top: 0;
+}
+
+.popup-content button {
+  margin: 0; /* Reset the margin to stack the buttons */
+}
+
+/* Add these styles to popus.css */
+
+.popup-content .close-button {
+  background-color: #ccc;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.popup-content .close-button:hover {
+  background-color: #999;
+}
+
+.popup-content .close-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(204, 204, 204, 0.3);
+}
+
+/* google button css */
+
+/* Basic button styles */
+.google-login-button {
+  display: inline-block;
+  background-color: #4285f4;
+  color: #fff;
+  border-radius: 4px;
+  border: none;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.google-login-button:hover {
+  background-color: #357ae8;
+}
+
+.google-login-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.3);
+}
+
+/* Optional: Adjust button size */
+.google-login-button.large {
+  padding: 14px 24px;
+  font-size: 16px;
+}
+
+.google-login-button.small {
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+/* Optional: Adjust button width */
+.google-login-button.full-width {
+  width: 100%;
+}
+
+/* Optional: Customize button text */
+.google-login-button span {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+/* Optional: Google logo styles */
+.google-login-button .google-logo {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+  width: 18px;
+  height: 18px;
+  background-image: url("../../images/search\ \(1\).png");
+  /* Replace with the path to your Google logo image */
+  background-size: cover;
+}
+
+
+/* facebook  */
+
+.facebook-button {
+  display: inline-block;
+  background-color: #4267B2;
+  color: white;
+  border-radius: 4px;
+  border: none;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.facebook-button:hover {
+  background-color: #385898;
+}
+
+.facebook-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(66, 103, 178, 0.3);
+}
+
+/* Optional: Adjust button size */
+.facebook-button.large {
+  padding: 14px 24px;
+  font-size: 16px;
+}
+
+.facebook-button.small {
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+/* Optional: Adjust button width */
+.facebook-button.full-width {
+  width: 100%;
+}
+
+/* Optional: Customize button text */
+.facebook-button span {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+

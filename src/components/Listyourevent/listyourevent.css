@@ -1,0 +1,78 @@
+.event-logo{
+    width: 80%;
+    margin: 30px auto 50px;
+    text-align: center;
+}
+.event-logo h2{
+    margin-top: 0;
+    color:#2D2D2D ;
+
+}
+.list-event span{
+font-size: 20px;
+font-weight: 500;
+line-height: 32px;
+letter-spacing: 0em;
+color:#666666
+}
+.event-img{
+    text-align: center;
+}
+.event-img img{
+    width: 10%;
+    background:url('../../images/Vector.png');
+}
+
+.list-event span{
+    width: 70%;
+}
+
+.list-event{
+    text-align: center;
+}
+.event-button{
+    display: flex;
+    /* gap: 2rem; */
+    justify-content: center;
+}
+
+.listbutton button{
+    width: 21.5%;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0.15rem;
+    border: none;
+    color:#666666 ;
+    /* border-radius: 7px; */
+    line-height: 24px;
+    border: 3px solid #24754F;
+    background: white;
+}
+.list-img{
+    position: relative;
+    height: 243px;
+    display: flex;
+    justify-content: center;
+}
+#man-img{
+    position: absolute;
+    top: 59px
+}
+#pink-list{
+    top: 100px;
+    /* left: 314px; */
+    position: absolute;
+}
+#orange-list{
+    position: absolute;
+}
+#green{
+    background-color: #24754F;
+    color: white;
+    font-size: 1rem;
+    /* font-weight: 800; */
+}
+.input-detail::placeholder{
+    color: white;
+}

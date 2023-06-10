@@ -1,0 +1,203 @@
+.bg-image{
+  background-image: url('../../public/images/Rectangle\ 7400.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+  background-position: center;
+}
+body {
+  font-family: 'Inter', sans-serif;
+}
+.bg-text {
+    /* position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+   text-align: center; */
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   text-align: center;
+   height: 100vh;
+   
+}
+
+.bg-title{
+    font-size: 64px;
+    font-weight:800px;
+    color: #FFFFFF;
+     margin: 0px;
+    
+   /* width: 1024px; */
+   /* height: 172px; */
+}
+
+.bg-para{
+    font-size: 125%;
+    color: #FFFFFF;
+    font-weight: 500px;
+    /* width: 903px; */
+ 
+    /* height: 150px; */
+    line-height: 32px;
+   
+    
+}
+
+.bg-button{
+    background-color: #EF7676;
+    color: #FFFFFF;
+    width: 315px;
+    height: 67px;
+    border-radius: 10px;
+    border: none;
+    outline: none; 
+    font-size: 175%;
+    font-weight: bold;
+}
+
+.bg-navbar {
+    position: relative;
+    top: 0;
+    color: #f1f1f1;
+    width: 96%;
+    background:white;
+    height: 67px;
+    padding: 0.2% 2%;
+    display: flex;
+    border-bottom: 1px solid #D2D2D2;
+    justify-content: space-between;
+}
+  
+.bg-logo{
+    background-image: url('../../public/images/Group.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 192px;
+    height: 144px;
+    padding-top: 18px;
+}
+
+.bg-nav {
+    float: right;
+    display: block;
+    color: black;
+    text-align: center;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.bg-events{
+    margin: 15px;
+    text-decoration: none;
+    width: 61px;
+    height: 70px;
+    color:#FFFFFF ;
+}
+
+.bg-events{
+    margin: 15px;
+    text-decoration: none;
+    width: 61px;
+    height: 70px;
+    color:#757373 ;
+    font-weight: 700;
+}
+
+.bg-btn{
+    width: 101px;
+    height: 38px;
+    margin: 15px;
+    background-color: #24754F;
+    color: #FFFFFF;
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+.bg-sign-up{
+    margin: 15px;
+    width: 61px;
+    text-decoration: none;
+    height: 70px;
+    color:#F0A31F ;
+    font-weight: 700;
+}
+
+@media screen and (max-width: 500px){
+  .bg-events{
+    display: none
+  }
+  .bg-logo{
+    width: 100px;
+    height: 50px;
+    margin-top: 10px;
+  }
+  .bg-btn{
+    width: 90px;
+    height: 40px;
+  }
+  .bg-title{
+    font-size: 35px;
+  }
+  .bg-image{
+    height: 82vh;
+  }
+}
+
+/* @media screen and (max-width: 500px) {
+  .bg-image{
+    width: 360px;
+    height: 240px;
+  }
+  .bg-navbar  {
+    padding: 0%;
+    width: 360px;
+    height: 39px;
+    }
+  .bg-logo{
+    width: 61px;
+    height: 41px;
+    padding: 5px;
+  }
+  .bg-events{
+    
+    width: 26px;
+    height: 30px;
+    font-size: 7px;
+  }
+  .bg-btn{
+    width: 42px;
+    height: 18px;
+    font-size: 7px;
+  }
+  .bg-sign-up{
+    width: 26px;
+    height: 30px;
+    font-size: 7px;
+  }
+  
+    .bg-title {
+      width: 285px;
+      height: 51px;
+      font-size: 18px;
+      font-weight: 400px;
+      text-align: center;
+    }
+    .bg-para{
+      width: 263px;
+      height: 59px;
+        
+      font-size: 10px;
+    }
+
+    .bg-button{
+      width: 153px;
+      height: 22px;
+      font-size: 10px;
+    }
+
+} */

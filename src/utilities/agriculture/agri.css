@@ -1,0 +1,27 @@
+.agri-container{
+    background-color: #FDFAE8;
+    padding: 2rem;
+}
+.agri-heading{
+    text-align: left;
+    margin-left: 2rem;
+    font-weight: 800;
+}
+.agri-imgs{
+ display: flex;
+ /* flex-wrap: wrap; */
+ /* flex-direction: column; */
+ /* gap: 4rem; */
+ justify-content: space-evenly;
+ margin-top: 5rem;
+}
+
+.agri-img-box img{
+    width: 70%;
+}
+@media screen and (max-width: 500px){
+    .agri-heading{
+        text-align: left;
+        margin-left: 0rem;
+    } 
+}

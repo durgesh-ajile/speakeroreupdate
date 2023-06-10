@@ -1,0 +1,162 @@
+.card-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 3rem;
+}
+.css-wjh20t-MuiPagination-ul{
+    justify-content: center;
+}
+.css-ahj2mt-MuiTypography-root{
+    text-align: center;
+}
+.topbar{
+    display: flex;
+    justify-content: space-between;
+}
+.view-text h3{
+    /* font-family: Inter; */
+font-size: 28px;
+font-weight: 800;
+line-height: 32px;
+letter-spacing: 0em;
+text-align: left;
+
+}
+.view-text{
+    margin-left: 30px;
+}
+.view-text h5{
+    /* font-family: Inter; */
+font-size: 18px;
+font-weight: 500;
+line-height: 24px;
+margin-top: 10px;
+letter-spacing: 0.02em;
+text-align: left;
+letter-spacing: 1.5px;
+}
+.card{
+    height: 369px;
+    width: 302px;
+    border: 1px solid #C7C7C7;
+    margin: 1.5rem 0 0 0 ;
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    justify-content: space-between;
+}
+.card-1{
+    background-color: #FDFAE8;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    padding-bottom: 10px;
+}
+.card-1 bold{
+    font-weight: 700;
+    margin-left: 2rem;
+    color:black
+}
+.card-1 span{
+    margin-left: 2rem;
+    color:#595959
+} 
+.card-2{
+    /* margin-top: 1rem; */
+    /* display: flex; */
+    align-items: center;
+    
+}
+.card-2 small{
+    margin-left: 2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+}
+.card-2 date{
+    margin-left: 2rem;
+    display: flex;
+    align-items: center;
+}
+.card-3{
+    text-align: center;
+    font-weight: 600;
+}
+.card-3 button{
+    padding: 12px;
+    width: 130px;
+    border: none;
+    color: white;
+    background: #24754F   ;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    font-weight: 600;
+}
+.card-2 span{
+    /* font-family: Inter; */
+/* font-size: 14px; */
+font-weight: 500;
+line-height: 17px;
+letter-spacing: 0em;
+text-align: left;
+margin-left: 2rem;
+display: flex;
+align-items: center;
+margin-bottom: 5px;
+}
+.card-2 h{
+    color:#464545;
+    margin: 0 8px 0px 5px;
+}
+.card-2 q{
+    color:#464545;
+    margin: 0 8px 0px 5px;
+}
+.desc p{
+    margin-left: 2rem;
+    font-size: 14px;
+    color: grey;
+}
+.filter-sidebar{
+    color: #666870;
+    background-color: #F6F6F6;
+    height: 100vh;
+}
+.mode{
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    margin: auto;
+}
+.mode-span{
+    text-align: left;
+    padding: 1rem;
+    font-size: 1.5rem;
+    /* color:grey; */
+    font-weight: 400;
+}
+
+.catogary select{
+    width: 75%;
+    padding: 7px;
+}
+.catogary{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.calendar{
+    text-align: center;
+
+}
+.calendar input{
+    padding: 12px;
+    width: 75%;
+    text-align: center;
+
+}
+

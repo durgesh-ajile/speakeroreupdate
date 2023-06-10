@@ -1,0 +1,52 @@
+.dash-circle{
+    background: #FEFCF1;
+    border: 2px solid #C1C1C1;
+    border-radius: 36.1661px;
+}
+.dash-info{
+    background: #EAEAEA;
+    width:30%
+}
+.dashboard{
+    display:flex;
+}
+.events-content {
+    width:70%;
+    /* margin: 50px; */
+    overflow: scroll;
+    height: 100vh;
+}
+.dash-input{
+    border: 1px solid #767676;
+border-radius: 4px;
+width:400px;
+height:40px;
+margin-bottom: 24px;
+padding-left: 40px;
+}
+.ico{
+    position: absolute;
+    top:13px;
+    left: 13px;
+}
+.input-div{
+    position: relative;
+}
+.admin{
+    display: flex;
+}
+.table-container{
+    margin: 50px;
+}
+.card-4{
+    display: flex;
+    justify-content: space-around;
+}
+.card-4 button{
+    border: 1px solid #ED3232;
+border-radius: 4px;
+width: 120px;
+padding: 10px;
+margin-bottom: 20px;
+color:#ED3232;
+}

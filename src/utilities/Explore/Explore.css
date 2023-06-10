@@ -1,0 +1,127 @@
+.bg-logo {
+    /* background-image: url("../../public/images/Group.png"); */
+  
+    position: absolute;
+    width: 159px;
+    height: 106px;
+    left: 32px;
+  }
+  .bg-events {
+    position: absolute;
+    width: 54px;
+    height: 70px;
+    left: 947px;
+    top: 4px;
+  
+  
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 70px;
+    /* identical to box height, or 438% */
+  
+    color: #757373;
+  }
+  
+  .bg-newevent {
+    position: absolute;
+    width: 140px;
+    height: 70px;
+    left: 1018px;
+    top: 4px;
+  
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 70px;
+    /* identical to box height, or 438% */
+  
+    display: flex;
+    align-items: center;
+  
+    color: #757373;
+  }
+  .bg-upgrade {
+    position: absolute;
+    width: 68px;
+    height: 70px;
+    left: 1175px;
+    top: 4px;
+  
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 70px;
+    /* identical to box height, or 438% */
+  
+    display: flex;
+    align-items: center;
+  
+    color: #757373;
+  }
+  
+  .vertical-line {
+    position: absolute;
+    width: 18px;
+    height: 0px;
+    left: 1250px;
+    top: 40px;
+  
+    border: 1px solid #000000;
+    transform: rotate(90deg);
+  }
+  
+  .bg-name {
+    position: absolute;
+    width: 124px;
+    height: 70px;
+    left: 1277px;
+    top: 4px;
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 70px;
+    /* identical to box height, or 292% */
+    
+    display: flex;
+    align-items: center;
+    /* letter-spacing: 0.04em; */
+    
+    color: #24754F;
+  }
+  
+  .bg-line {
+    position: absolute;
+    width: 1440px;
+    height: 0px;
+    left: 0px;
+    top: 77px;
+  
+    border: 2px solid #e0e0e0;
+  }
+  .bg-title {
+    position: absolute;
+    width: 457px;
+    height: 112px;
+    left: 87px;
+    top: 171px;
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 36px;
+    line-height: 56px;
+    /* or 156% */
+    
+    letter-spacing: 0.02em;
+    
+    color: #000000;
+  }
+  .bg-title-name{
+    color: #24754f;
+  }

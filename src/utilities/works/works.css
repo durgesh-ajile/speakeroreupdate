@@ -1,0 +1,86 @@
+.works-heading{
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.works-heading h2{
+    font-weight: 700;
+}
+.works-heading span{
+    color: #444444;
+    font-weight: 500;
+}
+.workcontainer{
+    padding: 1rem;
+}
+.green{
+    background-color: #24754F;
+    color: white;
+    font-size: 1rem;
+    font-weight: 800;
+}
+.works-container{
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    margin: 3rem;
+    gap: 2rem;
+}
+
+.works-box1{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.works-box1 img{
+    width: 6rem;
+     /* background-color: pink; */
+     /* border-radius: ; */
+}
+.joinowbtn{
+    text-align: center;
+}
+.joinowbtn button{
+    background-color: #EF7676;
+    color: white;
+    padding: 14px;
+    border: none;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 800;
+}
+.swapbutton{
+    /* text-align: center;
+    padding: 2rem;
+   display: flex;
+   justify-content: center; */
+}
+.swapbutton button{
+  width: 250px;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 800;
+    margin:0.3rem;
+    border: none;
+    border-radius: 7px;
+    line-height: 24px;
+    font-weight: 700;
+}
+.initial{
+    background-color: #E5E5E5;
+    color:#606060
+}
+
+.in-swap{
+   background-color: #E5E5E5;
+   text-align: center;
+   margin-top: 2rem;
+    /* padding: 2rem; */
+    display: flex;
+    justify-content: center;
+    width: 523px;
+    margin: auto;
+    border-radius: 9px;
+}

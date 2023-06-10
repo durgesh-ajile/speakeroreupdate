@@ -1,0 +1,120 @@
+.profile-container{
+    display: flex;
+}
+.left-container{
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 30%;
+    height: 100vh;
+    /* border-right: 2px solid gray; */
+    /* position: fixed; */
+}
+.name-deatils h3{
+    font-weight: 700;
+font-size: 16px;
+line-height: 19px;
+}
+.name-deatils span{
+    font-weight: 400;
+font-size: 14px;
+line-height: 17px;
+
+
+color: #625C5C;
+}
+.right-container{
+    width: 80%;
+    height: 100vh;
+    overflow: scroll;
+}
+.profile-pic{
+    background-color: #EAEAEA;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+.img{
+    width: 80px;
+    height: 80px;
+    border: 2px solid #C1C1C1;
+    border-radius: 50%;
+    font-size: 2.5rem;
+    font-weight: 600;
+    /* text-align: center; */
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.name-deatils{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    margin:  0 0 2rem 0;
+}
+.subsbutton{
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    height: 200px;
+}
+hr{
+    width: 50%;
+    text-align: center;
+}
+.subsbutton button{
+    width: 200px;
+    padding: 10px;
+    border: none;
+    font-weight: 600;
+    background: white;
+    border-radius: 5px;
+    text-align: left;
+}
+/* .subsbutton button:hover{
+    background-color: #24754F ;
+    color: white;
+} */
+.backgreen{
+    
+    color :rgb(234, 230, 230);
+    font-weight: 600;
+    background: #24754F !important;
+}
+.allevent{
+    display: flex;
+    gap: 1rem;
+    justify-content: space-evenly;
+    overflow: scroll;
+    
+    /* flex-direction: column; */
+}
+
+.subs-details{
+    width: 90%;
+    margin: auto;
+}
+.plan-head {
+    margin: 1rem 0;
+    color: #828282;
+    font-weight: 500;
+    /* padding: 1rem; */
+
+}
+.plan select{
+    width: 50%;
+    padding: 1rem;
+}
+.logout{
+    text-align: center;
+
+}
+.logout span{
+    font-size: 15px;
+    font-weight: 600;
+}

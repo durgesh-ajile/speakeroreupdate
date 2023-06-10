@@ -1,0 +1,22 @@
+.footer-container{
+    background-color: #808080;
+    color: white;
+    padding: 3rem;
+}
+.social{
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    font-size: 2rem;
+    padding: 2rem;
+}
+.events{
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    font-size: 1rem;
+}
+.copyright{
+    text-align: center;
+    font-size: 1rem;   
+}
