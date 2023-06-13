@@ -66,7 +66,7 @@ const Subscription = () => {
       if (selectedType && selectedPriceData) {
         const response = await axios({
           method: "POST",
-          url: "https://speakerorebackend.onrender.com/api/create/order",
+          url: "https://sobacke.in/api/create/order",
           data: {
             amount: selectedType,
             subcriptionType: selectedPriceData.price,
@@ -91,7 +91,7 @@ const Subscription = () => {
           image:
             "https://pbs.twimg.com/profile_images/1528248719585734657/roEyxCoi_400x400.jpg",
           order_id: order.order.id,
-          callback_url: `https://speakerorebackend.onrender.com/api/payment/verify?subscriptionType=${subcriptionType}&couponCode=${couponCodeExist}`,
+          callback_url: `https://sobacke.in/api/payment/verify?subscriptionType=${subcriptionType}&couponCode=${couponCodeExist}`,
           prefill: {},
           notes: {
             address: "Razorpay Corporate Office",
@@ -100,6 +100,7 @@ const Subscription = () => {
             color: "#121212",
           },
         };
+        
         const razor = new window.Razorpay(options);
         razor.open();
       }
