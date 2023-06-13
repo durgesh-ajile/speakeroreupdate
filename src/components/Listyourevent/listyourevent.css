@@ -3,6 +3,9 @@
     margin: 30px auto 50px;
     text-align: center;
 }
+.event-logo {
+    margin-top: 72px;
+}
 .event-logo h2{
     margin-top: 0;
     color:#2D2D2D ;

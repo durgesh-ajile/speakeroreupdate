@@ -10,11 +10,17 @@
     font-size: 2rem;
     padding: 2rem;
 }
+.social a{
+    color: white;
+}
 .events{
     display: flex;
     gap: 1.5rem;
     justify-content: center;
     font-size: 1rem;
+}
+.events span {
+    color:white
 }
 .copyright{
     text-align: center;

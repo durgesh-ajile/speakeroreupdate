@@ -18,6 +18,9 @@ import Categories from './utilities/Categories/Categories';
 import Navbar from './components/Navbar';
 import Appp from './utilities/Pop/LoginPopup';
 import AuthHOC from './utilities/Auth/AuthHOC'
+import FAQ from './utilities/FAQ/Faq';
+import Terms_N_Conditions from './utilities/TNC/Tnc';
+import Privacy_Policy from './utilities/Policy/Policy';
 function App() {
   return (
     <BrowserRouter>
@@ -31,7 +34,7 @@ function App() {
         />
         <Route
           path="/subscription"
-          element={<AuthHOC WrappedComponent={Subscription} />}
+          element={<Subscription />}
         ></Route>
         <Route
           path="/explore"
@@ -41,19 +44,22 @@ function App() {
           path="/createnewevent"
           element={<AuthHOC WrappedComponent={ListYourEvent} />}
         ></Route>
-        <Route path="/categories" element={<Categories />}></Route>
+        {/* <Route path="/categories" element={<Categories />}></Route> */}
         <Route
           path="/event/:eventId"
           element={<AuthHOC WrappedComponent={Viewdetails} />}
         ></Route>
-        <Route
+        {/* <Route
           path="/admin"
           element={<AuthHOC WrappedComponent={Admin} />}
-        ></Route>
+        ></Route> */}
         <Route
           path="/profile"
           element={<AuthHOC WrappedComponent={Profile} />}
         ></Route>
+        <Route path='/faq' element={<FAQ/>}></Route>
+        <Route path='/termsandconditions' element={<Terms_N_Conditions/>}></Route>
+        <Route path='/privacypolicy' element={<Privacy_Policy/>}></Route>
       </Routes>
     </BrowserRouter>
   );

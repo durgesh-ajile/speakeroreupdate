@@ -9,6 +9,15 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { BiSearchAlt } from 'react-icons/bi';
 import axios from 'axios';
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import { useState } from 'react';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -34,21 +43,73 @@ function createData(name, calories, fat, carbs, protein, action) {
   return { name, calories, fat, action };
 }
 
-const rows = [
-  createData(123456789, 'abc@gmail.com', "yearly", "24.01.2019", "24.01.2020", "backlist"),
-  createData(123456789, 'abc@gmail.com', "yearly", "24.01.2019", "24.01.2020", "backlist"),
-  createData(123456789, 'abc@gmail.com', "yearly", "24.01.2019", "24.01.2020", "backlist"),
-  createData(123456789, 'abc@gmail.com', "yearly", "24.01.2019", "24.01.2020", "backlist"),
-  createData(123456789, 'abc@gmail.com', "yearly", "24.01.2019", "24.01.2020", "backlist"),
-];
-
 export default function TeamMembers() {
   const [teamMemberData, setTeamMemberData] = React.useState("");
+  const [loading, setLoading] = useState(false);
+  const [makeAdminId, setAdminId] = useState('');
+  const [makeUserId, setmakeUserId] = useState('');
+
+  const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+  const [open2, setOpen2] = React.useState(false);
+
+  const handleClickOpen2 = () => {
+    setOpen2(true);
+  };
+
+  const handleClose2 = () => {
+    setOpen2(false);
+  };
+
+  const maketeammembertouser = () => {
+    axios({
+      method: "patch",
+      url: "https://sobacke.in/api/maketeammembertouser",
+      withCredentials: true,
+      data: {
+        userId: makeUserId,
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const maketeammembertoadmin = () => {
+    axios({
+      method: "patch",
+      url: "https://sobacke.in/api/maketeammembertoadmin",
+      withCredentials: true,
+      data: {
+        userId: makeAdminId,
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   React.useEffect(() => {
     axios ({
       method: "get",
-      url: "https://www.sobacke.in/api/getallteammembers",
+      url: "https://sobacke.in/api/getallteammembers",
       withCredentials: true,
     })
       .then((res) => {
@@ -58,6 +119,20 @@ export default function TeamMembers() {
         console.log(err);
       });
   }, []);
+
+  React.useEffect(() => {
+    axios ({
+      method: "get",
+      url: "https://sobacke.in/api/getallteammembers",
+      withCredentials: true,
+    })
+      .then((res) => {
+        setTeamMemberData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [loading]);
 
   console.log(teamMemberData)
 
@@ -79,16 +154,87 @@ export default function TeamMembers() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
-                {row.name}
+         
+          {teamMemberData ? teamMemberData.savedTeamMember.map((row) => (
+            <StyledTableRow key={row.alphaUnqiueId}>
+              <StyledTableCell align="">{row.alphaUnqiueId}</StyledTableCell>
+              <StyledTableCell component="th" align="right" scope="row">
+                {row.email}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right" sx={{color:'red'}}>{row.action}</StyledTableCell>
+              <StyledTableCell align="right">{row.role}</StyledTableCell>
+              <StyledTableCell align="right" ><span onClick={() => {
+              
+                handleClickOpen();
+                setmakeUserId(row._id)
+              }} style={{color:'red', cursor:'pointer'}}>MAKE USER</span> | <span onClick={() => {
+               
+                handleClickOpen2();
+                setAdminId(row._id)
+              }} style={{color:'#24754F', cursor:'pointer'}}>MAKE ADMIN</span></StyledTableCell>
+              <Dialog
+                        fullScreen={fullScreen}
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="responsive-dialog-title"
+                      >
+                        <DialogTitle id="responsive-dialog-title">
+                          {"Are You Sure You Want To Make This Member a Normal User"}
+                        </DialogTitle>
+      
+                        <DialogActions>
+                          <Button
+                            onClick={() => {
+                              handleClose();
+                            }}
+                            autoFocus
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            onClick={() => {
+                              handleClose();
+                              maketeammembertouser();
+                              setLoading(!loading)
+                            }}
+                            autoFocus
+                          >
+                            Make User
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
+                      <Dialog
+                        fullScreen={fullScreen}
+                        open={open2}
+                        onClose={handleClose2}
+                        aria-labelledby="responsive-dialog-title"
+                      >
+                        <DialogTitle id="responsive-dialog-title">
+                          {"Do you want to make this Member an Admin"}
+                        </DialogTitle>
+      
+                        <DialogActions>
+                          <Button
+                            onClick={() => {
+                              handleClose2();
+                            }}
+                            autoFocus
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            onClick={() => {
+                              handleClose2();
+                              maketeammembertoadmin();
+                              setLoading(!loading)
+                            }}
+                            autoFocus
+                          >
+                            Make Admin
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
             </StyledTableRow>
-          ))}
+          )) : <></>}
         </TableBody>
       </Table>
     </TableContainer>

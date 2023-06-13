@@ -46,7 +46,7 @@ const Admin = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://www.sobacke.in/api/getprofile",
+      url: "https://sobacke.in/api/getprofile",
       withCredentials: true,
     })
       .then((res) => {

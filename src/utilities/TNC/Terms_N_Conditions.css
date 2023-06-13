@@ -1,0 +1,55 @@
+.Terms_N_Conditions_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: justify;
+    text-justify: inter-word;
+
+}
+
+.Terms_N_Conditions_container_fluid {
+    width: 80%;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 50px 80px rgb(247, 247, 247);
+    padding: 0px 50px 0px 50px;
+    font-family: sans-serif;
+    margin-top: 10px;
+    border-radius: 5px;
+
+}
+
+.Terms_N_Conditions_container>.Terms_N_Conditions_container_fluid>div>p,
+.Terms_N_Conditions_container>.Terms_N_Conditions_container_fluid>div>h4 {
+    padding: 10px 0px 10px 0px;
+}
+
+
+.Terms_N_Conditions_container>.Terms_N_Conditions_container_fluid>div>p {
+    font-size: 15px;
+    line-height: 18px;
+}
+
+
+.Terms_N_Conditions_container>.Terms_N_Conditions_container_fluid>div>ol>li {
+    font-size: 15px;
+    line-height: 18px;
+}
+
+
+.ASSENT_AND_ACCEPTANCE_p {
+    font-weight: 600;
+    font-size: 13px;
+}
+
+@media screen and (max-width: 480px) {
+
+    .Terms_N_Conditions_container_fluid {
+        width: 95%;
+        box-shadow: 0px 0px 50px 80px rgb(112, 110, 110);
+        padding: 0px 15px 0px 15px;
+    }
+
+    .Terms_N_Conditions_container>.Terms_N_Conditions_container_fluid>div>h4 {
+        font-size: 12px;
+    }
+}

@@ -3,11 +3,11 @@ import React from 'react'
 import { useEffect } from 'react';
 import { MdLocationOn } from "react-icons/md";
 import { MdWatchLater } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useState } from 'react';
+import exclusiveimg from "../../images/Group.png";
 
 const Trash = () => {
     const [trashData, setTrashData] = useState("");
@@ -20,7 +20,7 @@ const Trash = () => {
     useEffect(() => {
         axios({
           method: "get",
-          url: "https://www.sobacke.in/api/getalltrashevents",
+          url: "https://sobacke.in/api/getalltrashevents",
           withCredentials: true,
         })
           .then((res) => {
@@ -35,7 +35,7 @@ const Trash = () => {
         const date = new Date(e).toLocaleString();
         return date;
       }
-      
+      console.log(trashData)
 
   return (
     <div>
@@ -44,21 +44,28 @@ const Trash = () => {
           {trashData ? (
             <div>
               <div className="card-container">
-                {trashData.savedEvents.map((e) => (
+                {trashData.deletedEvents.map((e) => (
                   <div className="card">
-                    <div className="card-1">
-                      <small
-                        style={{
-                          margin: "20px  0 0 2rem",
-                          fontSize: "1rem",
-                          fontWeight: "500",
-                          color: "#24754F",
-                        }}
-                      >
-                        {e.Category}{" "}
-                      </small>
-                      <bold>{e.OrganizerName}</bold>
-                      <span>{e.City}</span>
+                  <div className="card-1">
+                      <div>
+                        <small
+                          style={{
+                            margin: "20px  0 0 2rem",
+                            fontSize: "1rem",
+                            fontWeight: "500",
+                            color: "#24754F",
+                          }}
+                        >
+                          {e.Category}{" "}
+                        </small>
+                        <bold>{e.OrganizerName}</bold>
+                        <span>{e.City}</span>
+                      </div>
+                      <div>
+                        {e.isSpeakerOreExclusive ? (
+                          <img src={exclusiveimg} />
+                        ) : null}
+                      </div>
                     </div>
                     <div className="card-2">
                       <small>

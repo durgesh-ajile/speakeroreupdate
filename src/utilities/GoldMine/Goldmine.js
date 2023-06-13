@@ -6,6 +6,7 @@ import cut from "../../images/greeting 1.png";
 import handshake from "../../images/handshake 1.png";
 import authority from "../../images/chairman 1.png";
 import global from "../../images/international 1.png";
+import { Link } from "react-router-dom";
 
 const Goldmine = () => {
   return (
@@ -18,7 +19,7 @@ const Goldmine = () => {
           </div>
           <div className="gold-box">
             <img src={diverse} />
-            <span>Diver Event</span>
+            <span>Diverse Event</span>
           </div>
           <div className="gold-box">
             <img src={cut} />
@@ -59,7 +60,8 @@ const Goldmine = () => {
         </ul>
       </div>
       <div className="joinowbtn" style={{textAlign:'left'}} >
-        <button>Join now</button>
+      <Link to='/subscription'><button>Join now</button></Link>
+        
       </div>
       </div>
     </div>

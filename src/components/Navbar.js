@@ -6,12 +6,13 @@ import './Navbar.css'
 import logo from '../../src/images/mobilelogo.png'
 import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { Button } from "@mui/material";
 
 
 // import logo from '../../assets/img/logo.jpg'
 // import hambergure_icon from '../../assets/img/hamburger_icon.jpg'
 
-const MobileNavbar = () => {
+const MobileNavbar = ({userData, isAuthenticated}) => {
     const [sidebarToggle, setSidebarToggle] = useState(true)
     const NavbarboxRef = useRef(null);
 
@@ -32,13 +33,15 @@ const MobileNavbar = () => {
         setSidebarToggle(!sidebarToggle)
     };
 
+    
+
     return (<>
         <div className='Navbar_coontainer'>
             <div className="Navbar_logo">
                 <img src={logo} alt="" />
             </div>
             <div onClick={() => handleToggle()} className="Navbar_hambergure_icon">
-                <h6>HI DIVYA</h6>
+                <h6>HI {userData}!</h6>
                 <GiHamburgerMenu/>
             </div>
         </div>
@@ -89,7 +92,7 @@ const Navbar = () => {
     setLoading(true);
     axios({
       method: "get",
-      url: "https://www.sobacke.in/api/auth/check",
+      url: "https://sobacke.in/api/auth/check",
       withCredentials: true,
     })
       .then((res) => {
@@ -111,12 +114,12 @@ const Navbar = () => {
     if (isAuthenticated) {
       axios({
         method: "get",
-        url: "https://www.sobacke.in/api/getprofile",
+        url: "https://sobacke.in/api/getprofile",
         withCredentials: true,
       })
         .then((res) => {
           if(res.data.status){
-            setUserData(res.data);
+            setUserData(res.data.response.first_name);
           }
         })
         .catch((err) => {
@@ -138,9 +141,10 @@ const Navbar = () => {
 
   return (
     <div>
-    <MobileNavbar/>
+    <MobileNavbar isAuthenticated = {isAuthenticated}/>
       <div className="bg-navbar">
-        <div className="bg-logo"></div>
+      <Link to='/'> <div className="bg-logo"></div></Link>
+        
         <div className="bg-nav">
           {isAuthenticated && (
             <div className="bg-nav">
@@ -160,15 +164,15 @@ const Navbar = () => {
               </Link>
               <span >| </span>
               <Link to='/profile'>
-              <span className="nav-name"> Hi Durgesh!</span>
+              <span className="nav-name"> Hi {userData}!</span>
               </Link>
             </div>
           )}
           {!isAuthenticated && (
             <>
-              <a className="bg-sign-up" href="#" onClick={handleSignInClick}>
-                Sign up
-              </a>
+              <Button variant="outlined" className="bg-sign-up" onClick={handleSignInClick}>
+                Sign Up
+              </Button>
               {showPopup && <LoginPopup onClose={handleClosePopup} />}
             </>
           )}

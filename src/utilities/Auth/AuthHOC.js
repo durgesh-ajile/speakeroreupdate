@@ -11,7 +11,7 @@ const AuthHOC = ({ WrappedComponent }) => {
     const checkAuthentication = async () => {
       try {
         const response = await axios.get(
-          "https://www.sobacke.in/api/auth/check",
+          "https://sobacke.in/api/auth/check",
           {
             withCredentials: true,
           }

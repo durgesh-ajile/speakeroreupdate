@@ -1,6 +1,9 @@
 .head-banner{
     background-color: #24754F;
 }
+.view-detail{
+    margin-top: 72px;
+}
 .banner-text{
     color: white;
     font-size: 2rem;

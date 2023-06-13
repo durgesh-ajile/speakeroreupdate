@@ -23,7 +23,7 @@ const Viewdetails = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://www.sobacke.in/api/getsingleevent/${eventId}`,
+      url: `https://sobacke.in/api/getsingleevent/${eventId}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -54,7 +54,7 @@ const Viewdetails = () => {
 
   return (
     data ? 
-    <div>
+    <div className="view-detail">
       <div className="head-banner">
         <div className="banner-container">
           <div className="banner-text">

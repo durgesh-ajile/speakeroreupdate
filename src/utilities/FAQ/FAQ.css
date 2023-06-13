@@ -1,0 +1,66 @@
+.FAQ_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: justify;
+    text-justify: inter-word;
+
+}
+
+.FAQ_container_fluid {
+    width: 80%;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 50px 80px rgb(247, 247, 247);
+    padding: 0px 50px 0px 50px;
+    font-family: sans-serif;
+    margin-top: 10px;
+    border-radius: 5px;
+
+}
+
+.FAQ_container>.FAQ_container_fluid>div>p,
+.FAQ_container>.FAQ_container_fluid>div>h4 {
+    padding: 10px 0px 10px 0px;
+}
+
+
+.FAQ_container>.FAQ_container_fluid>div>p {
+    font-size: 15px;
+    line-height: 18px;
+}
+
+
+.FAQ_container>.FAQ_container_fluid>div>ol>li {
+    font-size: 12px;
+    line-height: 18px;
+}
+
+
+.ASSENT_AND_ACCEPTANCE_p {
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.FAQ_container_fluid_question {
+    font-size: 20px !important;
+    color: rgb(0, 0, 0);
+}
+.FAQ_container_fluid_innertext{
+    margin: 0px 5% 0px 5%;
+}
+.FAQ_container_fluid_innertext > p{
+    margin: 10px 0px 0px 0px;
+}
+
+@media screen and (max-width: 480px) {
+
+    .FAQ_container_fluid {
+        width: 95%;
+        box-shadow: 0px 0px 50px 80px rgb(112, 110, 110);
+        padding: 0px 15px 0px 15px;
+    }
+
+    .FAQ_container>.FAQ_container_fluid>div>h4 {
+        font-size: 12px;
+    }
+}

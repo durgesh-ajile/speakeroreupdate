@@ -19,6 +19,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import exclusiveimg from "../../images/Group.png";
 
 const drawerWidth = 340;
 
@@ -93,28 +94,42 @@ export default function PersistentDrawerLeft() {
 
   const handleExclusive = () => {
     setExclusive(!exclusive);
-    
   };
   const handleOnline = () => {
-    setMode('Online Event')
-    setOnline(true);
+    if(!online){
+      setMode("Online Event");
+      setOnline(true);
+    } else {
+      setMode("");
+      setOnline(false);
+    }
     setHybrid(false);
     setInperson(false);
   };
 
   const handleInperson = () => {
-    setMode('Offline Event')
+    if(!inperson){
+      setMode("Offline Event");
+      setInperson(true);
+    } else {
+      setMode("");
+      setInperson(false);
+    }
     setOnline(false);
     setHybrid(false);
-    setInperson(true);
   };
 
   const handleHybrid = () => {
-    setMode('Hybrid')
-    setHybrid(true);
+    if(!hybrid){
+      setMode("Hybrid");
+      setHybrid(true);
+    } else {
+      setMode("");
+      setHybrid(false);
+    }
     setOnline(false);
     setInperson(false);
-    };
+  };
 
   const StyledCalendar = styled(Calendar)`
     --moedim-primary: #f00;
@@ -133,7 +148,7 @@ export default function PersistentDrawerLeft() {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://www.sobacke.in/api/getallapprovedevent?page=${page}`,
+      url: `https://sobacke.in/api/getallapprovedevent?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -144,129 +159,67 @@ export default function PersistentDrawerLeft() {
         console.log(err);
       });
   }, [page]);
-  console.log(approvedEvent);
+  console.log(filter);
 
   useEffect(() => {
-    if (mode || category || date || speakerExclusive){
-    const apiUrl = `https://www.sobacke.in/api/geteventsbyfilter?${getQueryParams()}`;
+    if (mode || category || date || speakerExclusive) {
+      const apiUrl = `https://sobacke.in/api/geteventsbyfilter?${getQueryParams()}`;
 
-    function getQueryParams() {
-      const queryParams = [];
+      function getQueryParams() {
+        const queryParams = [];
 
-      if (mode) {
-        queryParams.push(`mode=${mode}`);
+        if (mode) {
+          queryParams.push(`mode=${mode}`);
+        }
+
+        if (category) {
+          queryParams.push(`category=${category}`);
+        }
+
+        if (date) {
+          queryParams.push(`date=${date}`);
+        }
+
+        if (speakerExclusive !== undefined) {
+          queryParams.push(`speakeroreExclusive=${speakerExclusive}`);
+        }
+        return queryParams.join("&");
       }
 
-      if (category) {
-        queryParams.push(`category=${category}`);
-      }
-
-      if (date) {
-        queryParams.push(`date=${date}`);
-      }
-
-      if (speakerExclusive !== undefined) {
-        queryParams.push(`speakeroreExclusive=${speakerExclusive}`);
-      }
-      return queryParams.join("&");
-    }
-
-    axios({
-      method: "get",
-      url: apiUrl,
-      withCredentials: true,
-    })
-      .then((res) => {
-        console.log(res);
-        setFilter(res.data.savedEvents)
+      axios({
+        method: "get",
+        url: apiUrl,
+        withCredentials: true,
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((res) => {
+          console.log(res);
+          setFilter(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          setFilter("");
+        });
+    }
+    if (!mode && !category && !date && ! speakerExclusive) {
+      setFilter('')
     }
   }, [mode, category, date, speakerExclusive]);
 
-  const returnOnline = () => { 
-    return 'Online Event'
-  }
 
   function convertDate(e) {
     const date = new Date(e).toLocaleString();
     return date;
   }
+  console.log(category)
 
   return (
-    <Box sx={{ display: "flex", color: "grey" }}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        open={open}
-        style={{ backgroundColor: "#24754F" }}
-      >
-        {/* <Toolbar style={{ paddingRight: "0" }}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: "none" }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography noWrap component="" className="topbar">
-            <div>
-              <h3>
-                Gold Deposits - Events Exploration Page{" "}
-                <h5>
-                  Explore, Map, Analyse, Mine &amp; Extract. For best results,
-                  <br /> Choose events from your category and focus!
-                </h5>
-              </h3>
-            </div>
-            <div>
-              <img src={man} style={{ width: "100%" }} />
-            </div>
-          </Typography>
-        </Toolbar> */}
-        <div className="head-banner">
-          <div className="banner-container">
-            <div className="view-text">
-              <h3>Gold Deposits - Events Exploration Page </h3>
-              <h5>
-                Explore, Map, Analyse, Mine &amp; Extract. For best results,
-                <br /> Choose events from your category and focus!
-              </h5>
-            </div>
-            <div>
-              <img src={man} />
-            </div>
+    <div className="event-main">
+      <div className="filter-sidebar">
+        <div className="filter-child">
+          <div>
+            <h1>Filter</h1>
           </div>
-        </div>
-      </AppBar>
-      <Drawer
-        className="drawer"
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            width: drawerWidth,
-            boxSizing: "border-box",
-            background: "#F6F6F6",
-            color: "#666870",
-          },
-        }}
-        variant="persistent"
-        anchor="left"
-        open={open}
-      >
-        <div style={{ width: "75%", margin: "auto" }}>
-          <h1>Filter</h1>
-        </div>
-
-        <Divider />
-        <div className="filter-sidebar">
-          {/* <div style={{width:"75%",margin:"auto"}}><h1>Filter</h1></div> */}
-          <div style={{ width: "75%", margin: "auto" }}>
+          <div>
             <h4>Modes</h4>
           </div>
           <div className="mode">
@@ -289,18 +242,45 @@ export default function PersistentDrawerLeft() {
               <lable>Hybrid</lable>
             </div>
           </div>
-          <div style={{ width: "75%", margin: "auto" }}>
+          <div>
             <h4>Category</h4>
           </div>
           <div className="catogary">
-            <select placeholder="Select here">
-              <option selected>Select</option>
-              <option value="">1</option>
-              <option>1</option>
-              <option>1</option>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="">Select</option>
+              <option value="Advertising">Advertising</option>
+              <option value="Agriculture">Agriculture</option>
+              <option value="Artificial Intelligence">
+                Artificial Intelligence{" "}
+              </option>
+              <option value="Automobile">Automobile</option>
+              <option value="Banking">Banking </option>
+              <option value="Business">Business</option>
+              <option value="Coaching">Coaching</option>
+              <option value="Communication">Communication</option>
+              <option value="Design Thinking">Design Thinking</option>
+              <option value="Education">Education</option>
+              <option value="Finance">Finance</option>
+              <option value="Fitness">Fitness</option>
+              <option value="Health">Health</option>
+              <option value="Human resource">Human resource </option>
+              <option value="Innovation">Innovation </option>
+              <option value="Leadership">Leadership</option>
+              <option value="LGBTQ">LGBTQ</option>
+              <option value="Manufacturing">Manufacturing</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Oil Gas">Oil Gas</option>
+              <option value="Parenting">Parenting</option>
+              <option value="Presentation Skill">Presentation Skill</option>
+              <option value="Retails">Retails</option>
+              <option value="Sales"> Sales</option>
+              <option value="Soft Skill">Soft Skill</option>
             </select>
           </div>
-          <div style={{ width: "75%", margin: "auto" }}>
+          <div>
             <h4>Select a date</h4>
           </div>
           <div className="calendar">
@@ -310,7 +290,7 @@ export default function PersistentDrawerLeft() {
               placeholder="Select start date"
             />
           </div>
-          <div style={{ width: "75%", margin: "auto" }}>
+          <div>
             <h4>SpeakerOre</h4>
             <div>
               <input
@@ -328,133 +308,157 @@ export default function PersistentDrawerLeft() {
             ""
           )}
         </div>
+      </div>
 
-        <Divider />
-      </Drawer>
-      <Main open={open}>
-        <DrawerHeader />
-        <div>
-        {filter ? 
-          <div>
-              <div className="card-container">
-
-                {approvedEvent.savedEvents.map((e) => (
-                  <div className="card">
-                    <div className="card-1">
-                      <small
-                        style={{
-                          margin: "20px  0 0 2rem",
-                          fontSize: "1rem",
-                          fontWeight: "500",
-                          color: "#24754F",
-                        }}
-                      >
-                        {e.Category}{" "}
-                      </small>
-                      <bold>{e.OrganizerName}</bold>
-                      <span>{e.City}</span>
-                    </div>
-                    <div className="card-2">
-                      <span>
-                        <MdLocationOn size={20} />
-                        <h>{e.Mode}</h>
-                      </span>
-
-                      <date>
-                        {" "}
-                        <MdWatchLater size={20} />
-                        <q>{convertDate(e.EventEndDateAndTime)}</q>
-                      </date>
-                      <p></p>
-                    </div>
-                    <div className="desc">
-                      <p>{e.ShortDescriptionOfTheEvent}</p>
-                    </div>
-                    <div className="card-3">
-                      <button
-                        onClick={() => {
-                          navigate(`/event/${e._id}`);
-                        }}
-                      >
-                        View Details
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <Stack spacing={2} >
-                <Pagination
-                style={{justifyContent:'center', marginTop:'20px'}}
-                  count={approvedEvent.totalPages}
-                  page={page}
-                  onChange={handleChange}
-                />
-                <Typography >Page: {page}</Typography>
-              </Stack>
-            </div> : approvedEvent ? (
-            <div>
-              <div className="card-container">
-
-                {approvedEvent.savedEvents.map((e) => (
-                  <div className="card">
-                    <div className="card-1">
-                      <small
-                        style={{
-                          margin: "20px  0 0 2rem",
-                          fontSize: "1rem",
-                          fontWeight: "500",
-                          color: "#24754F",
-                        }}
-                      >
-                        {e.Category}{" "}
-                      </small>
-                      <bold>{e.OrganizerName}</bold>
-                      <span>{e.City}</span>
-                    </div>
-                    <div className="card-2">
-                      <span>
-                        <MdLocationOn size={20} />
-                        <h>{e.Mode}</h>
-                      </span>
-
-                      <date>
-                        {" "}
-                        <MdWatchLater size={20} />
-                        <q>{convertDate(e.EventEndDateAndTime)}</q>
-                      </date>
-                      <p></p>
-                    </div>
-                    <div className="desc">
-                      <p>{e.ShortDescriptionOfTheEvent}</p>
-                    </div>
-                    <div className="card-3">
-                      <button
-                        onClick={() => {
-                          navigate(`/event/${e._id}`);
-                        }}
-                      >
-                        View Details
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <Stack spacing={2} >
-                <Pagination
-                style={{justifyContent:'center', marginTop:'20px'}}
-                  count={approvedEvent.totalPages}
-                  page={page}
-                  onChange={handleChange}
-                />
-                <Typography >Page: {page}</Typography>
-              </Stack>
+      <div className="right-container-e">
+        <div className="head-banner">
+          <div className="banner-container">
+            <div className="view-text">
+              <h3>Gold Deposits - Events Exploration Page </h3>
+              <h5>
+                Explore, Map, Analyse, Mine &amp; Extract. For best results,
+                <br /> Choose events from your category and focus!
+              </h5>
             </div>
-          ) : (
-            ""
-          )}
-          
+            <div>
+              <img src={man} />
+            </div>
+          </div>
         </div>
-      </Main>
-    </Box>
+        {filter ? (
+          <div>
+            <div className="card-container">
+              {filter.savedEvents.map((e) => (
+                <div className="card">
+                  <div className="card-1">
+                    <div>
+                      <small
+                        style={{
+                          margin: "20px  0 0 2rem",
+                          fontSize: "1rem",
+                          fontWeight: "500",
+                          color: "#24754F",
+                        }}
+                      >
+                        {e.Category}{" "}
+                      </small>
+                      <bold>{e.OrganizerName}</bold>
+                      <span>{e.City}</span>
+                    </div>
+                    <div>
+                      {e.isSpeakerOreExclusive ? (
+                        <img src={exclusiveimg} />
+                      ) : null}
+                    </div>
+                  </div>
+                  <div className="card-2">
+                    <span>
+                      <MdLocationOn size={20} />
+                      <h>{e.Mode}</h>
+                    </span>
+
+                    <date>
+                      {" "}
+                      <MdWatchLater size={20} />
+                      <q>{convertDate(e.EventEndDateAndTime)}</q>
+                    </date>
+                    <p></p>
+                  </div>
+                  <div className="desc">
+                    <p>{e.ShortDescriptionOfTheEvent}</p>
+                  </div>
+                  <div className="card-3">
+                    <button
+                      onClick={() => {
+                        navigate(`/event/${e._id}`);
+                      }}
+                    >
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <Stack spacing={2}>
+              <Pagination
+                style={{ justifyContent: "center", marginTop: "20px" }}
+                count={filter.totalPages}
+                page={page}
+                onChange={handleChange}
+              />
+              <Typography>Page: {page}</Typography>
+            </Stack>
+          </div>
+        ) : mode || category || date || speakerExclusive ? (<div>
+          <h3>No Matching Events</h3>
+        </div>) : approvedEvent ? (
+          <div>
+            <div className="card-container">
+              {approvedEvent.savedEvents.map((e) => (
+                <div className="card">
+                  <div className="card-1">
+                    <div>
+                      <small
+                        style={{
+                          margin: "20px  0 0 2rem",
+                          fontSize: "1rem",
+                          fontWeight: "500",
+                          color: "#24754F",
+                        }}
+                      >
+                        {e.Category}{" "}
+                      </small>
+                      <bold>{e.OrganizerName}</bold>
+                      <span>{e.City}</span>
+                    </div>
+                    <div>
+                      {e.isSpeakerOreExclusive ? (
+                        <img src={exclusiveimg} />
+                      ) : null}
+                    </div>
+                  </div>
+                  <div className="card-2">
+                    <span>
+                      <MdLocationOn size={20} />
+                      <h>{e.Mode}</h>
+                    </span>
+
+                    <date>
+                      {" "}
+                      <MdWatchLater size={20} />
+                      <q>{convertDate(e.EventEndDateAndTime)}</q>
+                    </date>
+                    <p></p>
+                  </div>
+                  <div className="desc">
+                    <p>{e.ShortDescriptionOfTheEvent}</p>
+                  </div>
+                  <div className="card-3">
+                    <button
+                      onClick={() => {
+                        navigate(`/event/${e._id}`);
+                      }}
+                    >
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <Stack spacing={2}>
+              <Pagination
+                style={{ justifyContent: "center", marginTop: "20px" }}
+                count={approvedEvent.totalPages}
+                page={page}
+                onChange={handleChange}
+              />
+              <Typography>Page: {page}</Typography>
+            </Stack>
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
+    </div>
   );
 }

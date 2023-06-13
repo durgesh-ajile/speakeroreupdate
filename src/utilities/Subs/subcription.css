@@ -7,6 +7,7 @@
 .subscribe-conatiner{
     display: flex;
     justify-content: space-around;
+    margin-top: 72px;
 }
 
 .price-container{

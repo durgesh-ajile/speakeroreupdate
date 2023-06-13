@@ -15,6 +15,7 @@
     /* margin: 50px; */
     overflow: scroll;
     height: 100vh;
+    margin-left: 30%;
 }
 .dash-input{
     border: 1px solid #767676;
@@ -34,6 +35,7 @@ padding-left: 40px;
 }
 .admin{
     display: flex;
+    margin-top: 72px;
 }
 .table-container{
     margin: 50px;
@@ -50,6 +52,12 @@ padding: 10px;
 margin-bottom: 20px;
 color:#ED3232;
 }
-.create-coupon{
-
+.create-coupon input{
+ border: .5px solid #767676;
+}
+.sub-type{
+    margin-top: 10px;
+}
+.sub-type button{
+    margin-left: 10px;
 }

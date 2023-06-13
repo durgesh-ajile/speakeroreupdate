@@ -8,6 +8,7 @@ import vector from "../../images/Vector.png";
 import debate from '../../images/debate-1.png'
 import fan from '../../images/fan-club-1.png'
 import list from '../../images/list-1.png'
+import { Link } from "react-router-dom";
 
 
 const Works = () => {
@@ -41,21 +42,25 @@ const Works = () => {
       {left==true ? <div className = "works-container " >
         <div className="works-box1">
           <img src={savetime} style={{backgroundImage:{vector}}}/>
+          
           <p>
-          Post your event’s Speaker <br/>requirement for free.
+          Save time, find Events <br/>of your interest
           </p>
         </div>
 
         <div className="works-box1">
           <img src={partnership} />
-          <p>Receive profiles directly from <br/> <bold>best speakers / Experts.</bold></p>
+          <p>Directly finalise with <br/>organisers. Speak to get<br/> noticed.</p>
+         
         </div>
 
         <div className="works-box1">
           <img src={goal1} />
           <p>
-          Happy Audience, Successful <br/> Event, <bold>Newer Opportunities.</bold>
+          Achieve your Professional <br/> and personal. Goals
+- Fame, <br/>Power, Money & amp; Peace
           </p>
+         
         </div>
       </div> : 
       
@@ -69,21 +74,20 @@ const Works = () => {
 
         <div className="works-box1">
           <img src={debate} />
-          <p>Directly finalise with <br/>organisers. Speak to get<br/> noticed.</p>
+          <p>Receive profiles directly from <br/> <bold>best speakers / Experts.</bold></p>
         </div>
 
         <div className="works-box1">
           <img src={fan} />
           <p>
-            Save Time, find Events <br />
-            of your Interest
+          Happy Audience, Successful <br/> Event, <bold>Newer Opportunities.</bold>
           </p>
         </div>
       </div>
       }
      
       <div className="joinowbtn">
-        <button>Join now</button>
+      <Link to='/subscription'><button>Join now</button></Link>
       </div>
     </div>
   );

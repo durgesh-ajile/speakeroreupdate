@@ -26,6 +26,7 @@ text-align: left;
 }
 .view-text{
     margin-left: 30px;
+    color: white;
 }
 .view-text h5{
     /* font-family: Inter; */
@@ -50,18 +51,25 @@ letter-spacing: 1.5px;
 .card-1{
     background-color: #FDFAE8;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     /* align-items: center; */
     padding-bottom: 10px;
+    padding-top: 10px;
+    justify-content: space-between;
+}
+.card-1 img{
+    margin: 12px;
 }
 .card-1 bold{
     font-weight: 700;
     margin-left: 2rem;
-    color:black
+    color:black;
+    display: block;
 }
 .card-1 span{
     margin-left: 2rem;
-    color:#595959
+    color:#595959;
+    display: block;
 } 
 .card-2{
     /* margin-top: 1rem; */
@@ -96,6 +104,17 @@ letter-spacing: 1.5px;
     border-radius: 5px;
     font-weight: 600;
 }
+.event-main{
+    display: flex;
+    margin-top: 72px;
+}
+.filter-child{
+    width: 280px;
+    padding: 40px;
+}
+.right-container-e{
+    margin-left: 360px;
+}
 .card-2 span{
     /* font-family: Inter; */
 /* font-size: 14px; */
@@ -125,12 +144,14 @@ margin-bottom: 5px;
     color: #666870;
     background-color: #F6F6F6;
     height: 100vh;
+    top: 72px;
+    position: fixed;
 }
 .mode{
     display: flex;
     flex-direction: column;
     width: 75%;
-    margin: auto;
+    /* margin: auto; */
 }
 .mode-span{
     text-align: left;
@@ -145,12 +166,10 @@ margin-bottom: 5px;
     padding: 7px;
 }
 .catogary{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    
 }
 .calendar{
-    text-align: center;
+   
 
 }
 .calendar input{

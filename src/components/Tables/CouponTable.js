@@ -31,17 +31,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein, action) {
-  return { name, calories, fat, carbs, protein, action };
-}
-
-const rows = [
-  createData(123456789, 'Rs 833', "yearly", "24.01.2019", "24.01.2020", "DISABLE"),
-  createData(123456789, 'Rs 833', "yearly", "24.01.2019", "24.01.2020", "DISABLE"),
-  createData(123456789, 'Rs 833', "yearly", "24.01.2019", "24.01.2020", "DISABLE"),
-  createData(123456789, 'Rs 833', "yearly", "24.01.2019", "24.01.2020", "DISABLE"),
-  createData(123456789, 'Rs 833', "yearly", "24.01.2019", "24.01.2020", "DISABLE"),
-];
 
 export default function CouponTable() {
   const [couponData, setCouponData] = useState("");
@@ -49,7 +38,7 @@ export default function CouponTable() {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://www.sobacke.in/api/getallcoupons",
+      url: "https://sobacke.in/api/getallcoupons",
       withCredentials: true,
     })
       .then((res) => {
@@ -59,6 +48,11 @@ export default function CouponTable() {
         console.log(err);
       });
   }, []);
+
+  function convertDate(e) {
+    const date = new Date(e).toLocaleDateString();
+    return date;
+  }
   
   console.log(couponData)
   return (
@@ -68,23 +62,23 @@ export default function CouponTable() {
         <TableHead>
           <TableRow sx={{backgroundColor:'#393939'}}>
             <StyledTableCell>Coupon Code</StyledTableCell>
-            <StyledTableCell align="right">Amount</StyledTableCell>
-            <StyledTableCell align="right">Start Date</StyledTableCell>
+            <StyledTableCell align="center">Discount</StyledTableCell>
+            <StyledTableCell align="center">Max Usage</StyledTableCell>
             <StyledTableCell align="right">Expiry Date</StyledTableCell>
             <StyledTableCell align="right">Action Required</StyledTableCell>
 
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+          {couponData && couponData.savedCoupon.map((row) => (
+            <StyledTableRow key={row.coupon_code}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                {row.coupon_code}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
-              <StyledTableCell align="right" sx={{color:'black'}}>{row.action}</StyledTableCell>
+              <StyledTableCell align="center">{row.discount}%</StyledTableCell>
+              <StyledTableCell align="center">{row.max_usages}</StyledTableCell>
+              <StyledTableCell align="right">{convertDate(row.expiration_date)}</StyledTableCell>
+              <StyledTableCell align="right">{row.subscription_type}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
