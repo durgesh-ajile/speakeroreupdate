@@ -4,27 +4,37 @@ import Organizerdetails from "../organizerdeatails/Organizerdetails";
 import { TagsInput } from "react-tag-input-component";
 import axios from "axios";
 
-const Preview = ({ stateData }) => {
+const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
   const {
-    eventTitle,
-    shortDescription,
-    longDescription,
-    eventWebsiteUrl,
-    mode,
-    engagementType,
-    eventType,
-    audienceType,
+    Short_description,
     audienceSize,
+    audienceType,
     category,
-    location,
     city,
-    pincode,
     country,
+    engagementType,
+    event,
+    eventType,
+    eventWebsiteUrl,
+    location,
+    longDescription,
+    mode,
+    pincode,
     organizerName,
     organizerEmail,
     organizerContactNumber,
     tags,
+    startdate,
+    enddate,
+    endtime,
+    starttime
   } = stateData;
+  console.log("stateDate", stateData)
+
+
+  const previous_Button = () => {
+    setStateHandle_Event_Organiser_Preview(p => { p.event = false; p.organise = true; p.preview = false; return { ...p } })
+  }
 
   const handleCreateEvent = (e) => {
     e.preventDefault();
@@ -32,29 +42,29 @@ const Preview = ({ stateData }) => {
       method: "post",
       url: "https://api.speakerore.com/api/createEvent",
       data: {
-      titleOfTheEvent: eventTitle,
-      shortDescriptionOfTheEvent: shortDescription,
-      detailedDescriptionOfTheEvent: longDescription,
-      eventWebsiteUrl: eventWebsiteUrl,
-      mode: mode,
-      engageMentTerm: engagementType,
-      eventType: eventType,
-      audienceType: audienceType,
-      audienceSize: audienceSize,
-      category: category,
-      eventStartDate: "2023-06-20T00:00:00",
-      eventEndDate: "2023-06-25T00:00:00",
-      eventStartTime: "13:00",
-      eventEndTime: "17:00",
-      location: location,
-      city: city,
-      pincode: pincode,
-      country: country,
-      organizerName: organizerName,
-      organizerEmail: organizerEmail,
-      organizerContactNumber: organizerContactNumber,
-      tags: tags,
-      isSpeakeroreExclusive: true,
+        titleOfTheEvent: event,
+        shortDescriptionOfTheEvent: Short_description,
+        detailedDescriptionOfTheEvent: longDescription,
+        eventWebsiteUrl: eventWebsiteUrl,
+        mode: mode,
+        engageMentTerm: engagementType,
+        eventType: eventType,
+        audienceType: audienceType,
+        audienceSize: audienceSize,
+        category: category,
+        eventStartDate: "2023-06-20T00:00:00",
+        eventEndDate: "2023-06-25T00:00:00",
+        eventStartTime: "13:00",
+        eventEndTime: "17:00",
+        location: location,
+        city: city,
+        pincode: pincode,
+        country: country,
+        organizerName: organizerName,
+        organizerEmail: organizerEmail,
+        organizerContactNumber: organizerContactNumber,
+        tags: tags,
+        isSpeakeroreExclusive: true,
       },
       withCredentials: true,
     })
@@ -76,69 +86,131 @@ const Preview = ({ stateData }) => {
                 <label>Title of Event</label>
                 <input
                   type="text"
-                  placeholder="Enter the title of event"
-                  defaultValue={eventTitle}
+                  // placeholder="Enter the title of event"
+                  defaultValue={event}
                   readOnly
+                  disabled
                 />
               </div>
 
               <div className="input-details">
                 <label>Short description Of the event</label>
                 <textarea
-                  placeholder="A very short one line description of the event here.."
+                  // placeholder="A very short one line description of the event here.."
                   required
-                  defaultValue={shortDescription}
+                  defaultValue={Short_description}
                   readOnly
+                  disabled
+
                 />
               </div>
 
               <div className="input-details">
                 <label>Detail description of the event</label>
                 <textarea
-                  placeholder="Type here"
+                  // placeholder="Type here"
                   required
                   defaultValue={longDescription}
+                  disabled
+
                 />
               </div>
 
               <div className="input-details">
                 <label>Event website URL</label>
-                <input type="text" required defaultValue={eventWebsiteUrl} />
+                <input type="text" required
+                  defaultValue={eventWebsiteUrl}
+                  disabled />
               </div>
 
               <div className="double">
                 <div className="input-details">
                   <label>Mode</label>
-                  <input type="text" required defaultValue={mode} />
+                  <input type="text" required
+                    defaultValue={mode}
+                    disabled />
                 </div>
 
                 <div className="input-details">
                   <label>Engagement Team</label>
-                  <input type="text" required defaultValue={engagementType} />
+                  <input type="text" required
+                    defaultValue={engagementType}
+                    disabled />
                 </div>
               </div>
 
               <div className="double">
                 <div className="input-details">
                   <label>Event Type</label>
-                  <input type="text" required defaultValue={eventType} />
+                  <input type="text" required
+                    defaultValue={eventType}
+                    disabled />
                 </div>
 
                 <div className="input-details">
                   <label> Audience Type</label>
-                  <input type="text" required defaultValue={audienceType} />
+                  <input type="text" required
+                    defaultValue={audienceType}
+                    disabled />
                 </div>
               </div>
 
               <div className="double">
                 <div className="input-details">
                   <label>Audience Size</label>
-                  <input type="text" required defaultValue={audienceSize} />
+                  <input type="text" required
+                    defaultValue={audienceSize}
+                    disabled />
                 </div>
 
                 <div className="input-details">
                   <label>Cateogary</label>
-                  <input type="text" required defaultValue={category} />
+                  <input type="text" required
+                    defaultValue={category}
+                    disabled />
+                </div>
+              </div>
+
+              <div className="double">
+                <div className="input-details">
+                  <label for="start">Start Date:</label>
+                  <input type="date" id="start" name="trip-start"
+
+                    required
+                    defaultValue={startdate}
+                    disabled
+                  >
+                  </input>
+                </div>
+                <div className="input-details">
+                  <label for="appt">Start Time:</label>
+                  <input type="time" id="appt" name="appt"
+
+                    required
+                    defaultValue={starttime}
+                    disabled
+                  />
+                </div>
+              </div>
+              <div className="double">
+                <div className="input-details">
+                  <label for="start">End Date:</label>
+                  <input type="date" id="start" name="trip-start"
+
+                    required
+                    defaultValue={enddate}
+                    disabled
+                  >
+                  </input>
+                </div>
+                <div className="input-details">
+                  <label for="appt">End Time:</label>
+                  <input type="time" id="appt" name="appt"
+
+                    required
+                    defaultValue={endtime}
+                    disabled
+                  />
                 </div>
               </div>
 
@@ -146,9 +218,10 @@ const Preview = ({ stateData }) => {
                 <label>Location</label>
                 <input
                   type="text"
-                  placeholder="Type here"
+                  // placeholder="Type here"
                   required
                   defaultValue={location}
+                  disabled
                 />
               </div>
 
@@ -157,9 +230,10 @@ const Preview = ({ stateData }) => {
                   <label>City</label>
                   <input
                     type="text"
-                    placeholder="Type here"
+                    // placeholder="Type here"
                     required
                     defaultValue={city}
+                    disabled
                   />
                 </div>
 
@@ -167,9 +241,10 @@ const Preview = ({ stateData }) => {
                   <label>Pin Code</label>
                   <input
                     type="text"
-                    placeholder="Type here"
+                    // placeholder="Type here"
                     required
                     defaultValue={pincode}
+                    disabled
                   />
                 </div>
 
@@ -177,9 +252,10 @@ const Preview = ({ stateData }) => {
                   <label>Country</label>
                   <input
                     type="text"
-                    placeholder="Type here"
+                    // placeholder="Type here"
                     required
                     defaultValue={country}
+                    disabled
                   />
                 </div>
               </div>
@@ -196,15 +272,18 @@ const Preview = ({ stateData }) => {
             <label>Organizer Name</label>
             <input
               type="text"
-              placeholder="Enter the Organizer Name"
+              // placeholder="Enter the Organizer Name"
               defaultValue={organizerName}
+              disabled
             />
           </div>
 
           <div className="double">
             <div className="input-details">
               <label>Organizer Email</label>
-              <input type="text" required defaultValue={organizerEmail} />
+              <input type="text" required
+                defaultValue={organizerEmail}
+                disabled />
             </div>
 
             <div className="input-details">
@@ -213,6 +292,7 @@ const Preview = ({ stateData }) => {
                 type="number"
                 required
                 defaultValue={organizerContactNumber}
+                disabled
               />
             </div>
           </div>
@@ -226,8 +306,10 @@ const Preview = ({ stateData }) => {
             <TagsInput
               value={tags}
               // onChange={setTags}
+              defaultValue={tags}
               name="tag"
-              placeHolder="Enter keyword"
+              // placeHolder="Enter keyword"
+              disabled
             />
           </div>
         </form>
@@ -236,7 +318,10 @@ const Preview = ({ stateData }) => {
         className="card-3 next-button"
         style={{ width: "85%", textAlign: "right" }}
       >
-        <button onClick={handleCreateEvent}>Submit</button>
+        <div className="card-3 next-button">
+          <button type="click" onClick={(e) => previous_Button(e)}style={{ marginRight: '10px' }}>Previous</button>
+          <button onClick={handleCreateEvent} >Submit</button>
+        </div>
       </div>
     </div>
   );

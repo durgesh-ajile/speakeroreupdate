@@ -18,6 +18,8 @@ const Profile = () => {
   const [affiliatemail, setAffiliatemail] = useState("");
   const [affiliatData, setAffiliatData] = useState("");
   const [affiliatPost, setAffiliatPost] = useState(false);
+  const [loading, setLoading] = useState(false);
+
 
   const [role, setRole] = useState("");
   useEffect(() => {
@@ -47,7 +49,7 @@ const Profile = () => {
     })
       .then((res) => {
         if (res.data.status) {
-         setAffiliatPost(true)
+         setLoading(!loading)
         }
       })
       .catch((err) => {
@@ -69,6 +71,21 @@ const Profile = () => {
         console.log(err);
       });
     }, [])
+
+    useEffect(() => {
+      axios({
+        method: "get",
+        url: "https://api.speakerore.com/api/getaffilatecoupon",
+        withCredentials: true,
+      })
+        .then((res) => {
+          setAffiliatData(res.data.affilateCoupon);
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      }, [loading])
   console.log(affiliatData)
   useEffect(() => {
     axios({
@@ -156,11 +173,10 @@ const Profile = () => {
         ) : (
           <></>
         )}
-        {userEvent ? (
           <div className="right-container">
             {subs == "event" ? (
               <div className="allevent" style={{ flexWrap: "wrap" }}>
-                {userEvent.map((e) => (
+                {userEvent ? userEvent.map((e) => (
                   <div className="card">
                   <div className="card-1">
                     <div>
@@ -207,24 +223,32 @@ const Profile = () => {
                       </button>
                     </div>
                   </div>
-                ))}
+                )) : <></>}
               </div>
             ) : subs === "subs" ? (
               <div className="subs-details">
                 <h2>Subscription Details</h2>
                 <div>
-                  <div className="plan-head">
+                  
+                  {userData.subcription ? 
+                   ( 
+                    <>
+                    <div className="plan-head">
                     {" "}
                     <span>Subscription Plan</span>
                   </div>
-                  <div className="plan">
-                    <h3>{userData.subcription && userData.subcription.Subcription_Type}</h3>
+                    <div className="plan">
+                    <h3>{userData.subcription.Subcription_Type}</h3>
                   </div>
+                  <div className="billing date">
+                  <h5>Next Billing Date : {convertDate2(userData.subcription.EndDate)}</h5>
+                </div>
+                </>) : (<h3>No subscription plan please subscribe or renew the plan</h3>)
+                  }
+                  
                 </div>
 
-                <div className="billing date">
-                  <h5>Next Billing Date : {userData.subcription && convertDate2(userData.subcription.EndDate)}</h5>
-                </div>
+                
               </div>
             ) : (
               <>
@@ -246,9 +270,7 @@ const Profile = () => {
               </>
             )}
           </div>
-        ) : (
-          <></>
-        )}
+       
       </div>
     </>
   );

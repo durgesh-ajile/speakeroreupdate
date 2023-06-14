@@ -35,6 +35,7 @@ const EventAdmin = () => {
   const [eventId, setEventId] = useState("");
   const [eventsForApproval, setEventsForApproval] = useState("");
   const [page, setPage] = React.useState(1);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -58,12 +59,20 @@ const EventAdmin = () => {
       })
       .catch((err) => {
         console.log(err);
+        if(err.response.status === 404){
+          setEventsForApproval('')
+        }
       });
   };
 
   useEffect(() => {
     geteventforapproval();
   }, []);
+
+  useEffect(() => {
+    geteventforapproval();
+  }, [loading]);
+
 
   const handleSingleView = () => {
     axios({
@@ -91,12 +100,13 @@ const EventAdmin = () => {
     })
       .then((res) => {
         console.log(res);
+        setLoading(!loading)
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  console.log(feedback);
+
   const handleApproveEvent = (id) => {
     axios({
       method: "patch",
@@ -109,6 +119,7 @@ const EventAdmin = () => {
       .then((res) => {
         console.log(res);
         geteventforapproval();
+        setLoading(!loading)
       })
       .catch((err) => {
         console.log(err);

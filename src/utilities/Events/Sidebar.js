@@ -83,7 +83,6 @@ export default function PersistentDrawerLeft() {
   const [mode, setMode] = React.useState();
   const [category, setCategory] = React.useState();
   const [date, setDate] = React.useState();
-  const [speakerExclusive, setSpeakerExclusive] = React.useState();
   const [filter, setFilter] = useState();
 
   const handleChange = (event, value) => {
@@ -134,13 +133,7 @@ export default function PersistentDrawerLeft() {
   const StyledCalendar = styled(Calendar)`
     --moedim-primary: #f00;
   `;
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+ 
   const handleCalendar = () => {
     setcal((prev) => !prev);
   };
@@ -162,9 +155,8 @@ export default function PersistentDrawerLeft() {
   console.log(filter);
 
   useEffect(() => {
-    if (mode || category || date || speakerExclusive) {
+    if (mode || category || date || exclusive) {
       const apiUrl = `https://api.speakerore.com/api/geteventsbyfilter?${getQueryParams()}`;
-
       function getQueryParams() {
         const queryParams = [];
 
@@ -180,11 +172,14 @@ export default function PersistentDrawerLeft() {
           queryParams.push(`date=${date}`);
         }
 
-        if (speakerExclusive !== undefined) {
-          queryParams.push(`speakeroreExclusive=${speakerExclusive}`);
+        
+        if (exclusive !== undefined) {
+          queryParams.push(`speakeroreExclusive=${exclusive}`);
+          
         }
         return queryParams.join("&");
       }
+     
 
       axios({
         method: "get",
@@ -200,17 +195,18 @@ export default function PersistentDrawerLeft() {
           setFilter("");
         });
     }
-    if (!mode && !category && !date && ! speakerExclusive) {
+    if (!mode && !category && !date && ! exclusive) {
       setFilter('')
     }
-  }, [mode, category, date, speakerExclusive]);
+  }, [mode, category, date, exclusive]);
 
 
   function convertDate(e) {
     const date = new Date(e).toLocaleString();
     return date;
   }
-  console.log(category)
+  console.log(date)
+  console.log(filter)
 
   return (
     <div className="event-main">
@@ -389,7 +385,7 @@ export default function PersistentDrawerLeft() {
               <Typography>Page: {page}</Typography>
             </Stack>
           </div>
-        ) : mode || category || date || speakerExclusive ? (<div>
+        ) : mode || category || date || exclusive ? (<div>
           <h3>No Matching Events</h3>
         </div>) : approvedEvent ? (
           <div>

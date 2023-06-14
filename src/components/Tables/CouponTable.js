@@ -34,6 +34,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function CouponTable() {
   const [couponData, setCouponData] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     axios({

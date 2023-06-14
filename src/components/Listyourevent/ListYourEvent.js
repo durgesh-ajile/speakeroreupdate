@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./listyourevent.css";
 import tech from "../../images/tech-support 1.png";
 import Eventdetails from "../../utilities/Eventdetails/Eventdetails";
@@ -9,109 +9,66 @@ import pinkback from "../../images/Vector 9.png";
 import orangeback from "../../images/Vector 10.png";
 
 const ListYourEvent = () => {
-  const [event, setEvent] = useState(true);
-  const [organise, setOrganise] = useState(false);
-  const [preview, setPreview] = useState(false);
-  const [eventTitle, setEventTitle] = useState("");
-  const [shortDescription, setShortDescription] = useState("");
-  const [longDescription, setLongDescription] = useState("");
-  const [eventWebsiteUrl, setEventWebsiteUrl] = useState("");
-  const [mode, setMode] = useState("");
-  const [engagementType, setEngagementType] = useState("");
-  const [eventType, setEventType] = useState("");
-  const [audienceType, setAudienceType] = useState("");
-  const [audienceSize, setAudienceSize] = useState("");
-  const [category, setCategory] = useState("");
-  const [location, setLocation] = useState("");
-  const [city, setCity] = useState("");
-  const [pincode, setPincode] = useState("");
-  const [country, setCountry] = useState("");
-  const [organizerName, setOrganizerName] = useState("");
-  const [organizerEmail, setOrganizerEmail] = useState("");
-  const [organizerContactNumber, setOrganizerContactNumber] = useState("");
+  const [handleFormInputListYourEvent, setHandleFormInputListYourEvent] = useState([]);
+  const [organiseInableDisable, setOrganiseInableDisable] = useState(true);
+  const [handleOrganizerDetails, setHandleOrganizerDetails] = useState([])
+  const [stateHandle_Event_Organiser_Preview, setStateHandle_Event_Organiser_Preview] = useState({ "event": true, "organise": false, "preview": false });
   const [tags, setTags] = useState([]);
 
-  const eventDetails = (
-    eventTitle,
-    shortDescription,
-    longDescription,
-    eventWebsiteUrl,
-    mode,
-    engagementType,
-    eventType,
-    audienceType,
-    audienceSize,
-    category,
-    location,
-    city,
-    pincode,
-    country
-  ) => {
-    setEventTitle(eventTitle);
-    setShortDescription(shortDescription);
-    setLongDescription(longDescription);
-    setEventWebsiteUrl(eventWebsiteUrl);
-    setMode(mode);
-    setEngagementType(engagementType);
-    setEventType(eventType);
-    setAudienceType(audienceType);
-    setAudienceSize(audienceSize);
-    setCategory(category);
-    setLocation(location);
-    setCity(city);
-    setPincode(pincode);
-    setCountry(country);
+  const eventDetails = (handleFormInput) => { setHandleFormInputListYourEvent(handleFormInput) };
+
+  const organizerDetails = (handleOrganizerDetails, tags) => {
+    setHandleOrganizerDetails(() => handleOrganizerDetails)
+    setTags(() => tags)
   };
 
-  const organizerDetails = (
-    organizerName,
-    organizerEmail,
-    organizerContactNumber,
-    tags
-  ) => {
-    setOrganizerName(organizerName);
-    setOrganizerEmail(organizerEmail);
-    setOrganizerContactNumber(organizerContactNumber);
-    setTags(tags);
-  };
+  const stateData = { ...handleFormInputListYourEvent, ...handleOrganizerDetails, tags };
 
-  const stateData = {
-    eventTitle,
-    shortDescription,
-    longDescription,
-    eventWebsiteUrl,
-    mode,
-    engagementType,
-    eventType,
-    audienceType,
-    audienceSize,
-    category,
-    location,
-    city,
-    pincode,
-    country,
-    organizerName,
-    organizerEmail,
-    organizerContactNumber,
-    tags,
-  };
+  const handle_Event_Organiser_Preview = (type) => {
+    if (type === 'event') {
+      setStateHandle_Event_Organiser_Preview(p => {
+        p.event = true
+        p.organise = false
+        p.preview = false
+        return { ...p }
+      })
+    } else if (type === 'organise') {
+      setStateHandle_Event_Organiser_Preview(p => {
+        p.event = false
+        p.organise = true
+        p.preview = false
+        return { ...p }
+      })
+    } else if (type === 'preview') {
+      setStateHandle_Event_Organiser_Preview(p => {
+        p.event = false
+        p.organise = false
+        p.preview = true
+        return { ...p }
+      })
+    }
+  }
 
-  // className={left == true ? "green" : ""}
-  const handleEvent = () => {
-    setEvent(true);
-    setOrganise(false);
-    setPreview(false);
-  };
-  const handleOrganiser = () => {
-    setEvent(false);
-    setOrganise(true);
-    setPreview(false);
-  };
-  const handlePreview = () => {
-    setEvent(false);
-    setOrganise(false);
-    setPreview(true);
-  };
+  useEffect(() => {
+    if (handleFormInputListYourEvent?.country &&
+      handleFormInputListYourEvent?.pincode &&
+      handleFormInputListYourEvent?.city &&
+      handleFormInputListYourEvent?.location &&
+      handleFormInputListYourEvent?.eventWebsiteUrl &&
+      handleFormInputListYourEvent?.longDescription &&
+      handleFormInputListYourEvent?.Short_description &&
+      handleFormInputListYourEvent?.event &&
+      handleFormInputListYourEvent?.mode &&
+      handleFormInputListYourEvent?.engagementType &&
+      handleFormInputListYourEvent?.eventType &&
+      handleFormInputListYourEvent?.audienceType &&
+      handleFormInputListYourEvent?.audienceSize &&
+      handleFormInputListYourEvent?.category) {
+      setOrganiseInableDisable(false)
+
+    }
+  }, [handleFormInputListYourEvent])
+
 
   return (
     <div>
@@ -134,38 +91,39 @@ const ListYourEvent = () => {
         </div>
       </div>
       <div className="listbutton event-button">
-        <button onClick={handleEvent} id={event == true ? "green" : ""}>
+        <button onClick={() => handle_Event_Organiser_Preview("event")}
+        
+          style={{ backgroundColor: stateHandle_Event_Organiser_Preview?.event === false ? 'rgba(180, 208, 195, 1)' : '' , cursor: organiseInableDisable ? "no-drop" : "no-drop" }}
+          disabled={true} id={stateHandle_Event_Organiser_Preview?.event === true ? "green" : ""}>
           1. Event details
         </button>
-        <button onClick={handleOrganiser} id={organise == true ? "green" : ""}>
+        <button onClick={() => handle_Event_Organiser_Preview("organise")}
+          disabled={true }
+          id={stateHandle_Event_Organiser_Preview?.organise === true ? "green" : ""} style={{ backgroundColor: stateHandle_Event_Organiser_Preview?.preview === !false ? 'rgba(180, 208, 195, 1)' : '' , cursor: organiseInableDisable ? "no-drop" : "no-drop" }}>
           2. Organizer details
         </button>
-        <button onClick={handlePreview} id={preview == true ? "green" : ""}>
+        <button onClick={() => handle_Event_Organiser_Preview("preview")} disabled={true} id={stateHandle_Event_Organiser_Preview?.preview === true ? "green" : ""} style={{ cursor: organiseInableDisable ? "no-drop" : "no-drop" }}>
           3. Preview
         </button>
       </div>
-      {/* ............. */}
 
-      {/* <Eventdetails/> */}
-
-      {/* <Organizerdetails/> */}
-
-      {event == true ? (
+      {stateHandle_Event_Organiser_Preview?.event === true ? (
         <Eventdetails
           eventDetails={eventDetails}
-          event={event}
-          setEvent={setEvent}
-          setOrganise={setOrganise}
+          setStateHandle_Event_Organiser_Preview={setStateHandle_Event_Organiser_Preview}
+          stateHandle_Event_Organiser_Preview={stateHandle_Event_Organiser_Preview}
         />
-      ) : organise == true ? (
+      ) : stateHandle_Event_Organiser_Preview?.organise === true ? (
         <Organizerdetails
           organizerDetails={organizerDetails}
-          organise={organise}
-          setOrganise={setOrganise}
-          setPreview={setPreview}
+          setStateHandle_Event_Organiser_Preview={setStateHandle_Event_Organiser_Preview}
+          stateHandle_Event_Organiser_Preview={stateHandle_Event_Organiser_Preview}
         />
       ) : (
-        <Preview stateData={stateData} />
+        <Preview stateData={stateData}
+          setStateHandle_Event_Organiser_Preview={setStateHandle_Event_Organiser_Preview}
+          stateHandle_Event_Organiser_Preview={stateHandle_Event_Organiser_Preview}
+        />
       )}
     </div>
   );

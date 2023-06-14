@@ -82,6 +82,7 @@ export default function UserTable() {
     })
       .then((res) => {
         console.log(res.data);
+        setLoading(!loading)
       })
       .catch((err) => {
         console.log(err);
@@ -99,6 +100,7 @@ export default function UserTable() {
     })
       .then((res) => {
         console.log(res.data);
+        setLoading(!loading)
       })
       .catch((err) => {
         console.log(err);
@@ -131,6 +133,9 @@ export default function UserTable() {
       })
       .catch((err) => {
         console.log(err);
+        if(err.response.status === 404){
+          setUserData('')
+        }
       });
   }, [loading]);
 

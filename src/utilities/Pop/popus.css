@@ -30,7 +30,9 @@
 }
 
 /* Add these styles to popus.css */
-
+.LoginSignupPopup_container{
+  z-index: 1;
+}
 .popup-content .close-button {
   background-color: #ccc;
   color: #fff;

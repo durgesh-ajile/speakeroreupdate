@@ -83,6 +83,7 @@ export default function TeamMembers() {
     })
       .then((res) => {
         console.log(res.data);
+        setLoading(!loading)
       })
       .catch((err) => {
         console.log(err);
@@ -100,6 +101,7 @@ export default function TeamMembers() {
     })
       .then((res) => {
         console.log(res.data);
+        setLoading(!loading)
       })
       .catch((err) => {
         console.log(err);
@@ -131,6 +133,9 @@ export default function TeamMembers() {
       })
       .catch((err) => {
         console.log(err);
+        if(err.response.status === 404){
+          setTeamMemberData('')
+        }
       });
   }, [loading]);
 
@@ -194,7 +199,6 @@ export default function TeamMembers() {
                             onClick={() => {
                               handleClose();
                               maketeammembertouser();
-                              setLoading(!loading)
                             }}
                             autoFocus
                           >
@@ -225,7 +229,6 @@ export default function TeamMembers() {
                             onClick={() => {
                               handleClose2();
                               maketeammembertoadmin();
-                              setLoading(!loading)
                             }}
                             autoFocus
                           >

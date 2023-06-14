@@ -2,6 +2,14 @@ import React from "react";
 import "./Home.css";
 
 function Home() {
+
+  const goToTop = () => {
+    window.scrollTo({
+        top: 100,
+        behavior: 'smooth',
+    });
+};
+
   return (
     <>
       <div className="bg-image">
@@ -13,7 +21,7 @@ function Home() {
           The World needs to Know your Message or You need the World To know
           your Message. Don’t Hold Back! It will change Lives. Get Started!
         </p>
-        <button className="bg-button">See how it works</button>
+        <button className="bg-button" onClick={goToTop}>See how it works</button>
       </div>
       </div>
     </>

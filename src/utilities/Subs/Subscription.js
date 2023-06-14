@@ -7,7 +7,7 @@ import axios from "axios";
 
 const pricedata = [
   {
-    type: "Half-Yearly",
+    type: "HalfYearly",
     price: 7000,
     desc: "Find your Life Changing Event. ",
   },
@@ -52,8 +52,7 @@ const Subscription = () => {
           url: `https://api.speakerore.com/api/applycouponcode?couponCode=${couponCode}&amount=${selectPrice}&subcriptionType=${selectedType}`,
           withCredentials: true,
         });
-       
-        
+        console.log(checkCoupon)
       }
     } catch (error) {
       console.log(error);

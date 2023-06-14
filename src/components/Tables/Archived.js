@@ -82,6 +82,9 @@ const Archived = () => {
           })
           .catch((err) => {
             console.log(err);
+            if(err.response.status === 404){
+              setArchivedData('')
+            }
           });
       }, [loading]);
 
@@ -163,7 +166,6 @@ const Archived = () => {
                             onClick={() => {
                               handleClose();
                               handlePermanentDelete();
-                              
                             }}
                             autoFocus
                           >
