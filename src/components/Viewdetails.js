@@ -23,7 +23,7 @@ const Viewdetails = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://sobacke.in/api/getsingleevent/${eventId}`,
+      url: `https://api.speakerore.com/api/getsingleevent/${eventId}`,
       withCredentials: true,
     })
       .then((res) => {

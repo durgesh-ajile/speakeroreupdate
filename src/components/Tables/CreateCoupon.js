@@ -16,7 +16,7 @@ const CreateCoupon = () => {
   const handleSubmit = () => {
     axios({
       method: "post",
-      url: "https://sobacke.in/api/createcoupon",
+      url: "https://api.speakerore.com/api/createcoupon",
       data: {
         couponCode: coupon_code,
         subcriptionType: subscription_type,
@@ -63,8 +63,8 @@ const CreateCoupon = () => {
         </div>
     </div>
     <div>
-    <h3>Discount</h3>
-    <input type='number' value={discount} onChange={(e) =>{
+    <h3>Discount (in percent)</h3>
+    <input type='number' placeholder=' eg. 10' value={discount} onChange={(e) =>{
       setDiscount(e.target.value)
     }}/>
     </div>

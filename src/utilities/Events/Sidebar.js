@@ -148,7 +148,7 @@ export default function PersistentDrawerLeft() {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://sobacke.in/api/getallapprovedevent?page=${page}`,
+      url: `https://api.speakerore.com/api/getallapprovedevent?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -163,7 +163,7 @@ export default function PersistentDrawerLeft() {
 
   useEffect(() => {
     if (mode || category || date || speakerExclusive) {
-      const apiUrl = `https://sobacke.in/api/geteventsbyfilter?${getQueryParams()}`;
+      const apiUrl = `https://api.speakerore.com/api/geteventsbyfilter?${getQueryParams()}`;
 
       function getQueryParams() {
         const queryParams = [];

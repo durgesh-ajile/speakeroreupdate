@@ -8,24 +8,57 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import exclusiveimg from "../../images/Group.png";
+import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material';
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 const Archived = () => {
     const [archivedData, setArchivedData] = useState("");
     const [page, setPage] = React.useState(1);
+    const [deleteId, setDeleteId] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (event, value) => {
       setPage(value);
     };
+
+    const [open, setOpen] = React.useState(false);
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+  
 
     function convertDate(e) {
       const date = new Date(e).toLocaleString();
       return date;
     }
 
+    const handlePermanentDelete = () =>{
+      axios({
+        method: "delete",
+        url: `https://api.speakerore.com/api/deleteevent?eventId=${deleteId}`,
+        withCredentials: true,
+      })
+        .then((res) => {
+          console.log(res.data);
+          setLoading(!loading)
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      }
+
     useEffect(() => {
         axios({
           method: "get",
-          url: "https://sobacke.in/api/getallarchievedevent",
+          url: "https://api.speakerore.com/api/getallarchievedevent",
           withCredentials: true,
         })
           .then((res) => {
@@ -36,6 +69,21 @@ const Archived = () => {
             console.log(err);
           });
       }, []);
+
+      useEffect(() => {
+        axios({
+          method: "get",
+          url: "https://api.speakerore.com/api/getallarchievedevent",
+          withCredentials: true,
+        })
+          .then((res) => {
+            console.log(res);
+            setArchivedData(res.data)
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }, [loading]);
 
       console.log(archivedData)
 
@@ -87,20 +135,42 @@ const Archived = () => {
                     </div>
                     <div className="card-4">
                       <button onClick={()=>{
-                        // handleEventDelete(e._id)
+                         handleClickOpen();
+                        setDeleteId(e._id)
                       }}>Delete permanently</button>
-                      {/* <button
-                        style={{
-                          color: "#24754F",
-                          border: "#24754F 1px solid",
-                        }}
-                        onClick={()=>{
-                        //   handleApproveEvent(e._id)
-                      }}
-                      >
-                        Move To
-                      </button> */}
+                     
                     </div>
+                    <Dialog
+                        fullScreen={fullScreen}
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="responsive-dialog-title"
+                      >
+                        <DialogTitle id="responsive-dialog-title">
+                          {"Do you want to delete this event permanently"}
+                        </DialogTitle>
+      
+                        <DialogActions>
+                          <Button
+                            onClick={() => {
+                              handleClose();
+                            }}
+                            autoFocus
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            onClick={() => {
+                              handleClose();
+                              handlePermanentDelete();
+                              
+                            }}
+                            autoFocus
+                          >
+                            Delete Event Permanently
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
                   </div>
                 ))}
               </div>

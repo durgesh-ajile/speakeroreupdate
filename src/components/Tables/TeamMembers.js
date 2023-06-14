@@ -75,7 +75,7 @@ export default function TeamMembers() {
   const maketeammembertouser = () => {
     axios({
       method: "patch",
-      url: "https://sobacke.in/api/maketeammembertouser",
+      url: "https://api.speakerore.com/api/maketeammembertouser",
       withCredentials: true,
       data: {
         userId: makeUserId,
@@ -92,7 +92,7 @@ export default function TeamMembers() {
   const maketeammembertoadmin = () => {
     axios({
       method: "patch",
-      url: "https://sobacke.in/api/maketeammembertoadmin",
+      url: "https://api.speakerore.com/api/maketeammembertoadmin",
       withCredentials: true,
       data: {
         userId: makeAdminId,
@@ -109,7 +109,7 @@ export default function TeamMembers() {
   React.useEffect(() => {
     axios ({
       method: "get",
-      url: "https://sobacke.in/api/getallteammembers",
+      url: "https://api.speakerore.com/api/getallteammembers",
       withCredentials: true,
     })
       .then((res) => {
@@ -123,7 +123,7 @@ export default function TeamMembers() {
   React.useEffect(() => {
     axios ({
       method: "get",
-      url: "https://sobacke.in/api/getallteammembers",
+      url: "https://api.speakerore.com/api/getallteammembers",
       withCredentials: true,
     })
       .then((res) => {

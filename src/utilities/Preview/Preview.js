@@ -30,7 +30,7 @@ const Preview = ({ stateData }) => {
     e.preventDefault();
     axios({
       method: "post",
-      url: "https://sobacke.in/api/createEvent",
+      url: "https://api.speakerore.com/api/createEvent",
       data: {
       titleOfTheEvent: eventTitle,
       shortDescriptionOfTheEvent: shortDescription,

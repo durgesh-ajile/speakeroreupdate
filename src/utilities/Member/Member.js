@@ -21,7 +21,7 @@ const Member = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://sobacke.in/api/getprofile",
+      url: "https://api.speakerore.com/api/getprofile",
       withCredentials: true,
     })
       .then((res) => {
@@ -40,7 +40,7 @@ const Member = () => {
   const handleAffiliateSubmit = () => {
     axios({
       method: "post",
-      url: "https://sobacke.in/api/createaffilatecoupon",
+      url: "https://api.speakerore.com/api/createaffilatecoupon",
       withCredentials: true,
     })
       .then((res) => {
@@ -56,7 +56,7 @@ const Member = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://sobacke.in/api/getaffilatecoupon",
+      url: "https://api.speakerore.com/api/getaffilatecoupon",
       withCredentials: true,
     })
       .then((res) => {
@@ -71,7 +71,7 @@ const Member = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://sobacke.in/api/geteventforcurrentuser",
+      url: "https://api.speakerore.com/api/geteventforcurrentuser",
       withCredentials: true,
     })
       .then((res) => {

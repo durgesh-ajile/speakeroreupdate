@@ -8,10 +8,41 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useState } from 'react';
 import exclusiveimg from "../../images/Group.png";
+import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material';
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 const Trash = () => {
     const [trashData, setTrashData] = useState("");
     const [page, setPage] = React.useState(1);
+    const [loading, setLoading] = useState(false);
+    const [deleteId, setDeleteId] = useState('');
+    const [reviveId, setReviveId] = useState('');
+
+
+    const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+  const [open2, setOpen2] = React.useState(false);
+
+  const handleClickOpen2 = () => {
+    setOpen2(true);
+  };
+
+  const handleClose2 = () => {
+    setOpen2(false);
+  };
+
 
     const handleChange = (event, value) => {
       setPage(value);
@@ -20,7 +51,7 @@ const Trash = () => {
     useEffect(() => {
         axios({
           method: "get",
-          url: "https://sobacke.in/api/getalltrashevents",
+          url: "https://api.speakerore.com/api/getalltrashevents",
           withCredentials: true,
         })
           .then((res) => {
@@ -31,11 +62,59 @@ const Trash = () => {
           });
       }, []);
 
+      useEffect(() => {
+        axios({
+          method: "get",
+          url: "https://api.speakerore.com/api/getalltrashevents",
+          withCredentials: true,
+        })
+          .then((res) => {
+            setTrashData(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }, [loading]);
+
+      const handlePermanentDelete = () =>{
+        axios({
+          method: "delete",
+          url: `https://api.speakerore.com/api/deleteevent?eventId=${deleteId}`,
+          withCredentials: true,
+        })
+          .then((res) => {
+            console.log(res.data);
+            setLoading(!loading)
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+        }
+
+        const handleReviveCard = () =>{
+          axios({
+            method: "patch",
+            url: "https://api.speakerore.com/api/revivefortrash",
+            withCredentials: true,
+            data: {
+              eventId: reviveId,
+            },
+          })
+            .then((res) => {
+              console.log(res.data);
+              setLoading(!loading)
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          }
+
       function convertDate(e) {
         const date = new Date(e).toLocaleString();
         return date;
       }
       console.log(trashData)
+
 
   return (
     <div>
@@ -85,7 +164,8 @@ const Trash = () => {
                     </div>
                     <div className="card-4">
                       <button onClick={()=>{
-                        // handleEventDelete(e._id)
+                        handleClickOpen();
+                        setDeleteId(e._id)
                       }}>Delete permanently</button>
                       <button
                         style={{
@@ -93,11 +173,73 @@ const Trash = () => {
                           border: "#24754F 1px solid",
                         }}
                         onClick={()=>{
-                        //   handleApproveEvent(e._id)
+                          handleClickOpen2();
+                          setReviveId(e._id)
                       }}
                       >
-                        Move To
+                        Revive Event
                       </button>
+                      <Dialog
+                        fullScreen={fullScreen}
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="responsive-dialog-title"
+                      >
+                        <DialogTitle id="responsive-dialog-title">
+                          {"Do you want to delete this event permanently"}
+                        </DialogTitle>
+      
+                        <DialogActions>
+                          <Button
+                            onClick={() => {
+                              handleClose();
+                            }}
+                            autoFocus
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            onClick={() => {
+                              handleClose();
+                              handlePermanentDelete();
+                              
+                            }}
+                            autoFocus
+                          >
+                            Delete Event Permanently
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
+                      <Dialog
+                        fullScreen={fullScreen}
+                        open={open2}
+                        onClose={handleClose2}
+                        aria-labelledby="responsive-dialog-title"
+                      >
+                        <DialogTitle id="responsive-dialog-title">
+                          {"Revive this event"}
+                        </DialogTitle>
+      
+                        <DialogActions>
+                          <Button
+                            onClick={() => {
+                              handleClose2();
+                            }}
+                            autoFocus
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            onClick={() => {
+                              handleClose2();
+                              handleReviveCard();
+                            }}
+                            autoFocus
+                          >
+                            Revive Event
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
                     </div>
                   </div>
                 ))}
