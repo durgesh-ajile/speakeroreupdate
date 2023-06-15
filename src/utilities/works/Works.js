@@ -58,7 +58,7 @@ const Works = () => {
           <img src={goal1} />
           <p>
           Achieve your Professional <br/> and personal. Goals
-- Fame, <br/>Power, Money & amp; Peace
+- Fame, <br/>Power, Money & Peace
           </p>
          
         </div>

@@ -39,7 +39,7 @@ export default function CouponTable() {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/getallcoupons",
+      url: "http://localhost:5000/api/getallcoupons",
       withCredentials: true,
     })
       .then((res) => {

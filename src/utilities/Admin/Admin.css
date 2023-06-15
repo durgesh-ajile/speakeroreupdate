@@ -61,3 +61,17 @@ color:#ED3232;
 .sub-type button{
     margin-left: 10px;
 }
+.arrow-icon{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px
+}
+.arrow-icon-main {
+    cursor: pointer;
+}
+Button{
+    cursor: pointer;
+}
+.logout{
+    cursor: pointer;
+}

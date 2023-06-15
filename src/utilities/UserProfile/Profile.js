@@ -25,7 +25,7 @@ const Profile = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/getprofile",
+      url: "http://localhost:5000/api/getprofile",
       withCredentials: true,
     })
       .then((res) => {
@@ -44,7 +44,7 @@ const Profile = () => {
   const handleAffiliateSubmit = () => {
     axios({
       method: "post",
-      url: "https://api.speakerore.com/api/createaffilatecoupon",
+      url: "http://localhost:5000/api/createaffilatecoupon",
       withCredentials: true,
     })
       .then((res) => {
@@ -60,7 +60,7 @@ const Profile = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/getaffilatecoupon",
+      url: "http://localhost:5000/api/getaffilatecoupon",
       withCredentials: true,
     })
       .then((res) => {
@@ -75,7 +75,7 @@ const Profile = () => {
     useEffect(() => {
       axios({
         method: "get",
-        url: "https://api.speakerore.com/api/getaffilatecoupon",
+        url: "http://localhost:5000/api/getaffilatecoupon",
         withCredentials: true,
       })
         .then((res) => {
@@ -86,11 +86,27 @@ const Profile = () => {
           console.log(err);
         });
       }, [loading])
+
+      const handleLogout = () => {
+        axios({
+          method: "get",
+          url: "http://localhost:5000/api/logout",
+          withCredentials: true,
+        })
+          .then((res) => {
+            window.location.reload()
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+
   console.log(affiliatData)
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/geteventforcurrentuser",
+      url: "http://localhost:5000/api/geteventforcurrentuser",
       withCredentials: true,
     })
       .then((res) => {
@@ -167,7 +183,7 @@ const Profile = () => {
             </div>
             <hr />
             <div className="logout">
-              <IoMdLogOut /> <span>Logout</span>
+               <span onClick={handleLogout}><IoMdLogOut /> Logout</span>
             </div>
           </div>
         ) : (

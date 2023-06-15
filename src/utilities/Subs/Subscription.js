@@ -49,7 +49,7 @@ const Subscription = () => {
       if (couponCode && selectedType && selectPrice) {
         const checkCoupon = await axios({
           method: "get",
-          url: `https://api.speakerore.com/api/applycouponcode?couponCode=${couponCode}&amount=${selectPrice}&subcriptionType=${selectedType}`,
+          url: `http://localhost:5000/api/applycouponcode?couponCode=${couponCode}&amount=${selectPrice}&subcriptionType=${selectedType}`,
           withCredentials: true,
         });
         console.log(checkCoupon)
@@ -65,7 +65,7 @@ const Subscription = () => {
       if (selectedType && selectedPriceData) {
         const response = await axios({
           method: "POST",
-          url: "https://api.speakerore.com/api/create/order",
+          url: "http://localhost:5000/api/create/order",
           data: {
             amount: selectedType,
             subcriptionType: selectedPriceData.price,
@@ -90,7 +90,7 @@ const Subscription = () => {
           image:
             "https://pbs.twimg.com/profile_images/1528248719585734657/roEyxCoi_400x400.jpg",
           order_id: order.order.id,
-          callback_url: `https://api.speakerore.com/api/payment/verify?subscriptionType=${subcriptionType}&couponCode=${couponCodeExist}`,
+          callback_url: `http://localhost:5000/api/payment/verify?subscriptionType=${subcriptionType}&couponCode=${couponCodeExist}`,
           prefill: {},
           notes: {
             address: "Razorpay Corporate Office",
@@ -107,6 +107,7 @@ const Subscription = () => {
       console.log(error);
     }
   };
+  console.log(selectedType)
 
   return (
     <div className="subscribe-conatiner">
@@ -134,17 +135,19 @@ const Subscription = () => {
       </div>
       <div className="price-container">
         {pricedata.map((e, index) => (
-          <div className="pricebox" key={index}>
+          <div className="pricebox" key={index} onClick={() => {
+                setSelectedType(e.type)
+              }}>
             <div className="price-details">
-              <div className="input">
+              <div className="input" >
                 <input
                   type="radio"
                   name="subscriptionType"
                   value={e.type}
                   checked={selectedType === e.type}
-                  onChange={(e) => {
-                    handleChange(e);
-                  }}
+                  // onChange={(e) => {
+                  //   handleChange(e);
+                  // }}
                 />
               </div>
               <div className="price-type">

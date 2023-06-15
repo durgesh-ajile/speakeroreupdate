@@ -10,6 +10,7 @@ import EventAdmin from "../../components/Tables/EventAdmin";
 import CreateCoupon from "../../components/Tables/CreateCoupon";
 import Trash from "../../components/Tables/Trash";
 import Archived from "../../components/Tables/Archived";
+import { useNavigate } from "react-router-dom";
 const data = {
   name: "Divya Devendar",
   email: "example123@gmail.com",
@@ -46,7 +47,7 @@ const Admin = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/getprofile",
+      url: "http://localhost:5000/api/getprofile",
       withCredentials: true,
     })
       .then((res) => {
@@ -59,12 +60,24 @@ const Admin = () => {
       });
   }, []);
 
+  const handleLogout = () => {
+    axios({
+      method: "get",
+      url: "http://localhost:5000/api/logout",
+      withCredentials: true,
+    })
+      .then((res) => {
+        window.location.reload()
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
  
   // console.log(eventsForApproval)
+  let navigate = useNavigate();
 
-
-
-  
   console.log(profile)
 
   return (
@@ -90,7 +103,7 @@ const Admin = () => {
               className={select === 'event' ? "backgreen" : ""}
             >
               {" "}
-              Events
+              Events Request
             </button>
             <button
               onClick={handleUser}
@@ -132,7 +145,7 @@ const Admin = () => {
         </div>
         <hr />
         <div className="logout">
-          <IoMdLogOut /> <span>Logout</span>
+          <span onClick={handleLogout}> <IoMdLogOut /> Logout</span>
         </div>
       </div>
       <div className="events-content">

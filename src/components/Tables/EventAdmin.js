@@ -16,6 +16,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import { BsArrowRightCircle } from "react-icons/bs";
+
 
 const EventAdmin = () => {
   const [deleteevent, setDeleteevent] = React.useState("");
@@ -51,7 +53,7 @@ const EventAdmin = () => {
   const geteventforapproval = () => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/geteventforapproval",
+      url: "http://localhost:5000/api/geteventforapproval",
       withCredentials: true,
     })
       .then((res) => {
@@ -65,6 +67,8 @@ const EventAdmin = () => {
       });
   };
 
+  
+
   useEffect(() => {
     geteventforapproval();
   }, []);
@@ -77,7 +81,7 @@ const EventAdmin = () => {
   const handleSingleView = () => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getsingleevent/${eventId}`,
+      url: `http://localhost:5000/api/getsingleevent/${eventId}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -91,7 +95,7 @@ const EventAdmin = () => {
   const handleEventDelete = () => {
     axios({
       method: "patch",
-      url: "https://api.speakerore.com/api/makeeventdecline",
+      url: "http://localhost:5000/api/makeeventdecline",
       data: {
         eventId: deleteevent,
         feedback: feedback,
@@ -110,7 +114,7 @@ const EventAdmin = () => {
   const handleApproveEvent = (id) => {
     axios({
       method: "patch",
-      url: "https://api.speakerore.com/api/makeeventapprove",
+      url: "http://localhost:5000/api/makeeventapprove",
       data: {
         eventId: id,
       },
@@ -171,7 +175,9 @@ setFeedback(event.target.value)
                         <MdWatchLater size={20} color="grey" />
                         <q>{convertDate(e.EventEndDateAndTime)}</q>
                       </date>
-                      <p></p>
+                      <div className="arrow-icon"><BsArrowRightCircle className="arrow-icon-main" size={40} color="grey"  onClick={() => {
+                        navigate(`/event/${e._id}`);
+                      }} /></div>
                     </div>
                     <div className="desc">
                       <p>{e.ShortDescriptionOfTheEvent}</p>

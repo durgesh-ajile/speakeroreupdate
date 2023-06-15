@@ -83,6 +83,7 @@ export default function PersistentDrawerLeft() {
   const [mode, setMode] = React.useState();
   const [category, setCategory] = React.useState();
   const [date, setDate] = React.useState();
+  const [searchKey, setSearchKey] = React.useState();
   const [filter, setFilter] = useState();
 
   const handleChange = (event, value) => {
@@ -141,7 +142,7 @@ export default function PersistentDrawerLeft() {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getallapprovedevent?page=${page}`,
+      url: `http://localhost:5000/api/getallapprovedevent?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -152,11 +153,28 @@ export default function PersistentDrawerLeft() {
         console.log(err);
       });
   }, [page]);
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: `http://localhost:5000/api/geteventbyquery?keyword=${searchKey}`,
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log(res);
+        setFilter(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [searchKey]);
   console.log(filter);
+  console.log(searchKey);
+
 
   useEffect(() => {
     if (mode || category || date || exclusive) {
-      const apiUrl = `https://api.speakerore.com/api/geteventsbyfilter?${getQueryParams()}`;
+      const apiUrl = `http://localhost:5000/api/geteventsbyfilter?${getQueryParams()}`;
       function getQueryParams() {
         const queryParams = [];
 
@@ -219,22 +237,21 @@ export default function PersistentDrawerLeft() {
             <h4>Modes</h4>
           </div>
           <div className="mode">
-            <div>
-              <input type="checkbox" checked={online} onChange={handleOnline} />
+            <div onClick={handleOnline}>
+              <input type="checkbox" checked={online}  />
               <lable>Online</lable>
             </div>
 
-            <div>
+            <div onClick={handleInperson}>
               <input
                 type="checkbox"
                 checked={inperson}
-                onChange={handleInperson}
               />
               <lable>In-person</lable>
             </div>
 
-            <div>
-              <input type="checkbox" checked={hybrid} onChange={handleHybrid} />
+            <div onClick={handleHybrid}>
+              <input type="checkbox" checked={hybrid} />
               <lable>Hybrid</lable>
             </div>
           </div>
@@ -286,13 +303,12 @@ export default function PersistentDrawerLeft() {
               placeholder="Select start date"
             />
           </div>
-          <div>
+          <div onClick={handleExclusive}>
             <h4>SpeakerOre</h4>
-            <div>
+            <div className="speaker-exclusive">
               <input
                 type="checkbox"
                 checked={exclusive}
-                onChange={handleExclusive}
               />
               <lable>Exclusive</lable>
             </div>
@@ -303,6 +319,12 @@ export default function PersistentDrawerLeft() {
           ) : (
             ""
           )}
+          <div className="filter-input">
+          <h4>Search by keyword</h4>
+          <input placeholder=" Type here" value={searchKey} onChange={(e)=> {
+            setSearchKey(e.target.value)
+          }} />
+          </div>
         </div>
       </div>
 

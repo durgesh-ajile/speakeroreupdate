@@ -92,7 +92,7 @@ const Navbar = () => {
     setLoading(true);
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/auth/check",
+      url: "http://localhost:5000/api/auth/check",
       withCredentials: true,
     })
       .then((res) => {
@@ -114,7 +114,7 @@ const Navbar = () => {
     if (isAuthenticated) {
       axios({
         method: "get",
-        url: "https://api.speakerore.com/api/getprofile",
+        url: "http://localhost:5000/api/getprofile",
         withCredentials: true,
       })
         .then((res) => {

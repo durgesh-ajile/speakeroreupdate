@@ -43,7 +43,7 @@ const Archived = () => {
     const handlePermanentDelete = () =>{
       axios({
         method: "delete",
-        url: `https://api.speakerore.com/api/deleteevent?eventId=${deleteId}`,
+        url: `http://localhost:5000/api/deleteevent?eventId=${deleteId}`,
         withCredentials: true,
       })
         .then((res) => {
@@ -58,7 +58,7 @@ const Archived = () => {
     useEffect(() => {
         axios({
           method: "get",
-          url: "https://api.speakerore.com/api/getallarchievedevent",
+          url: "http://localhost:5000/api/getallarchievedevent",
           withCredentials: true,
         })
           .then((res) => {
@@ -73,7 +73,7 @@ const Archived = () => {
       useEffect(() => {
         axios({
           method: "get",
-          url: "https://api.speakerore.com/api/getallarchievedevent",
+          url: "http://localhost:5000/api/getallarchievedevent",
           withCredentials: true,
         })
           .then((res) => {

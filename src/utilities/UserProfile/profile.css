@@ -113,7 +113,8 @@ hr{
 }
 .logout{
     text-align: center;
-
+    display: flex;
+    justify-content: center;
 }
 .logout span{
     font-size: 15px;

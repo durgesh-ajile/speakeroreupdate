@@ -5,7 +5,7 @@ function Home() {
 
   const goToTop = () => {
     window.scrollTo({
-        top: 100,
+        top: 675,
         behavior: 'smooth',
     });
 };
