@@ -1,0 +1,398 @@
+.head-banner{
+    background-color: #24754F;
+}
+.view-detail{
+    margin-top: 72px;
+}
+.banner-text{
+    color: white;
+    font-size: 2rem;
+    font-weight: 800;
+    width: 60%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.banner-img{
+    width: 30%;
+    display: flex;
+    justify-content: flex-end;
+}
+.banner-img img{
+    width: 49%;
+}
+.banner-container{
+    /* width:70%; */
+    display: flex;
+    justify-content: space-between;
+    /* background-image: url('../images/Group 11459.png'); */
+}
+.mail{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 80%;
+    margin: auto;
+}
+.mail span{
+    color:
+    #666666;
+    /* margin-left: 108px; */
+}
+.web{
+    width: 50%;
+    padding: 13px;
+    color: #5A5D6D;
+    font-size: 1rem;
+    background-color: #F8F7FA;
+    display: flex;
+    align-items: center;
+}
+.web span{
+    margin: 0 6px 0 10px;
+}
+.venue-details{
+    width: 80%;
+    margin:3rem auto;
+}
+.venue-details-container{
+    display: flex;
+    justify-content: space-between;
+    /* gap: 2rem; */
+
+}
+.box{
+    width: 300px;
+    display: flex;
+    /* flex-direction: column; */
+}
+.icon-view{
+    margin: 17px;
+    color: #24754F;
+}
+.view-description bold{
+    margin-bottom: 10px;
+}
+.in-des{
+    color:#666666;
+    margin-top: 10px;
+}
+.box bold{
+    font-weight: 700;
+}
+.box span{
+    font-size: 14px;
+    color: #666666;
+}
+.aboutevent{
+    width: 80%;
+    margin: 3rem  auto;
+}
+.eventtype{
+    display: flex;
+    gap: 2rem;
+}
+.eventtype small{
+    font-size: 1rem;
+    font-weight: 600;
+}
+.eventtype span{
+    font-size: 1rem;
+    font-weight: 600;
+}
+.aboutevent-para {
+    margin-top: 2rem;
+    color: #666666;
+}
+.tags{
+    width: 80%;
+    margin: 3rem auto;
+    
+}
+.tag{
+    display:flex ;
+    gap: 2rem;
+}
+.tags span{
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 120px;
+    background-color: #EF7676;
+    padding: 1rem;
+    border-radius:30px ;
+    text-align: center;
+}
+
+
+
+/* media query */
+
+
+
+@media only screen and (max-width: 756px) {
+
+    #MAil{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 90%;
+        margin: auto;
+        line-height: 1.3rem;
+        padding-left: 1rem;
+      
+      }
+      #MAil span{
+        color: #666666;
+        text-align: start;
+        font-size: small;
+      }
+      #BOx bold {
+        color: #000000ad;
+        font-weight: 600;
+      }
+      #ICon-view {
+        margin: 0px 10px 0px 0px;
+        background: #e3d9f759;
+        color: #24754F;
+        padding: 0.5rem 0.6rem 0.5rem 0.6rem;
+        border-radius: 5px;
+        height: fit-content;
+      }
+      
+      .box {
+        width: 300px;
+        display: flex;
+        margin-bottom: 2rem;
+      }
+      
+      .box bold{
+        font-weight: 700;
+        font-size: small;
+      }
+      #IN-des span{
+        color: grey;
+        font-weight: 800;
+        font-size: smaller;
+      }
+      .in-des {
+        color: #666666;
+        margin-top: 10px;
+        font-size: small;
+      }
+      .aboutevent{
+        width: 85%;
+        margin: 3rem  auto;
+      }
+      
+      #TAgs{
+        width: 80%;
+        margin: 1rem 2rem;
+        
+      }
+      #TAg{
+        display:flex ;
+       
+      }
+      /* #TAgs span{
+        color: white;
+        font-size: small;
+        font-weight: 600;
+        width: 120px;
+        background-color: #EF7676;
+        padding: 1rem;
+        border-radius:30px ;
+        
+      } */
+    
+.head-banner{
+    background-color: #24754F;
+}
+.banner-text{
+    color: white;
+    font-size: 2rem;
+    font-weight: 800;
+    width: 60%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.banner-img{
+    width: 30%;
+    display: flex;
+    justify-content: flex-end;
+}
+.banner-img img{
+    width: 49%;
+}
+.banner-container{
+    /* width:70%; */
+    display: flex;
+    justify-content: space-between;
+    /* background-image: url('../images/Group 11459.png'); */
+}
+.mail{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 80%;
+    margin: auto;
+}
+.mail span{
+    color: #666666;
+}
+.web{
+    width: 50%;
+    padding: 13px;
+    color: #5A5D6D;
+    font-size: 1.5rem;
+    background-color: #F8F7FA;
+}
+.venue-details{
+    width: 80%;
+    margin:3rem auto;
+}
+.venue-details-container{
+    display: flex;
+    justify-content: space-between;
+    /* gap: 2rem; */
+
+}
+.box{
+    width: 300px;
+    display: flex;
+    /* flex-direction: column; */
+}
+.icon-view{
+    margin: 17px;
+    color: #24754F;
+}
+.view-description bold{
+    margin-bottom: 10px;
+}
+.in-des{
+    color:#666666;
+    margin-top: 10px;
+}
+.box bold{
+    font-weight: 700;
+}
+.box span{
+    font-size: 14px;
+    color: #666666;
+}
+.aboutevent{
+    width: 80%;
+    margin: 3rem  auto;
+}
+.eventtype{
+    display: flex;
+    gap: 2rem;
+}
+.eventtype small{
+    font-size: 1rem;
+    font-weight: 600;
+}
+.eventtype span{
+    font-size: 1rem;
+    font-weight: 600;
+}
+.aboutevent-para {
+    margin-top: 2rem;
+    color: #666666;
+}
+.tags{
+    width: 80%;
+    margin: 3rem auto;
+    
+}
+.tag{
+    display:flex ;
+    gap: 2rem;
+}
+.tags span{
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 120px;
+    background-color: #EF7676;
+    padding: 1rem;
+    border-radius:30px ;
+    text-align: center;
+}
+
+  #BAnner-text {
+    font-size: 1.2rem;
+    width: 80%;
+  }
+
+  #BAnner-img {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  #MAil {
+    width: 100%;
+   
+  }
+
+  #WEb {
+    font-size: 1rem;
+    padding: 0.7rem 1rem;
+    width: 85%;
+  }
+
+  #VEnue-details {
+    margin: 1.5rem auto;
+  }
+
+  #VEnue-details-container {
+    flex-direction: column;
+  }
+
+  #BOx {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  #ABoutevent {
+    margin: 1.5rem auto;
+  }
+
+  #EVenttype {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  #EVenttype small,
+  #EVenttype span {
+    font-size: smaller;
+  }
+  #EVenttype span {
+   padding-top: 1px;
+   padding-left: 1.5rem;
+  }
+  #ABoutevent-para {
+    font-size: small;
+    line-height: 1.3rem;
+    margin-top: 1rem;
+}
+#TAg{
+  display: flex;
+  gap: 0.05rem;
+}
+  #tTAgs {
+    margin: 1.5rem auto;
+  }
+
+  #TAgs span {
+    font-size: 0.7rem;
+    min-width: 30px;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    border-radius: 10px;
+  }
+}

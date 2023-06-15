@@ -1,0 +1,245 @@
+@media (max-width: 967px) {
+
+  
+    #Location {
+      height: 15px;
+      width: 15px;
+      margin-right: 2px;
+    }
+    #WatchLater {
+      height: 15px;
+      width: 15px;
+      margin-right: 2px;
+    }
+    #Card-2 date{
+      margin-left: 1.5rem;
+    }
+    #Subsbutton {
+      background-color: white;
+      display: flex;
+      padding-left: 4.25rem;
+      flex-direction: row;
+      align-items: center;
+      border-radius: 55px;
+      margin-left: 3.25rem;
+      height: 0;
+      padding: 0;
+      gap: 0;
+  }
+    #Card {
+      flex: 0 0 calc(100% - 20px);
+      max-width: 100%;
+      height: auto;
+      border: 0;
+      /* border-bottom: 1px solid grey; */
+    }
+  
+    #Card-1 {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      background-color: white;
+      font-size: small;
+      margin: 0;
+      padding-bottom: 0px;
+  }
+   #Card-1 bold {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      background-color: white;
+      font-size: small;
+      margin: 0;
+      margin-left: 2rem;
+      padding-bottom: 7px;
+  }
+  #Card-1 span{
+    font-weight: 100;
+  } 
+  #Card-1 span {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: white;
+    font-size: small;
+    margin: 0;
+    margin-left: 32px;
+} 
+     #Card-1 small {
+      margin: 20px 0 0 2rem;
+      font-size: small;
+      font-weight: 600;
+      color: green;
+  }
+  
+  
+  #Card-2 {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    font-size: small;
+    margin-top: 2px;
+    color: #595959;
+}
+#Card-2 small {
+  font-size: small;
+  font-weight: 300;
+}
+    /* #Desc {
+      margin-top: 10px;    
+    }  */
+     #Desc p { 
+     margin-left: 2rem; 
+       font-size: small;
+      color: grey;
+      margin: 0rem 2rem;
+  }
+    #Card-4 {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-left: 20px;
+    }
+    
+    #Card-4 button {
+      margin-top: 10px;
+      margin-left: 10px;
+      max-width: fit-content;
+      color: white;
+      padding: 5px 10px;
+    }
+    
+    #Delb {
+      color: white;
+      background-color: red;
+    }
+    
+    #Viewb {
+      color: white;
+      background-color: green;
+    }
+    
+  
+    #dash-info {
+      display: none;
+    }
+  
+    #dashboard {
+      flex-direction: column;
+    }
+  
+    #Events-content {
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+    }
+    #Profile-pic{
+      background: white;
+      margin-top: 1.5rem;
+    }
+    #Img {
+      width: 60px;
+      height: 60px;
+      font-size: 2rem;
+      background-color: #fff0db;
+      border-color : #f9829673;
+  }
+    .dash-input {
+        border: 1px solid #767676; 
+        border-radius: 4px;
+        margin-bottom: 24px;
+        padding-left: 40px;
+        width: 90%;
+      /* margin-right: 10px; */
+    }
+  
+    .ico {
+      top: 10px;
+      left: 10px;
+    }
+    #Left-container{
+        width: 100%;
+        height: 23vh;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+ 
+   }
+    #Subsbutton button{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+    background-color: white;
+    margin-bottom: 117px;
+}
+#Span{
+  margin-left:-12px
+}
+    #Admin {
+      flex-direction: column;
+    }
+  
+    .table-container {
+      margin: 20px;
+    }
+  
+    #Card-4 {
+        display: 'flex';
+        flex-direction: 'column';
+        justify-content:  'center';
+        align-items:  'center';
+    }
+  
+    #Card-4 button {
+      width: 100%;
+    }
+ 
+    #Name-deatils bold{
+      font-weight: 600;
+      padding: 8px;
+    }
+    .backgreen1 {
+      position: relative;
+      border-bottom: 1px solid grey;
+    }
+    
+    .backgreen1::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 100%;
+      height: 4px;
+      background-color: red;
+      border-radius: 18%;
+    }
+    
+  }
+  /* EventAdmin */
+  #alleven1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 0px;
+    padding: 0px;
+    overflow: hidden;
+  }
+  
+  #Card {
+    flex: 0 0 calc(100% - 20px); 
+    max-width: 400px;
+    margin: 10px;
+  
+  }
+
+
+  @media (max-width: 700px){
+    .events-content {
+      width: 100%;
+      margin-left: 0;
+  }
+  .left-container{
+    display: none;
+  }
+  }
+  

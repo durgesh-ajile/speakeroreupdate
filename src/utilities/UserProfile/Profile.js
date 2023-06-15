@@ -25,7 +25,7 @@ const Profile = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://localhost:5000/api/getprofile",
+      url: "https://api.speakerore.com/api/getprofile",
       withCredentials: true,
     })
       .then((res) => {
@@ -44,7 +44,7 @@ const Profile = () => {
   const handleAffiliateSubmit = () => {
     axios({
       method: "post",
-      url: "http://localhost:5000/api/createaffilatecoupon",
+      url: "https://api.speakerore.com/api/createaffilatecoupon",
       withCredentials: true,
     })
       .then((res) => {
@@ -60,7 +60,7 @@ const Profile = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://localhost:5000/api/getaffilatecoupon",
+      url: "https://api.speakerore.com/api/getaffilatecoupon",
       withCredentials: true,
     })
       .then((res) => {
@@ -75,7 +75,7 @@ const Profile = () => {
     useEffect(() => {
       axios({
         method: "get",
-        url: "http://localhost:5000/api/getaffilatecoupon",
+        url: "https://api.speakerore.com/api/getaffilatecoupon",
         withCredentials: true,
       })
         .then((res) => {
@@ -90,7 +90,7 @@ const Profile = () => {
       const handleLogout = () => {
         axios({
           method: "get",
-          url: "http://localhost:5000/api/logout",
+          url: "https://api.speakerore.com/api/logout",
           withCredentials: true,
         })
           .then((res) => {
@@ -106,7 +106,7 @@ const Profile = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://localhost:5000/api/geteventforcurrentuser",
+      url: "https://api.speakerore.com/api/geteventforcurrentuser",
       withCredentials: true,
     })
       .then((res) => {

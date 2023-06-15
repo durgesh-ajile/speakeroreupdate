@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./viewdetails.css";
-import man from "../images/Group 11450.png";
-import web from "../images/mdi_web.png";
+import man from "../../images/Group 11450.png";
+import web from "../../images/mdi_web.png";
 import { MdDateRange } from "react-icons/md";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { BsFillPersonFill } from "react-icons/bs";
@@ -23,7 +23,7 @@ const Viewdetails = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getsingleevent/${eventId}`,
+      url: `https://api.speakerore.com/api/getsingleevent/${eventId}`,
       withCredentials: true,
     })
       .then((res) => {

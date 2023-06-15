@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import UserTable from "../../components/Tables/UserTable";
+import UserTable1 from "../../components/Tables/UserTable/UserTable1";
 import "./Admin.css";
 import { IoMdLogOut } from "react-icons/io";
 
-import TeamMembers from "../../components/Tables/TeamMembers";
-import CouponTable from "../../components/Tables/CouponTable";
-import EventAdmin from "../../components/Tables/EventAdmin";
+import TeamMembers1 from "../../components/Tables/TeamMember/TeamMembers1";
+import CouponTable1 from "../../components/Tables/CouponTable/CouponTable1";
+import EventAdmin1 from "../../components/Tables/EventAdmin/EventAdmin1";
 import CreateCoupon from "../../components/Tables/CreateCoupon";
 import Trash from "../../components/Tables/Trash";
 import Archived from "../../components/Tables/Archived";
@@ -47,7 +47,7 @@ const Admin = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://localhost:5000/api/getprofile",
+      url: "https://api.speakerore.com/api/getprofile",
       withCredentials: true,
     })
       .then((res) => {
@@ -63,7 +63,7 @@ const Admin = () => {
   const handleLogout = () => {
     axios({
       method: "get",
-      url: "http://localhost:5000/api/logout",
+      url: "https://api.speakerore.com/api/logout",
       withCredentials: true,
     })
       .then((res) => {
@@ -82,7 +82,7 @@ const Admin = () => {
 
   return (
     <div className="admin">
-      <div className="left-container">
+      <div className="left-container" id='LEft-container'>
       {profile ? <div className="profile-pic">
           <div className="img">{profile.first_name[0]}</div>
           <div className="name-deatils">
@@ -149,11 +149,11 @@ const Admin = () => {
         </div>
       </div>
       <div className="events-content">
-        {select === 'event' ? <EventAdmin /> : ""}
-        {select === 'user'  ? <UserTable /> : ""}
-        {select === 'member'  ? <TeamMembers /> : ""}
+        {select === 'event' ? <EventAdmin1 /> : ""}
+        {select === 'user'  ? <UserTable1 /> : ""}
+        {select === 'member'  ? <TeamMembers1 /> : ""}
         {select === 'trash'  ? <Trash /> : ""}
-        {select === 'coupon' ? <CouponTable /> : ""}
+        {select === 'coupon' ? <CouponTable1 /> : ""}
         {select === 'createCoupon' ? <CreateCoupon /> : ""}
         {select === 'archieved' ? <Archived /> : ""}
       </div>

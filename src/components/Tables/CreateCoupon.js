@@ -16,7 +16,7 @@ const CreateCoupon = () => {
   const handleSubmit = () => {
     axios({
       method: "post",
-      url: "http://localhost:5000/api/createcoupon",
+      url: "https://api.speakerore.com/api/createcoupon",
       data: {
         couponCode: coupon_code,
         subcriptionType: subscription_type,

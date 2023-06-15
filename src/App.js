@@ -1,19 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
-import Works from './utilities/works/Works';
-import Footer from './utilities/footer/Footer';
-import Agriculture from './utilities/agriculture/Agriculture';
-import Goldmine from './utilities/GoldMine/Goldmine';
-import Home from './components/Home';
 import Landing from './components/Landing';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PersistentDrawerLeft from './utilities/Events/Sidebar';
 import Subscription from './utilities/Subs/Subscription';
 import Explore from './utilities/Explore/Explore';
 import ListYourEvent from './components/Listyourevent/ListYourEvent';
-import Viewdetails from './components/Viewdetails';
+import Viewdetails1 from './components/Viewdetail/Viewdetails1';
 import Admin from './utilities/Admin/Admin';
-import Profile from './utilities/UserProfile/Profile';
+import Profile1 from './utilities/UserProfile/Profile1';
 import Categories from './utilities/Categories/Categories';
 import Navbar from './components/Navbar';
 import Appp from './utilities/Pop/LoginPopup';
@@ -21,6 +16,7 @@ import AuthHOC from './utilities/Auth/AuthHOC'
 import FAQ from './utilities/FAQ/Faq';
 import Terms_N_Conditions from './utilities/TNC/Tnc';
 import Privacy_Policy from './utilities/Policy/Policy';
+import './utilities/omResponsive.css'
 function App() {
   return (
     <BrowserRouter>
@@ -47,7 +43,7 @@ function App() {
         {/* <Route path="/categories" element={<Categories />}></Route> */}
         <Route
           path="/event/:eventId"
-          element={<AuthHOC WrappedComponent={Viewdetails} />}
+          element={<AuthHOC WrappedComponent={Viewdetails1} />}
         ></Route>
         {/* <Route
           path="/admin"
@@ -55,7 +51,7 @@ function App() {
         ></Route> */}
         <Route
           path="/profile"
-          element={<AuthHOC WrappedComponent={Profile} />}
+          element={<AuthHOC WrappedComponent={Profile1} />}
         ></Route>
         <Route path='/faq' element={<FAQ/>}></Route>
         <Route path='/termsandconditions' element={<Terms_N_Conditions/>}></Route>

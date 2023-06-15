@@ -12,7 +12,7 @@ import { Button } from "@mui/material";
 // import logo from '../../assets/img/logo.jpg'
 // import hambergure_icon from '../../assets/img/hamburger_icon.jpg'
 
-const MobileNavbar = ({userData, isAuthenticated}) => {
+const MobileNavbar = ({userData, isAuthenticated, showPopup, setShowPopup}) => {
     const [sidebarToggle, setSidebarToggle] = useState(true)
     const NavbarboxRef = useRef(null);
 
@@ -32,7 +32,13 @@ const MobileNavbar = ({userData, isAuthenticated}) => {
         }, 200);
         setSidebarToggle(!sidebarToggle)
     };
-
+    const handleSignInClick = () => {
+      setShowPopup(true);
+    };
+  
+    const handleClosePopup = () => {
+      setShowPopup(false);
+    };
     
 
     return (<>
@@ -40,10 +46,18 @@ const MobileNavbar = ({userData, isAuthenticated}) => {
             <div className="Navbar_logo">
                 <img src={logo} alt="" />
             </div>
-            <div onClick={() => handleToggle()} className="Navbar_hambergure_icon">
+            {isAuthenticated ? (
+              <div onClick={() => handleToggle()} className="Navbar_hambergure_icon">
                 <h6>HI {userData}!</h6>
                 <GiHamburgerMenu/>
-            </div>
+            </div>) : (
+              <>
+              <Button variant="outlined" className="bg-sign-up" onClick={handleSignInClick}>
+                Sign Up
+              </Button>
+              {showPopup && <LoginPopup onClose={handleClosePopup} />}
+            </>
+            )}
         </div>
         {
             // !sidebarToggle &&
@@ -92,7 +106,7 @@ const Navbar = () => {
     setLoading(true);
     axios({
       method: "get",
-      url: "http://localhost:5000/api/auth/check",
+      url: "https://api.speakerore.com/api/auth/check",
       withCredentials: true,
     })
       .then((res) => {
@@ -114,7 +128,7 @@ const Navbar = () => {
     if (isAuthenticated) {
       axios({
         method: "get",
-        url: "http://localhost:5000/api/getprofile",
+        url: "https://api.speakerore.com/api/getprofile",
         withCredentials: true,
       })
         .then((res) => {
@@ -141,7 +155,7 @@ const Navbar = () => {
 
   return (
     <div>
-    <MobileNavbar isAuthenticated = {isAuthenticated}/>
+    <MobileNavbar isAuthenticated = {isAuthenticated} userData={userData} showPopup ={showPopup} setShowPopup={setShowPopup} />
       <div className="bg-navbar">
       <Link to='/'> <div className="bg-logo"></div></Link>
         

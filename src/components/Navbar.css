@@ -61,6 +61,7 @@ a:-webkit-any-link{
     /* top: 36px; */
     right: -70%;
     display: none;
+    z-index: 1;
     /* box-shadow: -20px 30px 100px 0px #e4ffd8; */
 
     /* transition: transform 0.3s; */

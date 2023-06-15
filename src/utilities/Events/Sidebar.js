@@ -142,7 +142,7 @@ export default function PersistentDrawerLeft() {
   useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getallapprovedevent?page=${page}`,
+      url: `https://api.speakerore.com/api/getallapprovedevent?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -157,12 +157,12 @@ export default function PersistentDrawerLeft() {
   useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/geteventbyquery?keyword=${searchKey}`,
+      url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}`,
       withCredentials: true,
     })
       .then((res) => {
         console.log(res);
-        setFilter(res.data);
+        setFilter(res.data.queryResult);
       })
       .catch((err) => {
         console.log(err);
@@ -174,7 +174,7 @@ export default function PersistentDrawerLeft() {
 
   useEffect(() => {
     if (mode || category || date || exclusive) {
-      const apiUrl = `http://localhost:5000/api/geteventsbyfilter?${getQueryParams()}`;
+      const apiUrl = `https://api.speakerore.com/api/geteventsbyfilter?${getQueryParams()}`;
       function getQueryParams() {
         const queryParams = [];
 
@@ -206,7 +206,7 @@ export default function PersistentDrawerLeft() {
       })
         .then((res) => {
           console.log(res);
-          setFilter(res.data);
+          setFilter(res.data.savedEvents);
         })
         .catch((err) => {
           console.log(err);
@@ -328,7 +328,7 @@ export default function PersistentDrawerLeft() {
         </div>
       </div>
 
-      <div className="right-container-e">
+      <div className="right-container-e" id='right-container-event'>
         <div className="head-banner">
           <div className="banner-container">
             <div className="view-text">
@@ -346,7 +346,7 @@ export default function PersistentDrawerLeft() {
         {filter ? (
           <div>
             <div className="card-container">
-              {filter.savedEvents.map((e) => (
+              {filter.map((e) => (
                 <div className="card">
                   <div className="card-1">
                     <div>

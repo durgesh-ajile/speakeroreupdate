@@ -51,7 +51,7 @@ const Trash = () => {
     useEffect(() => {
         axios({
           method: "get",
-          url: "http://localhost:5000/api/getalltrashevents",
+          url: "https://api.speakerore.com/api/getalltrashevents",
           withCredentials: true,
         })
           .then((res) => {
@@ -65,7 +65,7 @@ const Trash = () => {
       useEffect(() => {
         axios({
           method: "get",
-          url: "http://localhost:5000/api/getalltrashevents",
+          url: "https://api.speakerore.com/api/getalltrashevents",
           withCredentials: true,
         })
           .then((res) => {
@@ -82,7 +82,7 @@ const Trash = () => {
       const handlePermanentDelete = () =>{
         axios({
           method: "delete",
-          url: `http://localhost:5000/api/deleteevent?eventId=${deleteId}`,
+          url: `https://api.speakerore.com/api/deleteevent?eventId=${deleteId}`,
           withCredentials: true,
         })
           .then((res) => {
@@ -97,7 +97,7 @@ const Trash = () => {
         const handleReviveCard = () =>{
           axios({
             method: "patch",
-            url: "http://localhost:5000/api/revivefortrash",
+            url: "https://api.speakerore.com/api/revivefortrash",
             withCredentials: true,
             data: {
               eventId: reviveId,
