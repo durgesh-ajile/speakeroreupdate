@@ -88,6 +88,12 @@ hr{
     font-weight: 600;
     background: #24754F !important;
 }
+#back-green{
+    background: #24754F !important;
+}
+#color-green{
+    color: #24754F !important;
+}
 .allevent{
     display: flex;
     gap: 1rem;
@@ -141,4 +147,9 @@ hr{
 
 .create-coupon{
     padding: 20px 40px;
+}
+@media screen and (max-width: 700px){
+    .name-deatils {
+        margin: 0 0 0rem 0;
+    }
 }

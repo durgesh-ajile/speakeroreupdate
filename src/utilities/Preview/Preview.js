@@ -27,7 +27,8 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
     startdate,
     enddate,
     endtime,
-    starttime
+    starttime,
+    exclusive
   } = stateData;
   console.log("stateDate", stateData)
 
@@ -52,10 +53,10 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
         audienceType: audienceType,
         audienceSize: audienceSize,
         category: category,
-        eventStartDate: "2023-06-20T00:00:00",
-        eventEndDate: "2023-06-25T00:00:00",
-        eventStartTime: "13:00",
-        eventEndTime: "17:00",
+        eventStartDate: startdate,
+        eventEndDate: enddate,
+        eventStartTime: starttime,
+        eventEndTime: endtime,
         location: location,
         city: city,
         pincode: pincode,
@@ -64,7 +65,7 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
         organizerEmail: organizerEmail,
         organizerContactNumber: organizerContactNumber,
         tags: tags,
-        isSpeakeroreExclusive: true,
+        isSpeakeroreExclusive: exclusive,
       },
       withCredentials: true,
     })
@@ -122,6 +123,16 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
                   defaultValue={eventWebsiteUrl}
                   disabled />
               </div>
+              <div className="event_details_inputbox_checkbox" >
+                <input type="checkbox"
+                  name="exclusive"
+                  disabled
+                  checked={exclusive}
+                >
+                </input>
+                <p>Exclusive</p>
+              </div>
+
 
               <div className="double">
                 <div className="input-details">
@@ -319,7 +330,7 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
         style={{ width: "85%", textAlign: "right" }}
       >
         <div className="card-3 next-button">
-          <button type="click" onClick={(e) => previous_Button(e)}style={{ marginRight: '10px' }}>Previous</button>
+          <button type="click" onClick={(e) => previous_Button(e)} style={{ marginRight: '10px' }}>Previous</button>
           <button onClick={handleCreateEvent} >Submit</button>
         </div>
       </div>

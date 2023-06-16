@@ -7,7 +7,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Admin from "../Admin/Admin";
 import exclusiveimg from '../../images/Group.png'
-
 import { Button } from "@mui/material";
 import Member from "../Member/Member";
 
@@ -15,9 +14,7 @@ const Profile = () => {
   const [subs, setSubs] = useState("event");
   const [userData, setUserData] = useState("");
   const [userEvent, setUserEvent] = useState("");
-  const [affiliatemail, setAffiliatemail] = useState("");
   const [affiliatData, setAffiliatData] = useState("");
-  const [affiliatPost, setAffiliatPost] = useState(false);
   const [loading, setLoading] = useState(false);
 
 
@@ -118,7 +115,6 @@ const Profile = () => {
       });
   }, []);
 
-  // console.log(userEvent);
 
   const handlesubs = () => {
     setSubs("subs");

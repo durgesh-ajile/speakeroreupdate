@@ -39,9 +39,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein, action) {
-  return { name, calories, fat, action };
-}
 
 export default function TeamMembers() {
   const [teamMemberData, setTeamMemberData] = React.useState("");

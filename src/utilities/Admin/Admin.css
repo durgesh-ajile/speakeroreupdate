@@ -75,3 +75,97 @@ Button{
 .logout{
     cursor: pointer;
 }
+.mobile-adjust{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+@media screen and (max-width: 700px){
+
+    .name-deatils {
+        margin: 0 0 0rem 0;
+    }
+    .backgreen1 {
+        position: relative;
+        border-bottom: 1px solid grey;
+      }
+      
+      .backgreen1::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 100%;
+        height: 4px;
+        background-color: red;
+        border-radius: 18%;
+      }
+
+    .admin {
+        display: flex;
+        margin-top: 0px;
+    }
+#dash-circle{
+    background: #FEFCF1;
+    border: 2px solid #C1C1C1;
+    border-radius: 36.1661px;
+}
+#dash-info{
+    background: #EAEAEA;
+    width:30%
+}
+#dashboard{
+    display:flex;
+}
+#Events-content {
+    width:70%;
+    /* margin: 50px; */
+    overflow: scroll;
+    height: 100vh;
+}
+.dash-input{
+    border: 1px solid #767676;
+border-radius: 4px;
+width:400px;
+height:40px;
+margin-bottom: 24px;
+padding-left: 40px;
+}
+.ico{
+    position: absolute;
+    top:13px;
+    left: 13px;
+}
+.input-div{
+    position: relative;
+}
+#Admin{
+    display: flex;
+}
+.table-container{
+    margin: 50px;
+}
+#Card-1 small{
+  margin: 20px  0 0 2rem;
+  font-size: 1rem;
+  font-weight: 900;
+  color: green;
+}
+#Card-4{
+    display: flex;
+    justify-content: space-around;
+}
+#Card-4 button{
+    border: 1px solid;
+border-radius: 4px;
+width: 120px;
+padding: 10px;
+margin-bottom: 20px;
+color:#ED3232;
+}
+#Span{
+  margin-left:3px
+}
+}

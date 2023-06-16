@@ -59,6 +59,8 @@
  #name-details strong {
     font-size: 18px;
     margin-bottom: 5px;
+    text-align: center;
+
   }
   
  #name-details span {
@@ -76,8 +78,8 @@
     border-radius: 55px;
   }
  #subsbutton button {
-    padding: 10px 20px;
-    width: 145px;
+  padding: 10px 12px;
+  width: 120px;
     border: none;
     border-radius: 55px;
     cursor: pointer;
@@ -116,7 +118,7 @@
     margin-top: 20px;
     font-size: small;
     font-weight: 600;
-    color: green;
+    color: #24754F 
   }
   
  #card-content h3 {
@@ -139,7 +141,7 @@
   }
   
  #card-content button {
-    background-color: green;
+    background-color: #24754F ;
     color: white;
     padding: 10px;
     border: none;
@@ -239,7 +241,7 @@ select {
   text-align: end;
   -webkit-appearance: none; /* Remove default arrow in Chrome/Safari */
   -moz-appearance: none; /* Remove default arrow in Firefox */
-   color: green;
+   color: #24754F ;
 }
 /* select:not(:-internal-list-box) {
   overflow: visible !important;

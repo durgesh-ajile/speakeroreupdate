@@ -11,12 +11,8 @@ import CreateCoupon from "../../components/Tables/CreateCoupon";
 import Trash from "../../components/Tables/Trash";
 import Archived from "../../components/Tables/Archived";
 import { useNavigate } from "react-router-dom";
-const data = {
-  name: "Divya Devendar",
-  email: "example123@gmail.com",
-};
 
-const Admin = () => {
+const AdminMob = () => {
   const [select, setSelect] = useState('event');
  
   const [profile, setProfile] = useState('')
@@ -82,7 +78,7 @@ const Admin = () => {
 
   return (
     <div id='Admin' className="admin">
-      <div className="left-container" id='Left-container' >
+      <div id='Left-container' >
       {profile ? <div className="profile-pic" id='Profile-pic'>
           <div className="img"  id='Img'>{profile.first_name[0]}</div>
           <div className="name-deatils"  id='Name-deatils'>
@@ -95,56 +91,57 @@ const Admin = () => {
         </>
         }
         
-
-        <div id='Subs-button' className="subs-button">
+        <div>
           <div className="subsbutton" id='Subsbutton'>
             <button
               onClick={handleEvent}
-              className={select === 'event' ? "backgreen" : ""}
+              className={select === 'event' ? "backgreen1" : ""}
             >
               {" "}
               Events Request
             </button>
             <button
               onClick={handleUser}
-              className={select == 'user' ? "backgreen" : ""}
+              className={select == 'user' ? "backgreen1" : ""}
             >
               Users
             </button>
             <button
               onClick={handleMember}
-              className={select == 'member' ? "backgreen" : ""}
+              className={select == 'member' ? "backgreen1" : ""}
             >
               Team <span id='Span'>Members</span> 
             </button>
             <button
               onClick={handleCoupon}
-              className={select == 'coupon' ? "backgreen" : ""}
+              className={select == 'coupon' ? "backgreen1" : ""}
             >
               Coupons
             </button>
-            
-          </div>
-          <div className="mobile-adjust subsbutton" id='Subsbutton' style={{paddingTop:'0'}}>
+</div>
+            <div className="subsbutton" id='Subsbutton' style={{margin:'8px 20px'}}>
             <button
               onClick={handleTrash}
-              className={select == 'trash' ? "backgreen" : ""}
+              className={select == 'trash' ? "backgreen1" : ""}
             >
               Trash
             </button>
             <button
               onClick={handleArchieved}
-              className={select == 'archieved' ? "backgreen" : ""}
+              className={select == 'archieved' ? "backgreen1" : ""}
             >
               Archieved
             </button>
             <button
               onClick={handleCreateCoupon}
-              className={select == 'createCoupon' ? "backgreen" : ""}
+              className={select == 'createCoupon' ? "backgreen1" : ""}
             >
               Create Coupon
             </button>
-            </div>
+          </div>
+          {/* <div className="mobile-adjust subsbutton" id='Subsbutton' style={{paddingTop:'0'}}> */}
+           
+            {/* </div> */}
         </div>
         <hr />
         <div className="logout">
@@ -164,4 +161,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default AdminMob;

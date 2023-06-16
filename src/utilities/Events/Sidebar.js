@@ -2,14 +2,8 @@ import * as React from "react";
 import { useState } from "react";
 import "./sidebar.css";
 import { styled, useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import CssBaseline from "@mui/material/CssBaseline";
 import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
 import man from "../../images/Group 11450.png";
 import { MdLocationOn } from "react-icons/md";
 import { MdWatchLater } from "react-icons/md";
@@ -166,6 +160,9 @@ export default function PersistentDrawerLeft() {
       })
       .catch((err) => {
         console.log(err);
+        if(err.response.status === 404){
+          setFilter('')
+        }
       });
   }, [searchKey]);
   console.log(filter);

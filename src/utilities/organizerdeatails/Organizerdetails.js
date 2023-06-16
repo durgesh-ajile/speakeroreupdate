@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import { AddAlert } from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
 import { TagsInput } from "react-tag-input-component";
 
-const Organizerdetails = ({ organizerDetails, stateHandle_Event_Organiser_Preview, setStateHandle_Event_Organiser_Preview }) => {
+const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Preview }) => {
 
   const [handleOrganizerDetails, setHandleOrganizerDetails] = useState([])
   const [checkReqierdField, setcheckReqierdField] = useState(false)
@@ -10,26 +11,44 @@ const Organizerdetails = ({ organizerDetails, stateHandle_Event_Organiser_Previe
   const onSubmit = (e) => {
     e.preventDefault();
     setcheckReqierdField(true)
-
     if (handleOrganizerDetails?.organizerName &&
       handleOrganizerDetails?.organizerEmail &&
-      handleOrganizerDetails?.organizerContactNumber &&
-      tags.length > 0) {
+      handleOrganizerDetails?.organizerContactNumber 
+      // &&  tags.length > 0
+      ) {
       setStateHandle_Event_Organiser_Preview(p => {
         p.organise = false
         p.preview = true
         return { ...p }
       })
     }
-
   };
+
   organizerDetails(handleOrganizerDetails, tags);
 
   const handleChangeOrganizerDetailsForm = (e) => {
-    setHandleOrganizerDetails(prev => {
-      prev[e.target.name] = e.target.value
-      return { ...prev }
-    })
+    let tempprev = {}
+    if (e.target.name === 'organizerContactNumber') {
+      setHandleOrganizerDetails(prev => {
+        let numberString
+        if (typeof prev.organizerContactNumber === 'string') {
+          numberString = prev.organizerContactNumber.length
+        }
+        prev[e.target.name] = e.target.value
+        tempprev = prev
+        if (numberString >= 10) {
+          prev.organizerContactNumber = prev.organizerContactNumber.slice(0, 10)
+        }
+        return { ...prev }
+      });
+    } else {
+      setHandleOrganizerDetails(prev => {
+        prev[e.target.name] = e.target.value
+        tempprev = prev
+        return { ...prev }
+      })
+    }
+    localStorage.setItem('handleOrganizerDetails', JSON.stringify(tempprev))
   }
 
   const previous_Button = () => {
@@ -37,16 +56,8 @@ const Organizerdetails = ({ organizerDetails, stateHandle_Event_Organiser_Previe
   }
 
   // useEffect(() => {
-  //   localStorage.setItem('handleFormInput', JSON.stringify(handleFormInput))
-
-  // }, [handleFormInput])
-
-
-  // useEffect(() => {
-  //   const handleFormInputFromLocal = JSON.parse(localStorage.getItem('handleFormInput'))
-  //   console.log("useEffect",handleFormInputFromLocal)
-  //   setHandleFormInput(() => handleFormInputFromLocal)
-  //   // alert("ksjdhfjshd")
+  //   const handleOrganizerDetailsLocal = JSON.parse(localStorage.getItem('handleOrganizerDetails'))
+  //   setHandleOrganizerDetails(() => handleOrganizerDetailsLocal)
   // }, [])
 
   return (
@@ -57,6 +68,8 @@ const Organizerdetails = ({ organizerDetails, stateHandle_Event_Organiser_Previe
           <input
             name="organizerName"
             type="text"
+            value={handleOrganizerDetails?.organizerName}
+
             placeholder="Enter the Organizer Name"
             onChange={(e) => { handleChangeOrganizerDetailsForm(e) }}
           />
@@ -73,6 +86,7 @@ const Organizerdetails = ({ organizerDetails, stateHandle_Event_Organiser_Previe
               name="organizerEmail"
               type="email"
               required
+              value={handleOrganizerDetails?.organizerEmail}
               onChange={(e) => { handleChangeOrganizerDetailsForm(e) }}
             />
             {
@@ -87,9 +101,12 @@ const Organizerdetails = ({ organizerDetails, stateHandle_Event_Organiser_Previe
               type="number"
               name="organizerContactNumber"
               // maxLength={13}
-              // min="1"
-              max="9"
+              // min={10}
+              disabled={!true}
+              // max={10}
               required
+              maxLength={10}
+              value={handleOrganizerDetails?.organizerContactNumber}
               onChange={(e) => { handleChangeOrganizerDetailsForm(e) }}
             />
             {
@@ -107,9 +124,11 @@ const Organizerdetails = ({ organizerDetails, stateHandle_Event_Organiser_Previe
           </span>
           <TagsInput
             value={tags}
+            // value={handleOrganizerDetails?.event}
+            // onChange={(e) => { handleChangeOrganizerDetailsFormTags(e) }}
             onChange={setTags}
             name="tag"
-            placeHolder="Enter keyword"
+            placeHolder="Press Enter To Add a Field"
           />
           {
             checkReqierdField &&
@@ -117,16 +136,10 @@ const Organizerdetails = ({ organizerDetails, stateHandle_Event_Organiser_Previe
           }
         </div>
 
-        {/* {stateHandle_Event_Organiser_Preview?.organise === true ? ( */}
-        {/* <div className="card-3 next-button">
-        </div> */}
         <div className="card-3 next-button">
-          <button type="click" onClick={(e) => previous_Button(e)}>Previous</button>
-          <button type="submit" onClick={(e) => onSubmit(e)} style={{marginRight:'10px'}}>Next</button>
+          <button type="button" onClick={(e) => previous_Button(e)} style={{ marginRight: '10px' }}>Previous</button>
+          <button type="submit" onClick={(e) => onSubmit(e)} >Next</button>
         </div>
-        {/* ) : (
-          ""
-        )} */}
       </form>
     </div>
   );

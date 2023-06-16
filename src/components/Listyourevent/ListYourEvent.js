@@ -90,21 +90,30 @@ const ListYourEvent = () => {
           </span>
         </div>
       </div>
-      <div className="listbutton event-button">
-        <button onClick={() => handle_Event_Organiser_Preview("event")}
-        
-          style={{ backgroundColor: stateHandle_Event_Organiser_Preview?.event === false ? 'rgba(180, 208, 195, 1)' : '' , cursor: organiseInableDisable ? "no-drop" : "no-drop" }}
-          disabled={true} id={stateHandle_Event_Organiser_Preview?.event === true ? "green" : ""}>
-          1. Event details
-        </button>
-        <button onClick={() => handle_Event_Organiser_Preview("organise")}
-          disabled={true }
-          id={stateHandle_Event_Organiser_Preview?.organise === true ? "green" : ""} style={{ backgroundColor: stateHandle_Event_Organiser_Preview?.preview === !false ? 'rgba(180, 208, 195, 1)' : '' , cursor: organiseInableDisable ? "no-drop" : "no-drop" }}>
-          2. Organizer details
-        </button>
-        <button onClick={() => handle_Event_Organiser_Preview("preview")} disabled={true} id={stateHandle_Event_Organiser_Preview?.preview === true ? "green" : ""} style={{ cursor: organiseInableDisable ? "no-drop" : "no-drop" }}>
-          3. Preview
-        </button>
+      <div className="List_Your_Event_Tab_Container">
+        <div className="List_Your_Event_Tab_Container_Fluid">
+          <div className={true && "green_border_bottom"}>
+            <button onClick={() => handle_Event_Organiser_Preview("event")}
+              style={{ backgroundColor: stateHandle_Event_Organiser_Preview?.event === false ? 'rgba(180, 208, 195, 1)' : '', cursor: organiseInableDisable ? "no-drop" : "no-drop" }}
+              disabled={true} id={stateHandle_Event_Organiser_Preview?.event === true ? "green" : ""}>
+              1. Event details
+            </button>
+          </div>
+          <div className={((stateHandle_Event_Organiser_Preview?.organise ===true)||(stateHandle_Event_Organiser_Preview?.organise ===false && stateHandle_Event_Organiser_Preview?.preview === true)) && "green_border_bottom"}>
+            <button onClick={() => handle_Event_Organiser_Preview("organise")}
+              disabled={true}
+              id={stateHandle_Event_Organiser_Preview?.organise === true ? "green" : ""} style={{ backgroundColor: stateHandle_Event_Organiser_Preview?.preview === !false ? 'rgba(180, 208, 195, 1)' : '', cursor: organiseInableDisable ? "no-drop" : "no-drop" }}>
+              2. Organizer details
+            </button>
+          </div>
+          <div className={stateHandle_Event_Organiser_Preview?.preview === true && "green_border_bottom"}>
+            <button onClick={() => handle_Event_Organiser_Preview("preview")} disabled={true} id={stateHandle_Event_Organiser_Preview?.preview === true ? "green" : ""} style={{ cursor: organiseInableDisable ? "no-drop" : "no-drop" }}>
+              3. Preview
+            </button>
+          </div>
+        </div>
+
+
       </div>
 
       {stateHandle_Event_Organiser_Preview?.event === true ? (
