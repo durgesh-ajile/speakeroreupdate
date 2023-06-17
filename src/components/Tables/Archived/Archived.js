@@ -7,17 +7,20 @@ import { MdWatchLater } from "react-icons/md";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import exclusiveimg from "../../images/Group.png";
+import exclusiveimg from "../../../images/Group.png";
 import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material';
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import { BiSearchAlt } from "react-icons/bi";
 
 const Archived = () => {
     const [archivedData, setArchivedData] = useState("");
     const [page, setPage] = React.useState(1);
     const [deleteId, setDeleteId] = useState('');
     const [loading, setLoading] = useState(false);
-
+    const [searchKey, setSearchKey] = React.useState();
+    const [filter, setFilter] = useState();
+  
     const handleChange = (event, value) => {
       setPage(value);
     };
@@ -55,10 +58,28 @@ const Archived = () => {
         })
       }
 
+      useEffect(() => {
+        axios({
+          method: "get",
+          url: `https://api.speakerore.com/api/geteventbyqueryforarchived?keyword=${searchKey}&page=${page}`,
+          withCredentials: true,
+        })
+          .then((res) => {
+            console.log(res);
+            setFilter(res.data.queryResult);
+          })
+          .catch((err) => {
+            console.log(err);
+            if (err.response.status === 422 || 404) {
+              setFilter("");
+            }
+          });
+      }, [searchKey, page]);
+
     useEffect(() => {
         axios({
           method: "get",
-          url: "https://api.speakerore.com/api/getallarchievedevent",
+          url: `https://api.speakerore.com/api/getallarchievedevent?page=${page}`,
           withCredentials: true,
         })
           .then((res) => {
@@ -73,7 +94,7 @@ const Archived = () => {
       useEffect(() => {
         axios({
           method: "get",
-          url: "https://api.speakerore.com/api/getallarchievedevent",
+          url: `https://api.speakerore.com/api/getallarchievedevent?page=${page}`,
           withCredentials: true,
         })
           .then((res) => {
@@ -88,7 +109,7 @@ const Archived = () => {
           });
       }, [loading]);
 
-      console.log(archivedData)
+      // console.log(filter)
 
   return (
     <div>
@@ -96,8 +117,103 @@ const Archived = () => {
         <div>
           {archivedData ? (
             <div>
+            <div className="input-div" style={{ marginTop: "20px" }}>
+                <BiSearchAlt className="ico" />
+                <input
+                  placeholder="Search via keyword"
+                  className="dash-input"
+                  value={searchKey}
+                  onChange={(e) => {
+                    setSearchKey(e.target.value);
+                  }}
+                />
+              </div>
               <div className="card-container">
-                {archivedData.savedEvents.map((e) => (
+                {filter ? (
+                  filter.map((e) => (
+                    <div className="card">
+                  <div className="card-1">
+                      <div>
+                        <small
+                          style={{
+                            margin: "20px  0 0 2rem",
+                            fontSize: "1rem",
+                            fontWeight: "500",
+                            color: "#24754F",
+                          }}
+                        >
+                          {e.Category}{" "}
+                        </small>
+                        <bold>{e.OrganizerName}</bold>
+                        <span>{e.City}</span>
+                      </div>
+                      <div>
+                        {e.isSpeakerOreExclusive ? (
+                          <img src={exclusiveimg} />
+                        ) : null}
+                      </div>
+                    </div>
+                    <div className="card-2">
+                      <small>
+                        <MdLocationOn color="grey" size={20} />
+                        <h>{e.Mode}</h>
+                      </small>
+                      <br />
+                      <date>
+                        {" "}
+                        <MdWatchLater size={20} color="grey" />
+                        <q>{convertDate(e.EventEndDateAndTime)}</q>
+                      </date>
+                      <p></p>
+                    </div>
+                    <div className="desc">
+                    <p>{e.ShortDescriptionOfTheEvent}</p>
+                    </div>
+                    <div className="card-4">
+                      <button onClick={()=>{
+                         handleClickOpen();
+                        setDeleteId(e._id)
+                      }}>Delete permanently</button>
+                     
+                    </div>
+                    <Dialog
+                        fullScreen={fullScreen}
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="responsive-dialog-title"
+                      >
+                        <DialogTitle id="responsive-dialog-title">
+                          {"Do you want to delete this event permanently"}
+                        </DialogTitle>
+      
+                        <DialogActions>
+                          <Button
+                            onClick={() => {
+                              handleClose();
+                            }}
+                            autoFocus
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            onClick={() => {
+                              handleClose();
+                              handlePermanentDelete();
+                            }}
+                            autoFocus
+                          >
+                            Delete Event Permanently
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
+                  </div>
+                  ))
+                ) : searchKey ? (
+                  <div>
+                    <h3>No Matching Events</h3>
+                  </div>
+                ) : (
+                  archivedData.savedEvents.map((e) => (
                   <div className="card">
                   <div className="card-1">
                       <div>
@@ -174,7 +290,7 @@ const Archived = () => {
                         </DialogActions>
                       </Dialog>
                   </div>
-                ))}
+          )))}
               </div>
               <Stack spacing={2}>
                 <Pagination

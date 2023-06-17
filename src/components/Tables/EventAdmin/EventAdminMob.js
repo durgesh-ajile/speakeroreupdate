@@ -11,172 +11,379 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { BsArrowRightCircle } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import { Button } from "@mui/material";
+import exclusiveimg from "../../../images/Group.png";
 
 
 const EventAdmin = () => {
+  const [deleteevent, setDeleteevent] = React.useState("");
+  const [feedback, setFeedback] = React.useState("");
+  const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const [eventId, setEventId] = useState("");
+  const [eventsForApproval, setEventsForApproval] = useState("");
+  const [page, setPage] = React.useState(1);
+  const [loading, setLoading] = useState(false);
+  const [searchKey, setSearchKey] = React.useState();
+  const [filter, setFilter] = useState();
+
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
+
+  let navigate = useNavigate();
 
   function convertDate(e) {
     const date = new Date(e).toLocaleString();
     return date;
   }
 
-  const [eventsForApproval, setEventsForApproval] = useState([]);
-  const [deleteEventId, setDeleteEventId] = useState("");
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [feedback, setFeedback] = useState("");
-
-  const getEventForApproval = () => {
-    axios
-      .get("https://api.speakerore.com/api/geteventforapproval", {
-        withCredentials: true,
-      })
+  const geteventforapproval = () => {
+    axios({
+      method: "get",
+      url: `https://api.speakerore.com/api/geteventforapproval?page=${page}`,
+      withCredentials: true,
+    })
       .then((res) => {
         setEventsForApproval(res.data);
       })
       .catch((err) => {
         console.log(err);
-        if (err.response && err.response.status === 404) {
-          setEventsForApproval([]);
+        if (err.response.status === 404) {
+          setEventsForApproval("");
         }
       });
   };
-
-  let navigate = useNavigate();
 
   useEffect(() => {
-    getEventForApproval();
+    axios({
+      method: "get",
+      url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}&page=${page}`,
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log(res);
+        setFilter(res.data.queryResult);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status === 422 || 404) {
+          setFilter("");
+        }
+      });
+  }, [searchKey]);
+
+  useEffect(() => {
+    geteventforapproval();
   }, []);
 
+  useEffect(() => {
+    geteventforapproval();
+  }, [loading, page]);
+
+  const handleSingleView = () => {
+    axios({
+      method: "get",
+      url: `https://api.speakerore.com/api/getsingleevent/${eventId}`,
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleEventDelete = () => {
-    axios
-      .patch(
-        "https://api.speakerore.com/api/makeeventdecline",
-        {
-          eventId: deleteEventId,
-          feedback: feedback,
-        },
-        {
-          withCredentials: true,
-        }
-      )
+    axios({
+      method: "patch",
+      url: "https://api.speakerore.com/api/makeeventdecline",
+      data: {
+        eventId: deleteevent,
+        feedback: feedback,
+      },
+      withCredentials: true,
+    })
       .then((res) => {
         console.log(res);
-        getEventForApproval();
-        setDialogOpen(false);
-        setFeedback("");
+        setLoading(!loading);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const handleApproveEvent = (eventId) => {
-    axios
-      .patch(
-        "https://api.speakerore.com/api/makeeventapprove",
-        {
-          eventId,
-        },
-        {
-          withCredentials: true,
-        }
-      )
+  const handleApproveEvent = (id) => {
+    axios({
+      method: "patch",
+      url: "https://api.speakerore.com/api/makeeventapprove",
+      data: {
+        eventId: id,
+      },
+      withCredentials: true,
+    })
       .then((res) => {
         console.log(res);
-        getEventForApproval();
+        geteventforapproval();
+        setLoading(!loading);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const openDeleteDialog = (eventId) => {
-    setDeleteEventId(eventId);
-    setDialogOpen(true);
-  };
-
-  const closeDeleteDialog = () => {
-    setDeleteEventId("");
-    setDialogOpen(false);
-    setFeedback("");
-  };
-
-  const handleFeedbackSubmit = (e) => {
-    setFeedback(e.target.value);
+  const handleFeedbackSubmit = (event) => {
+    setFeedback(event.target.value);
   };
 
   return (
     <div>
-      <div className="allevent" id="alleven1">
-        {Array.isArray(eventsForApproval.savedEvents) ? (
-          eventsForApproval.savedEvents.map((event) => (
-            <div className="card" id="Card" key={event._id}>
-              <div className="card-1" id="Card-1">
-                <small>
-                  <IoSchoolSharp size={16} color="green" style={{ marginRight: "4px" }} />
-                  {event.Category}
-                </small>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <strong style={{ marginLeft: "35px", marginTop: "8px", marginBottom: "8px" }}>
-                    {event.Approved ? "Approved" : "Pending Approval"}
-                  </strong>
-                  <div
-                    className={`dot ${event.Approved ? "approved" : "pending"}`}
-                    style={{ marginLeft: "8px" }}
-                  ></div>
+      {eventsForApproval ? (
+        <div id="alleven1" className="allevent">
+          {filter ? (
+            filter.map((e) => (
+              <div id="Card" className="card">
+                <div id="Card-1" className="card-1">
+                  <small>
+                    <IoSchoolSharp
+                      size={16}
+                      color="green"
+                      style={{ marginRight: "4px" }}
+                    />
+                    {e.event_catogary}{" "}
+                  </small>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <strong
+                      style={{
+                        marginLeft: "35px",
+                        marginTop: "8px",
+                        marginBottom: "8px",
+                        color: "black",
+                      }}
+                    >
+                      {e.organizer},
+                    </strong>
+                    <span
+                      style={{
+                        marginLeft: "5px",
+                        marginTop: "8px",
+                        marginBottom: "8px",
+                      }}
+                    >
+                      {e.location}
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div className="card-2" id="Card-2">
-                <small>
-                  <MdLocationOn id="Location" color="grey" size={20} />
-                  {event.Location}
-                </small>
-                <small>
-                  <MdWatchLater id="Watch" color="grey" size={20} />
-                  {convertDate(event.EventEndDateAndTime)}
-                </small>
-              </div>
-              <div className="card-3" id="Card-3">
-                <h4>{event.ShortDescriptionOfTheEvent}</h4>
-                <p>{event.Description}</p>
-              </div>
-              <div className="arrow-icon">
-                <BsArrowRightCircle
-                  className="arrow-icon-main"
-                  size={40}
-                  color="grey"
-                  onClick={() => {
-                    navigate(`/event/${event._id}`);
+                <div id="Card-2" className="card-2">
+                  <small>
+                    <MdLocationOn id="Location" color="grey" size={20} />
+                    {e.event_type}
+                  </small>
+                  <br />
+                  <date>
+                    {" "}
+                    <MdWatchLater id="WatchLater" size={20} color="grey" />
+                    {e.date}
+                  </date>
+                  <p></p>
+                </div>
+                <div id="Desc" className="desc">
+                  <p>{e.desc}</p>
+                </div>
+                <div
+                  id="Card-4"
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-evenly",
+                    padding: "15px",
+                    paddingTop: "0px",
                   }}
-                />
+                  className="card-4"
+                >
+                  <button id="Delb">Delete Event</button>
+                  <button id="Viewb">View Event</button>
+                </div>
+                <hr style={{ marginLeft: "-10px", width: "100vw" }} />
               </div>
-              <div className="card-4" id="Card-4">
-                <button onClick={() => handleApproveEvent(event._id)}>View Event</button>
-                <button onClick={() => openDeleteDialog(event._id)}>Delete Event</button>
-              </div>
+            ))
+          ) : searchKey ? (
+            <div>
+              <h3>No Matching Events</h3>
             </div>
-          ))
-        ) : (
-          <p>No events for approval.</p>
-        )}
-      </div>
-      <Dialog open={dialogOpen} onClose={closeDeleteDialog}>
-        <DialogTitle>{"Please provide feedback"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            <input type="text" onChange={(e) => handleFeedbackSubmit(e)} />
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <button onClick={closeDeleteDialog} autoFocus>
-            Cancel
-          </button>
-          <button onClick={handleEventDelete} autoFocus>
-            Submit
-          </button>
-        </DialogActions>
-      </Dialog>
+          ) : (
+            eventsForApproval.savedEvents.map((e) => (
+              <div id="Card" className="card">
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div id="Card-1" className="card-1">
+                    <small>
+                      <IoSchoolSharp
+                        size={16}
+                        color="green"
+                        style={{ marginRight: "4px" }}
+                      />
+                      {e.Category}{" "}
+                    </small>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <strong
+                        style={{
+                          marginLeft: "35px",
+                          marginTop: "8px",
+                          marginBottom: "8px",
+                          color: "black",
+                        }}
+                      >
+                        {e.OrganizerName},
+                      </strong>
+                      <span
+                        style={{
+                          marginLeft: "5px",
+                          marginTop: "8px",
+                          marginBottom: "8px",
+                        }}
+                      >
+                        {e.City}
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    {e.isSpeakerOreExclusive ? (
+                      <img src={exclusiveimg} />
+                    ) : null}
+                  </div>
+                </div>
+                <div id="Card-2" className="card-2">
+                  <small>
+                    <MdLocationOn id="Location" color="grey" size={20} />
+                    {e.Mode}
+                  </small>
+                  <br />
+                  <date>
+                    {" "}
+                    <MdWatchLater id="WatchLater" size={20} color="grey" />
+                    {convertDate(e.EventEndDateAndTime)}
+                  </date>
+                  <p></p>
+                </div>
+                <div id="Desc" className="desc">
+                  <p>{e.ShortDescriptionOfTheEvent}</p>
+                </div>
+                <div
+                  id="Card-4"
+                  style={{
+                    display: "flex",
+                    padding: "0 0 15px",
+                    paddingTop: "0px",
+                    justifyContent: "space-between",
+                  }}
+                  className="card-4"
+                >
+                  <span>
+                    <button
+                      id="Delb"
+                      onClick={() => {
+                        setDeleteevent(e._id);
+                        handleClickOpen();
+                      }}
+                    >
+                      Delete Event
+                    </button>
+                    <button
+                      id="Viewb"
+                      onClick={() => {
+                        handleApproveEvent(e._id);
+                      }}
+                    >
+                      Approve Event
+                    </button>
+                  </span>
+                  <div className="arrow-icon">
+                    <BsArrowRightCircle
+                      className="arrow-icon-main"
+                      size={30}
+                      color="grey"
+                      onClick={() => {
+                        navigate(`/event/${e._id}`);
+                      }}
+                    />
+                  </div>
+                  <Dialog
+                    fullScreen={fullScreen}
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="responsive-dialog-title"
+                  >
+                    <DialogTitle id="responsive-dialog-title">
+                      {"Please provide feedback"}
+                    </DialogTitle>
+                    <DialogContent>
+                      <input
+                        value={feedback}
+                        type="text"
+                        onChange={(e) => {
+                          handleFeedbackSubmit(e);
+                        }}
+                      />
+                    </DialogContent>
+                    <DialogActions>
+                      <Button
+                        onClick={() => {
+                          handleClose();
+                        }}
+                        autoFocus
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          handleClose();
+                          handleEventDelete();
+                        }}
+                        autoFocus
+                      >
+                        Submit
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </div>
+                <hr style={{ marginLeft: "-10px", width: "100vw" }} />
+              </div>
+            ))
+          )}
+          <Stack spacing={2}>
+            <Pagination
+              style={{ justifyContent: "center", marginTop: "20px" }}
+              count={eventsForApproval.totalPages}
+              page={page}
+              onChange={handleChange}
+            />
+            <Typography>Page: {page}</Typography>
+          </Stack>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

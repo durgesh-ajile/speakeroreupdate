@@ -8,8 +8,8 @@ import TeamMembers1 from "../../components/Tables/TeamMember/TeamMembers1";
 import CouponTable1 from "../../components/Tables/CouponTable/CouponTable1";
 import EventAdmin1 from "../../components/Tables/EventAdmin/EventAdmin1";
 import CreateCoupon from "../../components/Tables/CreateCoupon";
-import Trash from "../../components/Tables/Trash";
-import Archived from "../../components/Tables/Archived";
+import Trash1 from "../../components/Tables/Trash/Trash1";
+import Archived1 from "../../components/Tables/Archived/Archived1";
 import { useNavigate } from "react-router-dom";
 const data = {
   name: "Divya Devendar",
@@ -136,7 +136,7 @@ const Admin = () => {
               onClick={handleArchieved}
               className={select == 'archieved' ? "backgreen" : ""}
             >
-              Archieved
+              Archived
             </button>
             <button
               onClick={handleCreateCoupon}
@@ -155,10 +155,10 @@ const Admin = () => {
         {select === 'event' ? <EventAdmin1 /> : ""}
         {select === 'user'  ? <UserTable1 /> : ""}
         {select === 'member'  ? <TeamMembers1 /> : ""}
-        {select === 'trash'  ? <Trash /> : ""}
+        {select === 'trash'  ? <Trash1 /> : ""}
         {select === 'coupon' ? <CouponTable1 /> : ""}
         {select === 'createCoupon' ? <CreateCoupon /> : ""}
-        {select === 'archieved' ? <Archived /> : ""}
+        {select === 'archieved' ? <Archived1 /> : ""}
       </div>
     </div>
   );

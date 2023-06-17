@@ -151,7 +151,7 @@ export default function PersistentDrawerLeft() {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}`,
+      url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -160,7 +160,7 @@ export default function PersistentDrawerLeft() {
       })
       .catch((err) => {
         console.log(err);
-        if(err.response.status === 404){
+        if(err.response.status === 422 || 404){
           setFilter('')
         }
       });
@@ -404,7 +404,7 @@ export default function PersistentDrawerLeft() {
               <Typography>Page: {page}</Typography>
             </Stack>
           </div>
-        ) : mode || category || date || exclusive ? (<div>
+        ) : mode || category || date || exclusive || searchKey ? (<div>
           <h3>No Matching Events</h3>
         </div>) : approvedEvent ? (
           <div>

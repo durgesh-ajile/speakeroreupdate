@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import exclusiveimg from '../../images/Group.png'
 
 import { Button } from "@mui/material";
-import Archived from "../../components/Tables/Archived";
+import Archived from "../../components/Tables/Archived/Archived1";
 
 const Member = () => {
   const [subs, setSubs] = useState("event");
