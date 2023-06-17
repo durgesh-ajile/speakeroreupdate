@@ -189,7 +189,7 @@ export default function PersistentDrawerLeft() {
 
         
         if (exclusive !== undefined) {
-          queryParams.push(`speakeroreExclusive=${exclusive}`);
+          queryParams.push(`exclusive=${exclusive}`);
           
         }
         return queryParams.join("&");
