@@ -187,6 +187,7 @@ margin-left: 15px;
     background-color:white;
     border-radius: 10px;
     width: 420px;
+    text-align: center;
   }
   .LoginSignupPopup_cuntent_ui p{
     color:#8692A6
@@ -220,6 +221,16 @@ border-radius: 6px;
   
     .Privacy_Policy_container>.Privacy_Policy_container_fluid>div>h4 {
         font-size: 12px;
+    }
+
+    .LoginSignupPopup_cuntent_ui{
+      background-color:white;
+      border-radius: 10px;
+      width: 350px;
+      text-align: center;
+    }
+    .login-google{
+      margin: 0 50px;
     }
   }
   

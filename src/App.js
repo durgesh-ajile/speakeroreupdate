@@ -17,6 +17,7 @@ import FAQ from './utilities/FAQ/Faq';
 import Terms_N_Conditions from './utilities/TNC/Tnc';
 import Privacy_Policy from './utilities/Policy/Policy';
 import './utilities/omResponsive.css'
+import Event1 from './utilities/Events/Event1';
 function App() {
   return (
     <BrowserRouter>
@@ -26,7 +27,7 @@ function App() {
         <Route path="/" element={<Landing />}></Route>
         <Route
           path="/event"
-          element={<AuthHOC WrappedComponent={PersistentDrawerLeft} />}
+          element={<AuthHOC WrappedComponent={Event1} />}
         />
         <Route
           path="/subscription"

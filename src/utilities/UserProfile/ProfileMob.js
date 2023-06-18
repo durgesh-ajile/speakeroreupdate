@@ -8,7 +8,7 @@ import exclusiveimg from "../../images/Group.png";
 import { useNavigate } from "react-router-dom";
 import { IoSchoolSharp } from "react-icons/io5";
 import Admin from "../Admin/Admin";
-import Member from "../Member/Member";
+import MemberMob from "../Member/MemberMob";
 import AdminMob from "../Admin/AdminMob";
 import { Button } from "@mui/material";
 const data = {
@@ -222,7 +222,7 @@ const Profile = () => {
   return role === "admin" ? (
     <AdminMob />
   ) : role === "Team-member" ? (
-    <Member />
+    <MemberMob />
   ) : (
     <>
       <div id="profile-container">
@@ -436,104 +436,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-// import React, {useState} from 'react'
-// import './Admin.css'
-// import { IoMdLogOut } from "react-icons/io";
-
-// import CouponTable1 from '../../components/Tables/CouponTable1'
-// import EventAdmin1 from '../../components/Tables/EventAdmin1';
-// import TeamMembers1 from '../../components/Tables/TeamMembers1';
-// import UserTable1 from '../../components/Tables/UserTable1'
-// const data = {
-//     name: "Divya Devendar",
-//     email: "example123@gmail.com",
-//   };
-
-// const Admin = () => {
-
-//     const [event, setevent] = useState(true);
-//     const [user, setUser] = useState(false);
-//     const [members, setMembers] = useState(false);
-//     const [coupon, setCoupon] = useState(false);
-
-//   const handleUser = () => {
-//     setUser(true);
-//     setevent(false)
-//     setCoupon(false)
-//     setMembers(false)
-//   };
-//   const handleMember = () => {
-//     setUser(false);
-//     setevent(false)
-//     setCoupon(false)
-//     setMembers(true)
-//   };
-//   const handleEvent = () => {
-//     setUser(false);
-//     setevent(true)
-//     setCoupon(false)
-//     setMembers(false)
-//   };
-//   const handleCoupon = () => {
-//     setUser(false);
-//     setevent(false)
-//     setCoupon(true)
-//     setMembers(false)
-//   };
-//   return (
-//     <div id='Admin' className='admin'>
-//       <div id='Left-container' className="left-container">
-//         <div id='Profile-pic' className="profile-pic">
-//           <div id='Img' className="img">{data.name[0]}</div>
-//           <div id='Name-deatils' className="name-deatils">
-//             <bold>{data.name}</bold>
-//             <span>{data.email}</span>
-//           </div>
-//         </div>
-//         {/* <div id='Logout' className="logout">
-//             <IoMdLogOut/>{" "}<span>Logout</span>
-
-//         </div> */}
-//         <div id='Subs-button' className="subs-button">
-//           <div id='Subsbutton' className="subsbutton">
-//             <button
-//               onClick={handleEvent}
-//               className={event == true ? "backgreen1" : ""}
-//             >
-//               {" "}
-//               Events
-//             </button>
-//             <button
-//               onClick={handleUser}
-//               className={user == true ? "backgreen1" : ""}
-//             >
-//               Users
-//             </button>
-//             <button id='teamMember'
-//               onClick={handleMember}
-//               className={members == true ? "backgreen1" : ""}
-//             >
-//               Team<span id='Span'>Members</span>
-//             </button>
-//             <button
-//               onClick={handleCoupon}
-//               className={coupon == true ? "backgreen1" : ""}
-//             >
-//               Coupons
-//             </button>
-//           </div>
-//         </div>
-
-//       </div>
-//       <div id='Events-content' className='events-content'>
-//       {event == true ? <EventAdmin1/> : ""}
-//       {user == true ? <UserTable1/> : ""}
-//       {members == true ? <TeamMembers1/> : ""}
-//       {coupon == true ? <CouponTable1/> : ""}
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default Admin

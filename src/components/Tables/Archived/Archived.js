@@ -16,9 +16,9 @@ import { BiSearchAlt } from "react-icons/bi";
 const Archived = () => {
     const [archivedData, setArchivedData] = useState("");
     const [page, setPage] = React.useState(1);
+    const [searchKey, setSearchKey] = React.useState();
     const [deleteId, setDeleteId] = useState('');
     const [loading, setLoading] = useState(false);
-    const [searchKey, setSearchKey] = React.useState();
     const [filter, setFilter] = useState();
   
     const handleChange = (event, value) => {

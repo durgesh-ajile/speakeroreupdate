@@ -1,4 +1,7 @@
-import * as React from "react";
+import React, { useRef } from "react";
+import "./Eventmob.css";
+// import filter_icon from '../../assets/img/filter_icon.jpg'
+import EventlistInfo from "./EventlistInfo";
 import { useState } from "react";
 import "./sidebar.css";
 import { styled, useTheme } from "@mui/material/styles";
@@ -14,56 +17,11 @@ import { useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import exclusiveimg from "../../images/Group.png";
+import { BiSearchAlt } from "react-icons/bi";
 
-const drawerWidth = 340;
-
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && {
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
-  })
-);
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  transition: theme.transitions.create(["margin", "width"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: "flex-end",
-}));
-
-export default function Sidebar() {
-  const theme = useTheme();
+const Eventlist = () => {
+  const [filterToggle, setFilterToggle] = useState(true);
+  const NavbarboxRefFilter = useRef(null);
   const [cal, setcal] = React.useState(false);
   const [value, setValue] = useState(new Date());
   const [approvedEvent, setApprovedEvent] = useState();
@@ -218,43 +176,82 @@ export default function Sidebar() {
     const date = new Date(e).toLocaleString();
     return date;
   }
-  console.log(date)
-  console.log(filter)
+
+  const handleToggle = () => {
+    const box = NavbarboxRefFilter.current;
+    // Apply initial styles
+    box.style.transition = "transform 0.3s ease-in-out";
+    box.style.transform = filterToggle && "translateX(70%)";
+    box.style.right = !filterToggle && "-21%";
+    box.style.display = filterToggle ? "block" : "none";
+
+    // Delay style changes to ensure initial styles are applied before transition
+    setTimeout(() => {
+      box.style.transition = "transform 0.3s ease-out";
+      box.style.transform = filterToggle
+        ? "translateX(-0%)"
+        : "translateX(70%)";
+      box.style.right = filterToggle ? "0%" : "-21%";
+    }, 200);
+    setFilterToggle(!filterToggle);
+  };
 
   return (
-    <div className="event-main">
-      <div className="filter-sidebar">
-        <div className="filter-child">
-          <div>
-            <h1>Filter</h1>
-          </div>
-          <div>
-            <h4>Modes</h4>
-          </div>
-          <div className="mode">
-            <div onClick={handleOnline}>
-              <input type="checkbox" checked={online}  />
-              <lable>Online</lable>
-            </div>
+    <>
+      <div className="Eventlist_container">
+        <div className="Eventlist_container_left">
+          <h4 style={{ margin: "10px 0" }}>Events list</h4>
+        </div>
 
-            <div onClick={handleInperson}>
-              <input
-                type="checkbox"
-                checked={inperson}
-              />
-              <lable>In-person</lable>
-            </div>
+        <div
+          onClick={() => handleToggle()}
+          className="Eventlist_container_right"
+        >
+          {/* <img src={filter_icon} alt="" /> */}
+          <h4 style={{ margin: "0 10px" }}>Filter</h4>
+        </div>
+      </div>
+      <hr style={{ width: "100%" }} />
+      <div className="input-div" style={{ marginTop: "20px" }}>
+                <BiSearchAlt className="ico" />
+                <input
+                  placeholder="Search via keyword"
+                  className="dash-input"
+                  value={searchKey}
+                  onChange={(e) => {
+                    setSearchKey(e.target.value);
+                  }}
+                />
+              </div>
+      {/* {
+            filterToggle && */}
+      {!filterToggle && (
+        <div
+          onClick={() => handleToggle()}
+          className="Eventlist_filter_sidebar_empty_div"
+        ></div>
+      )}
 
-            <div onClick={handleHybrid}>
-              <input type="checkbox" checked={hybrid} />
-              <lable>Hybrid</lable>
-            </div>
+      <div ref={NavbarboxRefFilter} className="Eventlist_filter_sidebar">
+        <div className="Eventlist_filter_sidebar_fluid">
+          <h3>Filter</h3>
+          <p>Models</p>
+          <div className="Eventlist_input_type_checkbox" onClick={handleOnline}>
+            <input type="checkbox" checked={online}  name="" id="" />
+            <p>online</p>
           </div>
-          <div>
-            <h4>Category</h4>
+          <div className="Eventlist_input_type_checkbox" onClick={handleInperson}>
+            <input type="checkbox" name="" id="" checked={inperson}/>
+            <p>In-person</p>
           </div>
-          <div className="catogary">
-            <select
+          <div className="Eventlist_input_type_checkbox" onClick={handleHybrid}>
+            <input type="checkbox" name="" id="" checked={hybrid}/>
+            <p>Hybrid</p>
+          </div>
+
+          <p>Category</p>
+
+          <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
@@ -287,10 +284,9 @@ export default function Sidebar() {
               <option value="Sales"> Sales</option>
               <option value="Soft Skill">Soft Skill</option>
             </select>
-          </div>
-          <div>
-            <h4>Select a date</h4>
-          </div>
+
+          <p>Select a date</p>
+
           <div className="calendar">
             <input
               value={value}
@@ -298,99 +294,60 @@ export default function Sidebar() {
               placeholder="Select start date"
             />
           </div>
-          <div onClick={handleExclusive}>
-            <h4>SpeakerOre</h4>
-            <div className="speaker-exclusive">
-              <input
-                type="checkbox"
-                checked={exclusive}
-              />
-              <lable>Exclusive</lable>
-            </div>
-          </div>
 
-          {cal == true ? (
-            <Calendar value={value} onChange={(d) => setValue(d)} />
-          ) : (
-            ""
-          )}
-          <div className="filter-input">
-          <h4>Search by keyword</h4>
-          <input placeholder=" Type here" value={searchKey} onChange={(e)=> {
-            setSearchKey(e.target.value)
-          }} />
+          <p>SpeakerOre</p>
+          <div className="Eventlist_input_type_checkbox"  onClick={handleExclusive}>
+            <input type="checkbox" name="" id=""  checked={exclusive}/>
+            <p className="p">SpeakerOre Exclusive</p>
           </div>
         </div>
       </div>
+      {/* } */}
 
-      <div className="right-container-e" id='right-container-event'>
-        <div className="head-banner">
-          <div className="banner-container">
-            <div className="view-text">
-              <h3>Gold Deposits - Events Exploration Page </h3>
-              <h5>
-                Explore, Map, Analyse, Mine &amp; Extract. For best results,
-                <br /> Choose events from your category and focus!
-              </h5>
-            </div>
+      {/* use map funtion here */}
+      {filter ? (
+          <div>
             <div>
-              <img src={man} />
+              {filter.map((e) => (
+                <>
+      <div className="EventlistInfo_container">
+        <div className="EventlistInfo_container_fluid">
+          <div>
+            {/* <img src={education} alt="" /> */}
+            <p>{e.Category}</p>
+          </div>
+
+          <p style={{ margin: "0" }}>
+            <b>{e.OrganizerName},</b> <span>{e.City}</span>{" "}
+          </p>
+
+          <div>
+            <div
+              className="EventlistInfo_location"
+              style={{ color: "#6F6F6F" }}
+            >
+              <div>
+              <MdLocationOn size={20} />
+                <p>{e.Mode}</p>
+              </div>
+              <div style={{ marginLeft: "20px" }}>
+              <MdWatchLater size={20} />
+                <p style={{ marginLeft: "4px" }}>{convertDate(e.EventEndDateAndTime)}</p>
+              </div>
+            </div>
+          </div>
+          <div className="EventlistInfo_bottom_text">
+            <div>
+              <p style={{ marginTop: "5px" }}>{e.ShortDescriptionOfTheEvent}</p>
+              <button onClick={() => {
+                        navigate(`/event/${e._id}`);
+                      }} >View Details</button>
             </div>
           </div>
         </div>
-        {filter ? (
-          <div>
-            <div className="card-container">
-              {filter.map((e) => (
-                <div className="card">
-                  <div className="card-1">
-                    <div>
-                      <small
-                        style={{
-                          margin: "20px  0 0 2rem",
-                          fontSize: "1rem",
-                          fontWeight: "500",
-                          color: "#24754F",
-                        }}
-                      >
-                        {e.Category}{" "}
-                      </small>
-                      <bold>{e.OrganizerName}</bold>
-                      <span>{e.City}</span>
-                    </div>
-                    <div>
-                      {e.isSpeakerOreExclusive ? (
-                        <img src={exclusiveimg} />
-                      ) : null}
-                    </div>
-                  </div>
-                  <div className="card-2">
-                    <span>
-                      <MdLocationOn size={20} />
-                      <h>{e.Mode}</h>
-                    </span>
-
-                    <date>
-                      {" "}
-                      <MdWatchLater size={20} />
-                      <q>{convertDate(e.EventEndDateAndTime)}</q>
-                    </date>
-                    <p></p>
-                  </div>
-                  <div className="desc">
-                    <p>{e.ShortDescriptionOfTheEvent}</p>
-                  </div>
-                  <div className="card-3">
-                    <button
-                      onClick={() => {
-                        navigate(`/event/${e._id}`);
-                      }}
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
-              ))}
+      </div>
+      <hr style={{ width: "100%" }} />
+      </> ))}
             </div>
             <Stack spacing={2}>
               <Pagination
@@ -406,58 +363,49 @@ export default function Sidebar() {
           <h3>No Matching Events</h3>
         </div>) : approvedEvent ? (
           <div>
-            <div className="card-container">
-              {approvedEvent.savedEvents.map((e) => (
-                <div className="card">
-                  <div className="card-1">
-                    <div>
-                      <small
-                        style={{
-                          margin: "20px  0 0 2rem",
-                          fontSize: "1rem",
-                          fontWeight: "500",
-                          color: "#24754F",
-                        }}
-                      >
-                        {e.Category}{" "}
-                      </small>
-                      <bold>{e.OrganizerName}</bold>
-                      <span>{e.City}</span>
-                    </div>
-                    <div>
-                      {e.isSpeakerOreExclusive ? (
-                        <img src={exclusiveimg} />
-                      ) : null}
-                    </div>
-                  </div>
-                  <div className="card-2">
-                    <span>
-                      <MdLocationOn size={20} />
-                      <h>{e.Mode}</h>
-                    </span>
+            <div>
+      {approvedEvent?.savedEvents.map((e) => (
+      <>
+      <div className="EventlistInfo_container">
+        <div className="EventlistInfo_container_fluid">
+          <div>
+            {/* <img src={education} alt="" /> */}
+            <p>{e.Category}</p>
+          </div>
 
-                    <date>
-                      {" "}
-                      <MdWatchLater size={20} />
-                      <q>{convertDate(e.EventEndDateAndTime)}</q>
-                    </date>
-                    <p></p>
-                  </div>
-                  <div className="desc">
-                    <p>{e.ShortDescriptionOfTheEvent}</p>
-                  </div>
-                  <div className="card-3">
-                    <button
-                      onClick={() => {
-                        navigate(`/event/${e._id}`);
-                      }}
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
-              ))}
+          <p style={{ margin: "0" }}>
+            <b>{e.OrganizerName},</b> <span>{e.City}</span>{" "}
+          </p>
+
+          <div>
+            <div
+              className="EventlistInfo_location"
+              style={{ color: "#6F6F6F" }}
+            >
+              <div>
+              <MdLocationOn size={20} />
+                <p>{e.Mode}</p>
+              </div>
+              <div style={{ marginLeft: "20px" }}>
+              <MdWatchLater size={20} />
+                <p style={{ marginLeft: "4px" }}>{convertDate(e.EventEndDateAndTime)}</p>
+              </div>
             </div>
+          </div>
+          <div className="EventlistInfo_bottom_text">
+            <div>
+              <p style={{ marginTop: "5px" }}>{e.ShortDescriptionOfTheEvent}</p>
+              <button onClick={() => {
+                        navigate(`/event/${e._id}`);
+                      }} >View Details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr style={{ width: "100%" }} />
+      </>
+      ))}
+      </div>
             <Stack spacing={2}>
               <Pagination
                 style={{ justifyContent: "center", marginTop: "20px" }}
@@ -471,7 +419,9 @@ export default function Sidebar() {
         ) : (
           ""
         )}
-      </div>
-    </div>
+    </>
+    
   );
-}
+};
+
+export default Eventlist;
