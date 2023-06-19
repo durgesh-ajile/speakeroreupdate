@@ -124,8 +124,6 @@ const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Pre
           </span>
           <TagsInput
             value={tags}
-            // value={handleOrganizerDetails?.event}
-            // onChange={(e) => { handleChangeOrganizerDetailsFormTags(e) }}
             onChange={setTags}
             name="tag"
             placeHolder="Press Enter To Add a Field"

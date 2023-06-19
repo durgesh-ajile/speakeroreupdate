@@ -12,6 +12,18 @@ import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { BiSearchAlt } from "react-icons/bi";
+import { ToastContainer, toast } from "react-toastify";
+
+const successToast = {
+  position: "bottom-right",
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "light",
+};
 
 const Trash = () => {
   const [trashData, setTrashData] = useState("");
@@ -50,7 +62,7 @@ const Trash = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getalltrashevents?page=${page}`,
+      url: `http://localhost:5000/api/getalltrashevents?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -64,7 +76,7 @@ const Trash = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getalltrashevents?page=${page}`,
+      url: `http://localhost:5000/api/getalltrashevents?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -81,7 +93,7 @@ const Trash = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventbyqueryfortrash?keyword=${searchKey}&page=${page}`,
+      url: `http://localhost:5000/api/geteventbyqueryfortrash?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -99,22 +111,24 @@ const Trash = () => {
   const handlePermanentDelete = () => {
     axios({
       method: "delete",
-      url: `https://api.speakerore.com/api/deleteevent?eventId=${deleteId}`,
+      url: `http://localhost:5000/api/deleteevent?eventId=${deleteId}`,
       withCredentials: true,
     })
       .then((res) => {
         console.log(res.data);
         setLoading(!loading);
+        toast.success(res.data.message, successToast);
       })
       .catch((err) => {
         console.log(err);
+        toast.error(err.response.data.message, successToast);
       });
   };
 
   const handleReviveCard = () => {
     axios({
       method: "patch",
-      url: "https://api.speakerore.com/api/revivefortrash",
+      url: "http://localhost:5000/api/revivefortrash",
       withCredentials: true,
       data: {
         eventId: reviveId,
@@ -123,9 +137,11 @@ const Trash = () => {
       .then((res) => {
         console.log(res.data);
         setLoading(!loading);
+        toast.success(res.data.message, successToast);
       })
       .catch((err) => {
         console.log(err);
+        toast.error(err.response.data.message, successToast);
       });
   };
 
@@ -133,10 +149,10 @@ const Trash = () => {
     const date = new Date(e).toLocaleString();
     return date;
   }
-  console.log(trashData);
 
   return (
     <div>
+      <ToastContainer />
       <div className="allevent" style={{ flexWrap: "wrap" }}>
         <div>
           {trashData ? (

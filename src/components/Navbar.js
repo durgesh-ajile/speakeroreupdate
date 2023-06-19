@@ -43,12 +43,14 @@ const MobileNavbar = ({userData, isAuthenticated, showPopup, setShowPopup}) => {
 
     return (<>
         <div className='Navbar_coontainer'>
+        <Link to='/'>
             <div className="Navbar_logo">
                 <img src={logo} alt="" />
             </div>
+            </Link>
             {isAuthenticated ? (
-              <div onClick={() => handleToggle()} className="Navbar_hambergure_icon">
-                <h6>HI {userData}!</h6>
+              <div onClick={() => handleToggle()} style={{color:'#24754F'}} className="Navbar_hambergure_icon">
+                <h4 style={{marginRight:'10px'}}>HI {userData}!</h4>
                 <GiHamburgerMenu/>
             </div>) : (
               <>
@@ -106,7 +108,7 @@ const Navbar = () => {
     setLoading(true);
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/auth/check",
+      url: "http://localhost:5000/api/auth/check",
       withCredentials: true,
     })
       .then((res) => {
@@ -128,7 +130,7 @@ const Navbar = () => {
     if (isAuthenticated) {
       axios({
         method: "get",
-        url: "https://api.speakerore.com/api/getprofile",
+        url: "http://localhost:5000/api/getprofile",
         withCredentials: true,
       })
         .then((res) => {

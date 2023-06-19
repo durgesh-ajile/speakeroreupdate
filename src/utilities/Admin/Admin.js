@@ -11,6 +11,9 @@ import CreateCoupon from "../../components/Tables/CreateCoupon";
 import Trash1 from "../../components/Tables/Trash/Trash1";
 import Archived1 from "../../components/Tables/Archived/Archived1";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const data = {
   name: "Divya Devendar",
   email: "example123@gmail.com",
@@ -47,7 +50,7 @@ const Admin = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/getprofile",
+      url: "http://localhost:5000/api/getprofile",
       withCredentials: true,
     })
       .then((res) => {
@@ -63,7 +66,7 @@ const Admin = () => {
   const handleLogout = () => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/logout",
+      url: "http://localhost:5000/api/logout",
       withCredentials: true,
     })
       .then((res) => {

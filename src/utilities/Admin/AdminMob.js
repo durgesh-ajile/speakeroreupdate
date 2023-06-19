@@ -42,7 +42,7 @@ const AdminMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/getprofile",
+      url: "http://localhost:5000/api/getprofile",
       withCredentials: true,
     })
       .then((res) => {
@@ -58,7 +58,7 @@ const AdminMob = () => {
   const handleLogout = () => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/logout",
+      url: "http://localhost:5000/api/logout",
       withCredentials: true,
     })
       .then((res) => {
@@ -137,7 +137,7 @@ const AdminMob = () => {
               onClick={handleArchieved}
               className={select == "archieved" ? "backgreen1" : ""}
             >
-              Archieved
+              Archived
             </button>
             <button
               onClick={handleCreateCoupon}

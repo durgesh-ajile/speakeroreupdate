@@ -11,7 +11,7 @@ const AuthHOC = ({ WrappedComponent }) => {
     const checkAuthentication = async () => {
       try {
         const response = await axios.get(
-          "https://api.speakerore.com/api/auth/check",
+          "http://localhost:5000/api/auth/check",
           {
             withCredentials: true,
           }

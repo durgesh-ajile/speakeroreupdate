@@ -1,14 +1,14 @@
 import UsersCard from "./UsersCard";
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { BiSearchAlt } from 'react-icons/bi';
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { BiSearchAlt } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
@@ -19,13 +19,23 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import { ToastContainer, toast } from "react-toastify";
 
+const successToast = {
+  position: "bottom-right",
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "light",
+};
 const UsersWrapper = () => {
-
   const [userData, setUserData] = useState("");
   const [loading, setLoading] = useState(false);
-  const [block, setBlock] = useState('');
-  const [makeMemberId, setMakeMemberId] = useState('');
+  const [block, setBlock] = useState("");
+  const [makeMemberId, setMakeMemberId] = useState("");
 
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
@@ -39,7 +49,6 @@ const UsersWrapper = () => {
     setOpen(false);
   };
 
-
   const [open2, setOpen2] = React.useState(false);
 
   const handleClickOpen2 = () => {
@@ -50,29 +59,29 @@ const UsersWrapper = () => {
     setOpen2(false);
   };
 
-
   const blockRegularUser = () => {
     axios({
       method: "patch",
-      url: "https://api.speakerore.com/api/blockregularuser",
+      url: "http://localhost:5000/api/blockregularuser",
       withCredentials: true,
       data: {
         userId: block,
       },
     })
       .then((res) => {
-        console.log(res.data);
-        setLoading(!loading)
+        toast.success(res.data.message, successToast);
+        setLoading(!loading);
       })
       .catch((err) => {
         console.log(err);
+        toast.error(err.response.data.message, successToast);
       });
   };
 
   const makeMember = () => {
     axios({
       method: "patch",
-      url: "https://api.speakerore.com/api/makeusertoteammember",
+      url: "http://localhost:5000/api/makeusertoteammember",
       withCredentials: true,
       data: {
         userId: makeMemberId,
@@ -80,18 +89,19 @@ const UsersWrapper = () => {
     })
       .then((res) => {
         console.log(res.data);
-        setLoading(!loading)
+        setLoading(!loading);
+        toast.success(res.data.message, successToast);
       })
       .catch((err) => {
         console.log(err);
+        toast.error(err.response.data.message, successToast);
       });
   };
-
 
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/getallregularuser",
+      url: "http://localhost:5000/api/getallregularuser",
       withCredentials: true,
     })
       .then((res) => {
@@ -105,7 +115,7 @@ const UsersWrapper = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/getallregularuser",
+      url: "http://localhost:5000/api/getallregularuser",
       withCredentials: true,
     })
       .then((res) => {
@@ -113,8 +123,8 @@ const UsersWrapper = () => {
       })
       .catch((err) => {
         console.log(err);
-        if(err.response.status === 404){
-          setUserData('')
+        if (err.response.status === 404) {
+          setUserData("");
         }
       });
   }, [loading]);
@@ -123,10 +133,10 @@ const UsersWrapper = () => {
     const date = new Date(e).toLocaleDateString();
     return date;
   }
-console.log(loading)
+  
   return (
-    
     <div>
+      <ToastContainer />
       <div className="input-div">
         <input
           placeholder="Search via roles"
@@ -144,103 +154,118 @@ console.log(loading)
           }}
         />
       </div>
-      {userData ? userData.savedUser.map((row) => (
-        <>
-      <div className="coupon-card-continer">
-        <div className="user-id">
-          <span>USER ID</span>
-          <div></div>
-          <span>{row.alphaUnqiueId}</span>
-        </div>
-        <p className="mail">{row.email}</p>
-        <div className="plan-type">
-          <span>Plan</span>
-          <div></div>
-          <span style={{ color: "gray" }}>{row.subcription ? row.subcription.Subcription_Type : null}</span>
-        </div>
-          <div>
-          {convertDate(row.subcription && row.subcription.StartDate)} - {convertDate(row.subcription && row.subcription.EndDate)}
-          </div>
-        <div>
-          <button id="Button" className="blacklist-btn" onClick={() => {
-                setLoading(!loading)
-                handleClickOpen();
-                setBlock(row._id)
-              }} >
-          Blacklist
-          </button>
-          <button id="Button" className="make-members-btn"  onClick={() => {
-                setLoading(!loading)
-                handleClickOpen2();
-                setMakeMemberId(row._id)
-              }} >
-            Make Member
-          </button>
-          <Dialog
-                        fullScreen={fullScreen}
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="responsive-dialog-title"
-                      >
-                        <DialogTitle id="responsive-dialog-title">
-                          {"Are You Sure You Want To Block This User"}
-                        </DialogTitle>
-      
-                        <DialogActions>
-                          <Button
-                            onClick={() => {
-                              handleClose();
-                            }}
-                            autoFocus
-                          >
-                            Cancel
-                          </Button>
-                          <Button
-                            onClick={() => {
-                              handleClose();
-                              blockRegularUser();
-                            }}
-                            autoFocus
-                          >
-                            Block
-                          </Button>
-                        </DialogActions>
-                      </Dialog>
-                      <Dialog
-                        fullScreen={fullScreen}
-                        open={open2}
-                        onClose={handleClose2}
-                        aria-labelledby="responsive-dialog-title"
-                      >
-                        <DialogTitle id="responsive-dialog-title">
-                          {"Do you want to make this user to team member"}
-                        </DialogTitle>
-      
-                        <DialogActions>
-                          <Button
-                            onClick={() => {
-                              handleClose2();
-                            }}
-                            autoFocus
-                          >
-                            Cancel
-                          </Button>
-                          <Button
-                            onClick={() => {
-                              handleClose2();
-                              makeMember();
-                            }}
-                            autoFocus
-                          >
-                            Make Member
-                          </Button>
-                        </DialogActions>
-                      </Dialog>
-        </div>
-      </div>
-      <hr style={{ marginLeft: 0, width: "100vw" }} />
-      </>
-      )) : <></>}
+      {userData ? (
+        userData.savedUser.map((row) => (
+          <>
+            <div className="coupon-card-continer">
+              <div className="user-id">
+                <span>USER ID</span>
+                <div></div>
+                <span>{row.alphaUnqiueId}</span>
+              </div>
+              <p className="mail">{row.email}</p>
+              <div className="plan-type">
+                <span>Plan</span>
+                <div></div>
+                <span style={{ color: "gray" }}>
+                  {row.subcription ? row.subcription.Subcription_Type : null}
+                </span>
+              </div>
+              <div>
+                {convertDate(row.subcription && row.subcription.StartDate)} -{" "}
+                {convertDate(row.subcription && row.subcription.EndDate)}
+              </div>
+              <div>
+                <button
+                  id="Button"
+                  className="blacklist-btn"
+                  onClick={() => {
+                    setLoading(!loading);
+                    handleClickOpen();
+                    setBlock(row._id);
+                  }}
+                >
+                  Blacklist
+                </button>
+                <button
+                  id="Button"
+                  className="make-members-btn"
+                  onClick={() => {
+                    setLoading(!loading);
+                    handleClickOpen2();
+                    setMakeMemberId(row._id);
+                  }}
+                >
+                  Make Member
+                </button>
+                <Dialog
+                  fullScreen={fullScreen}
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="responsive-dialog-title"
+                >
+                  <DialogTitle id="responsive-dialog-title">
+                    {"Are You Sure You Want To Block This User"}
+                  </DialogTitle>
+
+                  <DialogActions>
+                    <Button
+                      onClick={() => {
+                        handleClose();
+                      }}
+                      autoFocus
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        handleClose();
+                        blockRegularUser();
+                      }}
+                      autoFocus
+                    >
+                      Block
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+                <Dialog
+                  fullScreen={fullScreen}
+                  open={open2}
+                  onClose={handleClose2}
+                  aria-labelledby="responsive-dialog-title"
+                >
+                  <DialogTitle id="responsive-dialog-title">
+                    {"Do you want to make this user to team member"}
+                  </DialogTitle>
+
+                  <DialogActions>
+                    <Button
+                      onClick={() => {
+                        handleClose2();
+                      }}
+                      autoFocus
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        handleClose2();
+                        makeMember();
+                      }}
+                      autoFocus
+                    >
+                      Make Member
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </div>
+            </div>
+            <hr style={{ marginLeft: 0, width: "100vw" }} />
+          </>
+        ))
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

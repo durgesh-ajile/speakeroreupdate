@@ -4,6 +4,18 @@ import mic from "../../images/FINAL-07 1.png";
 import pinkback from "../../images/Vector 9.png";
 import orangeback from "../../images/Vector 10.png";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+
+const successToast = {
+  position: "bottom-right",
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "light",
+};
 
 const pricedata = [
   {
@@ -49,7 +61,7 @@ const Subscription = () => {
       if (couponCode && selectedType && selectPrice) {
         const checkCoupon = await axios({
           method: "get",
-          url: `https://api.speakerore.com/api/applycouponcode?couponCode=${couponCode}&amount=${selectPrice}&subcriptionType=${selectedType}`,
+          url: `http://localhost:5000/api/applycouponcode?couponCode=${couponCode}&amount=${selectPrice}&subcriptionType=${selectedType}`,
           withCredentials: true,
         });
         console.log(checkCoupon)
@@ -58,50 +70,63 @@ const Subscription = () => {
       console.log(error);
     }
   };
-
+  const generateOrderId = () => {
+    const currentDate = new Date();
+    const hours = currentDate.getHours().toString().padStart(2, "0");
+    const minutes = currentDate.getMinutes().toString().padStart(2, "0");
+    const seconds = currentDate.getSeconds().toString().padStart(2, "0");
+    return `${hours}${minutes}${seconds}`;
+  };
+  
   const handlePayments = async (e) => {
     e.preventDefault();
     try {
       if (selectedType && selectedPriceData) {
         const response = await axios({
           method: "POST",
-          url: "https://api.speakerore.com/api/create/order",
+          url: "https://sobacke.in/api/ccavRequestHandler",
           data: {
-            amount: selectedType,
-            subcriptionType: selectedPriceData.price,
-            couponCode: couponCode,
+            merchant_id: "2560771",
+            order_id: generateOrderId(),
+            currency: "INR",
+            amount: selectPrice,
+            redirect_url: "https://sobacke.in/api/ccavResponseHandler",
+            cancel_url: "https://sobacke.in/api/ccavResponseHandler",
+            language: "EN",
+            merchant_param1: selectedType,
+            merchant_param2: couponCode || "No Coupon Code",
           },
           withCredentials: true,
         });
 
-        const order = response.data;
-        console.log(order);
-        let couponCodeExist = order.order.notes.couponCode || "No Coupon Code";
-        let subcriptionType = order.order.notes.subcriptionType;
+        // const order = response.data;
+        // console.log(order);
+        // let couponCodeExist = order.order.notes.couponCode || "No Coupon Code";
+        // let subcriptionType = order.order.notes.subcriptionType;
 
-        const options = {
-          key: "rzp_live_bzuVO7uY2e0AZp",
-          amount: order.order.amount,
-          currency: "INR",
-          name: "",
-          email: "",
-          contact: "",
-          description: "This is testing",
-          image:
-            "https://pbs.twimg.com/profile_images/1528248719585734657/roEyxCoi_400x400.jpg",
-          order_id: order.order.id,
-          callback_url: `https://api.speakerore.com/api/payment/verify?subscriptionType=${subcriptionType}&couponCode=${couponCodeExist}`,
-          prefill: {},
-          notes: {
-            address: "Razorpay Corporate Office",
-          },
-          theme: {
-            color: "#121212",
-          },
-        };
+        // const options = {
+        //   key: "rzp_live_bzuVO7uY2e0AZp",
+        //   amount: order.order.amount,
+        //   currency: "INR",
+        //   name: "",
+        //   email: "",
+        //   contact: "",
+        //   description: "This is testing",
+        //   image:
+        //     "https://pbs.twimg.com/profile_images/1528248719585734657/roEyxCoi_400x400.jpg",
+        //   order_id: order.order.id,
+        //   callback_url: `http://localhost:5000/api/payment/verify?subscriptionType=${subcriptionType}&couponCode=${couponCodeExist}`,
+        //   prefill: {},
+        //   notes: {
+        //     address: "Razorpay Corporate Office",
+        //   },
+        //   theme: {
+        //     color: "#121212",
+        //   },
+        // };
         
-        const razor = new window.Razorpay(options);
-        razor.open();
+        // const razor = new window.Razorpay(options);
+        // razor.open();
       }
     } catch (error) {
       console.log(error);

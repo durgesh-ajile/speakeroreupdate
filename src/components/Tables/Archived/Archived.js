@@ -1,123 +1,138 @@
-import axios from 'axios';
-import React from 'react'
-import { useState } from 'react';
-import { useEffect } from 'react';
+import axios from "axios";
+import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 import { MdLocationOn } from "react-icons/md";
 import { MdWatchLater } from "react-icons/md";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import exclusiveimg from "../../../images/Group.png";
-import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { BiSearchAlt } from "react-icons/bi";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
+
+const successToast = {
+  position: "bottom-right",
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "light",
+};
 
 const Archived = () => {
-    const [archivedData, setArchivedData] = useState("");
-    const [page, setPage] = React.useState(1);
-    const [searchKey, setSearchKey] = React.useState();
-    const [deleteId, setDeleteId] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [filter, setFilter] = useState();
-  
-    const handleChange = (event, value) => {
-      setPage(value);
-    };
+  const [archivedData, setArchivedData] = useState("");
+  const [page, setPage] = React.useState(1);
+  const [searchKey, setSearchKey] = React.useState();
+  const [deleteId, setDeleteId] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [filter, setFilter] = useState();
 
-    const [open, setOpen] = React.useState(false);
-    const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-  
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleClose = () => {
-      setOpen(false);
-    };
-  
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
 
-    function convertDate(e) {
-      const date = new Date(e).toLocaleString();
-      return date;
-    }
+  const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
-    const handlePermanentDelete = () =>{
-      axios({
-        method: "delete",
-        url: `https://api.speakerore.com/api/deleteevent?eventId=${deleteId}`,
-        withCredentials: true,
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  function convertDate(e) {
+    const date = new Date(e).toLocaleString();
+    return date;
+  }
+
+  const handlePermanentDelete = () => {
+    axios({
+      method: "delete",
+      url: `http://localhost:5000/api/deleteevent?eventId=${deleteId}`,
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log(res.data);
+        setLoading(!loading);
+        toast.success(res.data.message, successToast);
       })
-        .then((res) => {
-          console.log(res.data);
-          setLoading(!loading)
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-      }
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.response.data.message, successToast);
+      });
+  };
 
-      useEffect(() => {
-        axios({
-          method: "get",
-          url: `https://api.speakerore.com/api/geteventbyqueryforarchived?keyword=${searchKey}&page=${page}`,
-          withCredentials: true,
-        })
-          .then((res) => {
-            console.log(res);
-            setFilter(res.data.queryResult);
-          })
-          .catch((err) => {
-            console.log(err);
-            if (err.response.status === 422 || 404) {
-              setFilter("");
-            }
-          });
-      }, [searchKey, page]);
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: `http://localhost:5000/api/geteventbyqueryforarchived?keyword=${searchKey}&page=${page}`,
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log(res);
+        setFilter(res.data.queryResult);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status === 422 || 404) {
+          setFilter("");
+        }
+      });
+  }, [searchKey, page]);
 
-    useEffect(() => {
-        axios({
-          method: "get",
-          url: `https://api.speakerore.com/api/getallarchievedevent?page=${page}`,
-          withCredentials: true,
-        })
-          .then((res) => {
-            console.log(res);
-            setArchivedData(res.data)
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }, []);
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: `http://localhost:5000/api/getallarchievedevent?page=${page}`,
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log(res);
+        setArchivedData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-      useEffect(() => {
-        axios({
-          method: "get",
-          url: `https://api.speakerore.com/api/getallarchievedevent?page=${page}`,
-          withCredentials: true,
-        })
-          .then((res) => {
-            console.log(res);
-            setArchivedData(res.data)
-          })
-          .catch((err) => {
-            console.log(err);
-            if(err.response.status === 404){
-              setArchivedData('')
-            }
-          });
-      }, [loading]);
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: `http://localhost:5000/api/getallarchievedevent?page=${page}`,
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log(res);
+        setArchivedData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status === 404) {
+          setArchivedData("");
+        }
+      });
+  }, [loading]);
 
-      // console.log(filter)
+  // console.log(filter)
 
   return (
     <div>
+      <ToastContainer />
       <div className="allevent" style={{ flexWrap: "wrap" }}>
         <div>
           {archivedData ? (
             <div>
-            <div className="input-div" style={{ marginTop: "20px" }}>
+              <div className="input-div" style={{ marginTop: "20px" }}>
                 <BiSearchAlt className="ico" />
                 <input
                   placeholder="Search via keyword"
@@ -132,51 +147,54 @@ const Archived = () => {
                 {filter ? (
                   filter.map((e) => (
                     <div className="card">
-                  <div className="card-1">
-                      <div>
-                        <small
-                          style={{
-                            margin: "20px  0 0 2rem",
-                            fontSize: "1rem",
-                            fontWeight: "500",
-                            color: "#24754F",
+                      <div className="card-1">
+                        <div>
+                          <small
+                            style={{
+                              margin: "20px  0 0 2rem",
+                              fontSize: "1rem",
+                              fontWeight: "500",
+                              color: "#24754F",
+                            }}
+                          >
+                            {e.Category}{" "}
+                          </small>
+                          <bold>{e.OrganizerName}</bold>
+                          <span>{e.City}</span>
+                        </div>
+                        <div>
+                          {e.isSpeakerOreExclusive ? (
+                            <img src={exclusiveimg} />
+                          ) : null}
+                        </div>
+                      </div>
+                      <div className="card-2">
+                        <small>
+                          <MdLocationOn color="grey" size={20} />
+                          <h>{e.Mode}</h>
+                        </small>
+                        <br />
+                        <date>
+                          {" "}
+                          <MdWatchLater size={20} color="grey" />
+                          <q>{convertDate(e.EventEndDateAndTime)}</q>
+                        </date>
+                        <p></p>
+                      </div>
+                      <div className="desc">
+                        <p>{e.ShortDescriptionOfTheEvent}</p>
+                      </div>
+                      <div className="card-4">
+                        <button
+                          onClick={() => {
+                            handleClickOpen();
+                            setDeleteId(e._id);
                           }}
                         >
-                          {e.Category}{" "}
-                        </small>
-                        <bold>{e.OrganizerName}</bold>
-                        <span>{e.City}</span>
+                          Delete permanently
+                        </button>
                       </div>
-                      <div>
-                        {e.isSpeakerOreExclusive ? (
-                          <img src={exclusiveimg} />
-                        ) : null}
-                      </div>
-                    </div>
-                    <div className="card-2">
-                      <small>
-                        <MdLocationOn color="grey" size={20} />
-                        <h>{e.Mode}</h>
-                      </small>
-                      <br />
-                      <date>
-                        {" "}
-                        <MdWatchLater size={20} color="grey" />
-                        <q>{convertDate(e.EventEndDateAndTime)}</q>
-                      </date>
-                      <p></p>
-                    </div>
-                    <div className="desc">
-                    <p>{e.ShortDescriptionOfTheEvent}</p>
-                    </div>
-                    <div className="card-4">
-                      <button onClick={()=>{
-                         handleClickOpen();
-                        setDeleteId(e._id)
-                      }}>Delete permanently</button>
-                     
-                    </div>
-                    <Dialog
+                      <Dialog
                         fullScreen={fullScreen}
                         open={open}
                         onClose={handleClose}
@@ -185,7 +203,7 @@ const Archived = () => {
                         <DialogTitle id="responsive-dialog-title">
                           {"Do you want to delete this event permanently"}
                         </DialogTitle>
-      
+
                         <DialogActions>
                           <Button
                             onClick={() => {
@@ -206,7 +224,7 @@ const Archived = () => {
                           </Button>
                         </DialogActions>
                       </Dialog>
-                  </div>
+                    </div>
                   ))
                 ) : searchKey ? (
                   <div>
@@ -214,52 +232,55 @@ const Archived = () => {
                   </div>
                 ) : (
                   archivedData.savedEvents.map((e) => (
-                  <div className="card">
-                  <div className="card-1">
-                      <div>
-                        <small
-                          style={{
-                            margin: "20px  0 0 2rem",
-                            fontSize: "1rem",
-                            fontWeight: "500",
-                            color: "#24754F",
+                    <div className="card">
+                      <div className="card-1">
+                        <div>
+                          <small
+                            style={{
+                              margin: "20px  0 0 2rem",
+                              fontSize: "1rem",
+                              fontWeight: "500",
+                              color: "#24754F",
+                            }}
+                          >
+                            {e.Category}{" "}
+                          </small>
+                          <bold>{e.OrganizerName}</bold>
+                          <span>{e.City}</span>
+                        </div>
+                        <div>
+                          {e.isSpeakerOreExclusive ? (
+                            <img src={exclusiveimg} />
+                          ) : null}
+                        </div>
+                      </div>
+                      <div className="card-2">
+                        <small>
+                          <MdLocationOn color="grey" size={20} />
+                          <h>{e.Mode}</h>
+                        </small>
+                        <br />
+                        <date>
+                          {" "}
+                          <MdWatchLater size={20} color="grey" />
+                          <q>{convertDate(e.EventEndDateAndTime)}</q>
+                        </date>
+                        <p></p>
+                      </div>
+                      <div className="desc">
+                        <p>{e.ShortDescriptionOfTheEvent}</p>
+                      </div>
+                      <div className="card-4">
+                        <button
+                          onClick={() => {
+                            handleClickOpen();
+                            setDeleteId(e._id);
                           }}
                         >
-                          {e.Category}{" "}
-                        </small>
-                        <bold>{e.OrganizerName}</bold>
-                        <span>{e.City}</span>
+                          Delete permanently
+                        </button>
                       </div>
-                      <div>
-                        {e.isSpeakerOreExclusive ? (
-                          <img src={exclusiveimg} />
-                        ) : null}
-                      </div>
-                    </div>
-                    <div className="card-2">
-                      <small>
-                        <MdLocationOn color="grey" size={20} />
-                        <h>{e.Mode}</h>
-                      </small>
-                      <br />
-                      <date>
-                        {" "}
-                        <MdWatchLater size={20} color="grey" />
-                        <q>{convertDate(e.EventEndDateAndTime)}</q>
-                      </date>
-                      <p></p>
-                    </div>
-                    <div className="desc">
-                    <p>{e.ShortDescriptionOfTheEvent}</p>
-                    </div>
-                    <div className="card-4">
-                      <button onClick={()=>{
-                         handleClickOpen();
-                        setDeleteId(e._id)
-                      }}>Delete permanently</button>
-                     
-                    </div>
-                    <Dialog
+                      <Dialog
                         fullScreen={fullScreen}
                         open={open}
                         onClose={handleClose}
@@ -268,7 +289,7 @@ const Archived = () => {
                         <DialogTitle id="responsive-dialog-title">
                           {"Do you want to delete this event permanently"}
                         </DialogTitle>
-      
+
                         <DialogActions>
                           <Button
                             onClick={() => {
@@ -289,8 +310,9 @@ const Archived = () => {
                           </Button>
                         </DialogActions>
                       </Dialog>
-                  </div>
-          )))}
+                    </div>
+                  ))
+                )}
               </div>
               <Stack spacing={2}>
                 <Pagination
@@ -308,7 +330,7 @@ const Archived = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Archived
+export default Archived;

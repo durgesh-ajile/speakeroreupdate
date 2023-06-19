@@ -1,5 +1,12 @@
 /* event */
-@media screen and (max-width: 926px) {
+@media screen and (max-width: 700px) {
+    body {
+        overflow-x: hidden;
+    }
+    .next-button {
+        display: flex;
+        justify-content: flex-end;
+    }
     .card-container{
         margin-top:5rem;
        flex-direction: column;

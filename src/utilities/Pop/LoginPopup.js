@@ -4,7 +4,7 @@ import "./popus.css";
 const LoginPopup = ({ onClose }) => {
   const handleGoogleLogin = () => {
     try {
-      window.open("https://api.speakerore.com/api/auth/google", "_self");
+      window.open("http://localhost:5000/api/auth/google", "_self");
     } catch (error) {
       console.log(error);
     }
@@ -12,7 +12,7 @@ const LoginPopup = ({ onClose }) => {
 
   const handleFacebookLogin = () => {
     try {
-      window.open("https://api.speakerore.com/api/auth/facebook", "_self");
+      window.open("http://localhost:5000/api/auth/facebook", "_self");
     } catch (error) {
       console.log(error);
     }

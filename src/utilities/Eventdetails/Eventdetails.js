@@ -5,7 +5,7 @@ const Eventdetails = ({ eventDetails, stateHandle_Event_Organiser_Preview, setSt
 
   const [handleFormInput, setHandleFormInput] = useState([]);
   const [checkReqierdField, setCheckReqierdField] = useState(!true);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
 
   eventDetails(handleFormInput);
@@ -63,16 +63,18 @@ const Eventdetails = ({ eventDetails, stateHandle_Event_Organiser_Preview, setSt
   }
 
 
-  // useEffect(() => {
-  //   const handleFormInputFromLocal = JSON.parse(localStorage.getItem('handleFormInput'))
-  //   if (handleFormInputFromLocal !== 'null') {
-
-  //     console.log('handleFormInputFromLocal', handleFormInputFromLocal)
-  //     setHandleFormInput(() => handleFormInputFromLocal)
-  //   }
-  // }, [loading])
-  // console.log('handleFormInput11', handleFormInput)
-
+  useEffect(() => {
+    let handleFormInputFromLocal = null
+    try {
+      handleFormInputFromLocal = JSON.parse(localStorage.getItem('handleFormInput'))
+    } catch (error) {
+      console.error('Error parsing JSON:', error);
+      alert(error)
+    }
+    if (handleFormInputFromLocal !== null) {
+      setHandleFormInput(() => handleFormInputFromLocal)
+    }
+  }, [])
 
 
   return (
@@ -462,7 +464,7 @@ const Eventdetails = ({ eventDetails, stateHandle_Event_Organiser_Preview, setSt
             <div className="card-3 next-button">
               <button type="submit" onClick={(e)=>
               {onSubmit(e)
-              setLoading(!loading)
+              // setLoading(!loading)
               }
               }>
                 Next

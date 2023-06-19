@@ -18,7 +18,18 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import exclusiveimg from "../../../images/Group.png";
+import { ToastContainer, toast } from "react-toastify";
 
+const successToast = {
+  position: "bottom-right",
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "light",
+};
 
 const EventAdmin = () => {
   const [deleteevent, setDeleteevent] = React.useState("");
@@ -56,7 +67,7 @@ const EventAdmin = () => {
   const geteventforapproval = () => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventforapproval?page=${page}`,
+      url: `http://localhost:5000/api/geteventforapproval?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -73,7 +84,7 @@ const EventAdmin = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}&page=${page}`,
+      url: `http://localhost:5000/api/geteventbyquery?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -99,7 +110,7 @@ const EventAdmin = () => {
   const handleSingleView = () => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getsingleevent/${eventId}`,
+      url: `http://localhost:5000/api/getsingleevent/${eventId}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -113,7 +124,7 @@ const EventAdmin = () => {
   const handleEventDelete = () => {
     axios({
       method: "patch",
-      url: "https://api.speakerore.com/api/makeeventdecline",
+      url: "http://localhost:5000/api/makeeventdecline",
       data: {
         eventId: deleteevent,
         feedback: feedback,
@@ -123,16 +134,18 @@ const EventAdmin = () => {
       .then((res) => {
         console.log(res);
         setLoading(!loading);
+        toast.success(res.data.message, successToast);
       })
       .catch((err) => {
         console.log(err);
+        toast.error(err.response.data.message, successToast);
       });
   };
 
   const handleApproveEvent = (id) => {
     axios({
       method: "patch",
-      url: "https://api.speakerore.com/api/makeeventapprove",
+      url: "http://localhost:5000/api/makeeventapprove",
       data: {
         eventId: id,
       },
@@ -142,9 +155,11 @@ const EventAdmin = () => {
         console.log(res);
         geteventforapproval();
         setLoading(!loading);
+        toast.success(res.data.Message, successToast);
       })
       .catch((err) => {
         console.log(err);
+        toast.error(err.response.data.message, successToast);
       });
   };
 
@@ -154,6 +169,7 @@ const EventAdmin = () => {
 
   return (
     <div>
+      <ToastContainer />
       {eventsForApproval ? (
         <div id="alleven1" className="allevent">
           {filter ? (

@@ -235,7 +235,7 @@
   pointer-events: none;
 }
 
-select {
+.custom-select select {
   margin-left: 30px;
   padding: 8px 0px;
   font-size: small;
@@ -267,11 +267,11 @@ select {
   justify-content: space-between;
   margin: 0.5rem 0rem 0rem 3rem;
 }
-select option:first-child {
+.custom-select select option:first-child {
   display: none;
 }
 
-select option{
+.custom-select select option{
   text-align: center;
 }
 

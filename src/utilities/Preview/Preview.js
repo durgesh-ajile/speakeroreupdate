@@ -3,6 +3,18 @@ import Eventdetails from "../Eventdetails/Eventdetails";
 import Organizerdetails from "../organizerdeatails/Organizerdetails";
 import { TagsInput } from "react-tag-input-component";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+
+const setToast = {
+  position: "bottom-right",
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "light",
+  }
 
 const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
   const {
@@ -41,7 +53,7 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
     e.preventDefault();
     axios({
       method: "post",
-      url: "https://api.speakerore.com/api/createEvent",
+      url: "http://localhost:5000/api/createEvent",
       data: {
         titleOfTheEvent: event,
         shortDescriptionOfTheEvent: Short_description,
@@ -71,14 +83,17 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
     })
       .then((res) => {
         console.log(res.data);
+        toast.success(res.data.message, setToast)
       })
       .catch((err) => {
         console.log(err);
+        toast.error(err.response.data.message, setToast)
       });
   };
 
   return (
     <div>
+            <ToastContainer/>
       <div className="listevent-container">
         <div>
           <div>

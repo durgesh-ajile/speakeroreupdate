@@ -13,73 +13,18 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { BiSearchAlt } from "react-icons/bi";
 import { IoSchoolSharp } from "react-icons/io5";
+import { ToastContainer, toast } from "react-toastify";
 
-const cardData = [
-  {
-    event_catogary: "Education",
-    organizer: "Indian Business School",
-    location: "Hyderabad",
-    event_type: "Online Event",
-    date: "Jan 2 , 2023 | 12:31 pm",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sint consectetur nemo volup",
-  },
-  {
-    event_catogary: "Education",
-    organizer: "Indian Business School",
-    location: "Hyderabad",
-    event_type: "Online Event",
-    date: "Jan 2 , 2023 | 12:31 pm",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sint consectetur nemo volup",
-  },
-  {
-    event_catogary: "Education",
-    organizer: "Indian Business School",
-    location: "Hyderabad",
-    event_type: "Online Event",
-    date: "Jan 2 , 2023 | 12:31 pm",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sint consectetur nemo volup",
-  },
-  {
-    event_catogary: "Education",
-    organizer: "Indian Business School",
-    location: "Hyderabad",
-    event_type: "Online Event",
-    date: "Jan 2 , 2023 | 12:31 pm",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sint consectetur nemo volup",
-  },
-  {
-    event_catogary: "Education",
-    organizer: "Indian Business School",
-    location: "Hyderabad",
-    event_type: "Online Event",
-    date: "Jan 2 , 2023 | 12:31 pm",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sint consectetur nemo volup",
-  },
-  {
-    event_catogary: "Education",
-    organizer: "Indian Business School",
-    location: "Hyderabad",
-    event_type: "Online Event",
-    date: "Jan 2 , 2023 | 12:31 pm",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sint consectetur nemo volup",
-  },
-  {
-    event_catogary: "Education",
-    organizer: "Indian Business School",
-    location: "Hyderabad",
-    event_type: "Online Event",
-    date: "Jan 2 , 2023 | 12:31 pm",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sint consectetur nemo volup",
-  },
-  {
-    event_catogary: "Education",
-    organizer: "Indian Business School",
-    location: "Hyderabad",
-    event_type: "Online Event",
-    date: "Jan 2 , 2023 | 12:31 pm",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque sint consectetur nemo volup",
-  },
-];
+const successToast = {
+  position: "bottom-right",
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "light",
+};
 
 const TrashMob = () => {
   const [trashData, setTrashData] = useState("");
@@ -118,7 +63,7 @@ const TrashMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getalltrashevents?page=${page}`,
+      url: `http://localhost:5000/api/getalltrashevents?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -132,7 +77,7 @@ const TrashMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getalltrashevents?page=${page}`,
+      url: `http://localhost:5000/api/getalltrashevents?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -149,7 +94,7 @@ const TrashMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventbyqueryfortrash?keyword=${searchKey}&page=${page}`,
+      url: `http://localhost:5000/api/geteventbyqueryfortrash?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -167,22 +112,24 @@ const TrashMob = () => {
   const handlePermanentDelete = () => {
     axios({
       method: "delete",
-      url: `https://api.speakerore.com/api/deleteevent?eventId=${deleteId}`,
+      url: `http://localhost:5000/api/deleteevent?eventId=${deleteId}`,
       withCredentials: true,
     })
       .then((res) => {
         console.log(res.data);
         setLoading(!loading);
+        toast.success(res.data.message, successToast);
       })
       .catch((err) => {
         console.log(err);
+        toast.error(err.response.data.message, successToast);
       });
   };
 
   const handleReviveCard = () => {
     axios({
       method: "patch",
-      url: "https://api.speakerore.com/api/revivefortrash",
+      url: "http://localhost:5000/api/revivefortrash",
       withCredentials: true,
       data: {
         eventId: reviveId,
@@ -191,9 +138,11 @@ const TrashMob = () => {
       .then((res) => {
         console.log(res.data);
         setLoading(!loading);
+        toast.success(res.data.message, successToast);
       })
       .catch((err) => {
         console.log(err);
+        toast.error(err.response.data.message, successToast);
       });
   };
 
@@ -203,6 +152,8 @@ const TrashMob = () => {
   }
   return (
     <div>
+      <ToastContainer />
+
       <div className="input-div">
         <input
           placeholder="Search via roles"
@@ -426,7 +377,6 @@ const TrashMob = () => {
                   id="Card-4"
                   style={{
                     display: "flex",
-                    justifyContent: "space-evenly",
                     padding: "15px",
                     paddingTop: "0px",
                   }}
@@ -434,6 +384,7 @@ const TrashMob = () => {
                 >
                   <button
                     id="Delb"
+                    style={{ marginLeft: "0" }}
                     onClick={() => {
                       handleClickOpen();
                       setDeleteId(e._id);

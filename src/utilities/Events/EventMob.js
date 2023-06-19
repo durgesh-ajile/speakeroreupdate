@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import "./Eventmob.css";
 // import filter_icon from '../../assets/img/filter_icon.jpg'
-import EventlistInfo from "./EventlistInfo";
 import { useState } from "react";
 import "./sidebar.css";
 import { styled, useTheme } from "@mui/material/styles";
@@ -19,6 +18,17 @@ import Stack from "@mui/material/Stack";
 import exclusiveimg from "../../images/Group.png";
 import { BiSearchAlt } from "react-icons/bi";
 
+const successToast = {
+  position: "bottom-right",
+  autoClose: 4000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "light",
+  }
+  
 const Eventlist = () => {
   const [filterToggle, setFilterToggle] = useState(true);
   const NavbarboxRefFilter = useRef(null);
@@ -46,7 +56,7 @@ const Eventlist = () => {
     setExclusive(!exclusive);
   };
   const handleOnline = () => {
-    if(!online){
+    if (!online) {
       setMode("Online Event");
       setOnline(true);
     } else {
@@ -58,7 +68,7 @@ const Eventlist = () => {
   };
 
   const handleInperson = () => {
-    if(!inperson){
+    if (!inperson) {
       setMode("Offline Event");
       setInperson(true);
     } else {
@@ -70,7 +80,7 @@ const Eventlist = () => {
   };
 
   const handleHybrid = () => {
-    if(!hybrid){
+    if (!hybrid) {
       setMode("Hybrid");
       setHybrid(true);
     } else {
@@ -84,7 +94,7 @@ const Eventlist = () => {
   const StyledCalendar = styled(Calendar)`
     --moedim-primary: #f00;
   `;
- 
+
   const handleCalendar = () => {
     setcal((prev) => !prev);
   };
@@ -92,7 +102,7 @@ const Eventlist = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getallapprovedevent?page=${page}`,
+      url: `http://localhost:5000/api/getallapprovedevent?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -107,7 +117,7 @@ const Eventlist = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}&page=${page}`,
+      url: `http://localhost:5000/api/geteventbyquery?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -116,18 +126,17 @@ const Eventlist = () => {
       })
       .catch((err) => {
         console.log(err);
-        if(err.response.status === 422 || 404){
-          setFilter('')
+        if (err.response.status === 422 || 404) {
+          setFilter("");
         }
       });
   }, [searchKey]);
   console.log(filter);
-  console.log(searchKey);
-
+  console.log(inperson);
 
   useEffect(() => {
     if (mode || category || date || exclusive) {
-      const apiUrl = `https://api.speakerore.com/api/geteventsbyfilter?${getQueryParams()}`;
+      const apiUrl = `http://localhost:5000/api/geteventsbyfilter?${getQueryParams()}`;
       function getQueryParams() {
         const queryParams = [];
 
@@ -143,14 +152,12 @@ const Eventlist = () => {
           queryParams.push(`date=${date}`);
         }
 
-        
-        if (exclusive !== undefined) {
+        if (exclusive) {
           queryParams.push(`exclusive=${exclusive}`);
-          
         }
+        
         return queryParams.join("&");
       }
-     
 
       axios({
         method: "get",
@@ -166,11 +173,10 @@ const Eventlist = () => {
           setFilter("");
         });
     }
-    if (!mode && !category && !date && ! exclusive) {
-      setFilter('')
+    if (!mode && !category && !date && !exclusive) {
+      setFilter("");
     }
   }, [mode, category, date, exclusive]);
-
 
   function convertDate(e) {
     const date = new Date(e).toLocaleString();
@@ -198,9 +204,23 @@ const Eventlist = () => {
 
   return (
     <>
+    <div className="head-banner">
+          <div className="banner-container">
+            <div className="view-text">
+              <h3>Gold Deposits - Events Exploration Page </h3>
+              <h5>
+                Explore, Map, Analyse, Mine &amp; Extract. For best results,
+                <br /> Choose events from your category and focus!
+              </h5>
+            </div>
+            <div>
+              <img src={man} style={{ width: "100%" }} />
+            </div>
+          </div>
+        </div>
       <div className="Eventlist_container">
         <div className="Eventlist_container_left">
-          <h4 style={{ margin: "10px 0" }}>Events list</h4>
+          <h4 style={{ margin: "10px" }}>Events list</h4>
         </div>
 
         <div
@@ -213,16 +233,16 @@ const Eventlist = () => {
       </div>
       <hr style={{ width: "100%" }} />
       <div className="input-div" style={{ marginTop: "20px" }}>
-                <BiSearchAlt className="ico" />
-                <input
-                  placeholder="Search via keyword"
-                  className="dash-input"
-                  value={searchKey}
-                  onChange={(e) => {
-                    setSearchKey(e.target.value);
-                  }}
-                />
-              </div>
+        <BiSearchAlt style={{ top: "13px" }} className="ico" />
+        <input
+          placeholder="Search via keyword"
+          className="dash-input"
+          value={searchKey}
+          onChange={(e) => {
+            setSearchKey(e.target.value);
+          }}
+        />
+      </div>
       {/* {
             filterToggle && */}
       {!filterToggle && (
@@ -237,53 +257,56 @@ const Eventlist = () => {
           <h3>Filter</h3>
           <p>Models</p>
           <div className="Eventlist_input_type_checkbox" onClick={handleOnline}>
-            <input type="checkbox" checked={online}  name="" id="" />
+            <input type="checkbox" checked={online} name="" id="" />
             <p>online</p>
           </div>
-          <div className="Eventlist_input_type_checkbox" onClick={handleInperson}>
-            <input type="checkbox" name="" id="" checked={inperson}/>
+          <div
+            className="Eventlist_input_type_checkbox"
+            onClick={handleInperson}
+          >
+            <input type="checkbox" name="" id="" checked={inperson} />
             <p>In-person</p>
           </div>
           <div className="Eventlist_input_type_checkbox" onClick={handleHybrid}>
-            <input type="checkbox" name="" id="" checked={hybrid}/>
+            <input type="checkbox" name="" id="" checked={hybrid} />
             <p>Hybrid</p>
           </div>
 
           <p>Category</p>
 
           <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="">Select</option>
-              <option value="Advertising">Advertising</option>
-              <option value="Agriculture">Agriculture</option>
-              <option value="Artificial Intelligence">
-                Artificial Intelligence{" "}
-              </option>
-              <option value="Automobile">Automobile</option>
-              <option value="Banking">Banking </option>
-              <option value="Business">Business</option>
-              <option value="Coaching">Coaching</option>
-              <option value="Communication">Communication</option>
-              <option value="Design Thinking">Design Thinking</option>
-              <option value="Education">Education</option>
-              <option value="Finance">Finance</option>
-              <option value="Fitness">Fitness</option>
-              <option value="Health">Health</option>
-              <option value="Human resource">Human resource </option>
-              <option value="Innovation">Innovation </option>
-              <option value="Leadership">Leadership</option>
-              <option value="LGBTQ">LGBTQ</option>
-              <option value="Manufacturing">Manufacturing</option>
-              <option value="Marketing">Marketing</option>
-              <option value="Oil Gas">Oil Gas</option>
-              <option value="Parenting">Parenting</option>
-              <option value="Presentation Skill">Presentation Skill</option>
-              <option value="Retails">Retails</option>
-              <option value="Sales"> Sales</option>
-              <option value="Soft Skill">Soft Skill</option>
-            </select>
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="">Select</option>
+            <option value="Advertising">Advertising</option>
+            <option value="Agriculture">Agriculture</option>
+            <option value="Artificial Intelligence">
+              Artificial Intelligence{" "}
+            </option>
+            <option value="Automobile">Automobile</option>
+            <option value="Banking">Banking </option>
+            <option value="Business">Business</option>
+            <option value="Coaching">Coaching</option>
+            <option value="Communication">Communication</option>
+            <option value="Design Thinking">Design Thinking</option>
+            <option value="Education">Education</option>
+            <option value="Finance">Finance</option>
+            <option value="Fitness">Fitness</option>
+            <option value="Health">Health</option>
+            <option value="Human resource">Human resource </option>
+            <option value="Innovation">Innovation </option>
+            <option value="Leadership">Leadership</option>
+            <option value="LGBTQ">LGBTQ</option>
+            <option value="Manufacturing">Manufacturing</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Oil Gas">Oil Gas</option>
+            <option value="Parenting">Parenting</option>
+            <option value="Presentation Skill">Presentation Skill</option>
+            <option value="Retails">Retails</option>
+            <option value="Sales"> Sales</option>
+            <option value="Soft Skill">Soft Skill</option>
+          </select>
 
           <p>Select a date</p>
 
@@ -296,8 +319,11 @@ const Eventlist = () => {
           </div>
 
           <p>SpeakerOre</p>
-          <div className="Eventlist_input_type_checkbox"  onClick={handleExclusive}>
-            <input type="checkbox" name="" id=""  checked={exclusive}/>
+          <div
+            className="Eventlist_input_type_checkbox"
+            onClick={handleExclusive}
+          >
+            <input type="checkbox" name="" id="" checked={exclusive} />
             <p className="p">SpeakerOre Exclusive</p>
           </div>
         </div>
@@ -306,121 +332,139 @@ const Eventlist = () => {
 
       {/* use map funtion here */}
       {filter ? (
+        <div>
           <div>
-            <div>
-              {filter.map((e) => (
-                <>
-      <div className="EventlistInfo_container">
-        <div className="EventlistInfo_container_fluid">
-          <div>
-            {/* <img src={education} alt="" /> */}
-            <p>{e.Category}</p>
-          </div>
+            {filter.map((e) => (
+              <>
+                <div className="EventlistInfo_container">
+                  <div className="EventlistInfo_container_fluid">
+                    <div>
+                      {/* <img src={education} alt="" /> */}
+                      <p>{e.Category}</p>
+                    </div>
 
-          <p style={{ margin: "0" }}>
-            <b>{e.OrganizerName},</b> <span>{e.City}</span>{" "}
-          </p>
+                    <p style={{ margin: "0" }}>
+                      <b>{e.OrganizerName},</b> <span>{e.City}</span>{" "}
+                    </p>
 
-          <div>
-            <div
-              className="EventlistInfo_location"
-              style={{ color: "#6F6F6F" }}
-            >
-              <div>
-              <MdLocationOn size={20} />
-                <p>{e.Mode}</p>
-              </div>
-              <div style={{ marginLeft: "20px" }}>
-              <MdWatchLater size={20} />
-                <p style={{ marginLeft: "4px" }}>{convertDate(e.EventEndDateAndTime)}</p>
-              </div>
-            </div>
+                    <div>
+                      <div
+                        className="EventlistInfo_location"
+                        style={{ color: "#6F6F6F" }}
+                      >
+                        <div>
+                          <MdLocationOn size={20} />
+                          <p>{e.Mode}</p>
+                        </div>
+                        <div style={{ marginLeft: "20px" }}>
+                          <MdWatchLater size={20} />
+                          <p style={{ marginLeft: "4px" }}>
+                            {convertDate(e.EventEndDateAndTime)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="EventlistInfo_bottom_text">
+                      <div>
+                        <p style={{ marginTop: "5px" }}>
+                          {e.ShortDescriptionOfTheEvent}
+                        </p>
+                        <button
+                          onClick={() => {
+                            navigate(`/event/${e._id}`);
+                          }}
+                        >
+                          View Details
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr style={{ width: "100%" }} />
+              </>
+            ))}
           </div>
-          <div className="EventlistInfo_bottom_text">
-            <div>
-              <p style={{ marginTop: "5px" }}>{e.ShortDescriptionOfTheEvent}</p>
-              <button onClick={() => {
-                        navigate(`/event/${e._id}`);
-                      }} >View Details</button>
-            </div>
-          </div>
+          <Stack spacing={2}>
+            <Pagination
+              style={{ justifyContent: "center", marginTop: "20px" }}
+              count={filter.totalPages}
+              page={page}
+              onChange={handleChange}
+            />
+            <Typography>Page: {page}</Typography>
+          </Stack>
         </div>
-      </div>
-      <hr style={{ width: "100%" }} />
-      </> ))}
-            </div>
-            <Stack spacing={2}>
-              <Pagination
-                style={{ justifyContent: "center", marginTop: "20px" }}
-                count={filter.totalPages}
-                page={page}
-                onChange={handleChange}
-              />
-              <Typography>Page: {page}</Typography>
-            </Stack>
-          </div>
-        ) : mode || category || date || exclusive || searchKey ? (<div>
+      ) : mode || category || date || exclusive || searchKey ? (
+        <div>
           <h3>No Matching Events</h3>
-        </div>) : approvedEvent ? (
-          <div>
-            <div>
-      {approvedEvent?.savedEvents.map((e) => (
-      <>
-      <div className="EventlistInfo_container">
-        <div className="EventlistInfo_container_fluid">
-          <div>
-            {/* <img src={education} alt="" /> */}
-            <p>{e.Category}</p>
-          </div>
-
-          <p style={{ margin: "0" }}>
-            <b>{e.OrganizerName},</b> <span>{e.City}</span>{" "}
-          </p>
-
-          <div>
-            <div
-              className="EventlistInfo_location"
-              style={{ color: "#6F6F6F" }}
-            >
-              <div>
-              <MdLocationOn size={20} />
-                <p>{e.Mode}</p>
-              </div>
-              <div style={{ marginLeft: "20px" }}>
-              <MdWatchLater size={20} />
-                <p style={{ marginLeft: "4px" }}>{convertDate(e.EventEndDateAndTime)}</p>
-              </div>
-            </div>
-          </div>
-          <div className="EventlistInfo_bottom_text">
-            <div>
-              <p style={{ marginTop: "5px" }}>{e.ShortDescriptionOfTheEvent}</p>
-              <button onClick={() => {
-                        navigate(`/event/${e._id}`);
-                      }} >View Details</button>
-            </div>
-          </div>
         </div>
-      </div>
-      <hr style={{ width: "100%" }} />
-      </>
-      ))}
-      </div>
-            <Stack spacing={2}>
-              <Pagination
-                style={{ justifyContent: "center", marginTop: "20px" }}
-                count={approvedEvent.totalPages}
-                page={page}
-                onChange={handleChange}
-              />
-              <Typography>Page: {page}</Typography>
-            </Stack>
+      ) : approvedEvent ? (
+        <div>
+          <div>
+            {approvedEvent?.savedEvents.map((e) => (
+              <>
+                <div className="EventlistInfo_container">
+                  <div className="EventlistInfo_container_fluid">
+                    <div>
+                      {/* <img src={education} alt="" /> */}
+                      <p>{e.Category}</p>
+                    </div>
+
+                    <p style={{ margin: "0" }}>
+                      <b>{e.OrganizerName},</b> <span>{e.City}</span>{" "}
+                    </p>
+
+                    <div>
+                      <div
+                        className="EventlistInfo_location"
+                        style={{ color: "#6F6F6F" }}
+                      >
+                        <div>
+                          <MdLocationOn size={20} />
+                          <p>{e.Mode}</p>
+                        </div>
+                        <div style={{ marginLeft: "20px" }}>
+                          <MdWatchLater size={20} />
+                          <p style={{ marginLeft: "4px" }}>
+                            {convertDate(e.EventEndDateAndTime)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="EventlistInfo_bottom_text">
+                      <div>
+                        <p style={{ marginTop: "5px" }}>
+                          {e.ShortDescriptionOfTheEvent}
+                        </p>
+                        <button
+                          onClick={() => {
+                            navigate(`/event/${e._id}`);
+                          }}
+                        >
+                          View Details
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr style={{ width: "100%" }} />
+              </>
+            ))}
           </div>
-        ) : (
-          ""
-        )}
+          <Stack spacing={2}>
+            <Pagination
+              style={{ justifyContent: "center", marginTop: "20px" }}
+              count={approvedEvent.totalPages}
+              page={page}
+              onChange={handleChange}
+            />
+            <Typography>Page: {page}</Typography>
+          </Stack>
+        </div>
+      ) : (
+        ""
+      )}
     </>
-    
   );
 };
 
