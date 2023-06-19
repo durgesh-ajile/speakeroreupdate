@@ -82,7 +82,7 @@ const Subscription = () => {
     e.preventDefault();
     try {
       if (selectedType && selectedPriceData) {
-       window.location.href = `http://localhost:5000/api/paymentform?merchant_id=2560771&order_id=${generateOrderId()}&currency=INR&amount=${selectPrice}&merchant_param1=${selectedType}&merchant_param2=${couponCode}`
+       window.location.href = `https://api.speakerore.com/api/paymentform?merchant_id=2560771&order_id=${generateOrderId()}&currency=INR&amount=${selectPrice}&merchant_param1=${selectedType}&merchant_param2=${couponCode}`
 
         // const order = response.data;
         // console.log(order);
