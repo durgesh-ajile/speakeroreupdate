@@ -62,7 +62,7 @@ const UsersWrapper = () => {
   const blockRegularUser = () => {
     axios({
       method: "patch",
-      url: "http://localhost:5000/api/blockregularuser",
+      url: "https://api.speakerore.com/api/blockregularuser",
       withCredentials: true,
       data: {
         userId: block,
@@ -81,7 +81,7 @@ const UsersWrapper = () => {
   const makeMember = () => {
     axios({
       method: "patch",
-      url: "http://localhost:5000/api/makeusertoteammember",
+      url: "https://api.speakerore.com/api/makeusertoteammember",
       withCredentials: true,
       data: {
         userId: makeMemberId,
@@ -101,7 +101,7 @@ const UsersWrapper = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://localhost:5000/api/getallregularuser",
+      url: "https://api.speakerore.com/api/getallregularuser",
       withCredentials: true,
     })
       .then((res) => {
@@ -115,7 +115,7 @@ const UsersWrapper = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://localhost:5000/api/getallregularuser",
+      url: "https://api.speakerore.com/api/getallregularuser",
       withCredentials: true,
     })
       .then((res) => {

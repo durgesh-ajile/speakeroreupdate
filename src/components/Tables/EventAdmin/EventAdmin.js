@@ -78,7 +78,7 @@ const EventAdmin = () => {
   const geteventforapproval = () => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/geteventforapproval?page=${page}`,
+      url: `https://api.speakerore.com/api/geteventforapproval?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -95,7 +95,7 @@ const EventAdmin = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/geteventbyquery?keyword=${searchKey}&page=${page}`,
+      url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -121,7 +121,7 @@ const EventAdmin = () => {
   const handleSingleView = () => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getsingleevent/${eventId}`,
+      url: `https://api.speakerore.com/api/getsingleevent/${eventId}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -135,7 +135,7 @@ const EventAdmin = () => {
   const handleEventDelete = () => {
     axios({
       method: "patch",
-      url: "http://localhost:5000/api/makeeventdecline",
+      url: "https://api.speakerore.com/api/makeeventdecline",
       data: {
         eventId: deleteevent,
         feedback: feedback,
@@ -156,7 +156,7 @@ const EventAdmin = () => {
   const handleApproveEvent = (id) => {
     axios({
       method: "patch",
-      url: "http://localhost:5000/api/makeeventapprove",
+      url: "https://api.speakerore.com/api/makeeventapprove",
       data: {
         eventId: id,
       },

@@ -18,7 +18,7 @@ const CurrentUserMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/geteventforcurrentuser?${page}`,
+      url: `https://api.speakerore.com/api/geteventforcurrentuser?${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -33,7 +33,7 @@ const CurrentUserMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/geteventforcurrentuser?${page}`,
+      url: `https://api.speakerore.com/api/geteventforcurrentuser?${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -48,7 +48,7 @@ const CurrentUserMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/geteventbyqueryforcurrentuser?keyword=${searchKey}&page=${page}`,
+      url: `https://api.speakerore.com/api/geteventbyqueryforcurrentuser?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {

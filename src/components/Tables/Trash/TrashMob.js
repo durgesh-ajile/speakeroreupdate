@@ -63,7 +63,7 @@ const TrashMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getalltrashevents?page=${page}`,
+      url: `https://api.speakerore.com/api/getalltrashevents?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -77,7 +77,7 @@ const TrashMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getalltrashevents?page=${page}`,
+      url: `https://api.speakerore.com/api/getalltrashevents?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -94,7 +94,7 @@ const TrashMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/geteventbyqueryfortrash?keyword=${searchKey}&page=${page}`,
+      url: `https://api.speakerore.com/api/geteventbyqueryfortrash?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -112,7 +112,7 @@ const TrashMob = () => {
   const handlePermanentDelete = () => {
     axios({
       method: "delete",
-      url: `http://localhost:5000/api/deleteevent?eventId=${deleteId}`,
+      url: `https://api.speakerore.com/api/deleteevent?eventId=${deleteId}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -129,7 +129,7 @@ const TrashMob = () => {
   const handleReviveCard = () => {
     axios({
       method: "patch",
-      url: "http://localhost:5000/api/revivefortrash",
+      url: "https://api.speakerore.com/api/revivefortrash",
       withCredentials: true,
       data: {
         eventId: reviveId,
