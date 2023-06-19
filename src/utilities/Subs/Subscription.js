@@ -82,22 +82,7 @@ const Subscription = () => {
     e.preventDefault();
     try {
       if (selectedType && selectedPriceData) {
-        const response = await axios({
-          method: "POST",
-          url: "https://sobacke.in/api/ccavRequestHandler",
-          data: {
-            merchant_id: "2560771",
-            order_id: generateOrderId(),
-            currency: "INR",
-            amount: selectPrice,
-            redirect_url: "https://sobacke.in/api/ccavResponseHandler",
-            cancel_url: "https://sobacke.in/api/ccavResponseHandler",
-            language: "EN",
-            merchant_param1: selectedType,
-            merchant_param2: couponCode || "No Coupon Code",
-          },
-          withCredentials: true,
-        });
+       window.location.href = `http://localhost:5000/api/paymentform?merchant_id=2560771&order_id=${generateOrderId()}&currency=INR&amount=${selectPrice}&merchant_param1=${selectedType}&merchant_param2=${couponCode}`
 
         // const order = response.data;
         // console.log(order);
