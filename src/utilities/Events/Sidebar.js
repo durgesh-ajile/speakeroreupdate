@@ -65,7 +65,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function Sidebar() {
   const theme = useTheme();
   const [cal, setcal] = React.useState(false);
-  const [value, setValue] = useState(new Date());
   const [approvedEvent, setApprovedEvent] = useState();
   const [online, setOnline] = useState(false);
   const [inperson, setInperson] = useState(false);
@@ -74,9 +73,10 @@ export default function Sidebar() {
   const [page, setPage] = React.useState(1);
   const [mode, setMode] = React.useState();
   const [category, setCategory] = React.useState();
-  const [date, setDate] = React.useState();
+  const [filterdate, setFilterDate] = React.useState();
   const [searchKey, setSearchKey] = React.useState();
   const [filter, setFilter] = useState();
+  const [showdate, setShowDate] = React.useState();
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -127,9 +127,7 @@ export default function Sidebar() {
     --moedim-primary: #f00;
   `;
  
-  const handleCalendar = () => {
-    setcal((prev) => !prev);
-  };
+ 
 
   useEffect(() => {
     axios({
@@ -163,12 +161,11 @@ export default function Sidebar() {
         }
       });
   }, [searchKey]);
-  console.log(filter);
-  console.log(searchKey);
+
 
 
   useEffect(() => {
-    if (mode || category || date || exclusive) {
+    if (mode || category || filterdate || exclusive) {
       const apiUrl = `https://api.speakerore.com/api/geteventsbyfilter?${getQueryParams()}`;
       function getQueryParams() {
         const queryParams = [];
@@ -181,8 +178,8 @@ export default function Sidebar() {
           queryParams.push(`category=${category}`);
         }
 
-        if (date) {
-          queryParams.push(`date=${date}`);
+        if (filterdate) {
+          queryParams.push(`date=${filterdate}`);
         }
 
         if (exclusive) {
@@ -192,7 +189,6 @@ export default function Sidebar() {
         return queryParams.join("&");
       }
      
-
       axios({
         method: "get",
         url: apiUrl,
@@ -207,18 +203,18 @@ export default function Sidebar() {
           setFilter("");
         });
     }
-    if (!mode && !category && !date && ! exclusive) {
+    if (!mode && !category && !filterdate && ! exclusive) {
       setFilter('')
     }
-  }, [mode, category, date, exclusive]);
+  }, [mode, category, filterdate, exclusive]);
 
 
   function convertDate(e) {
     const date = new Date(e).toLocaleString();
     return date;
   }
-  console.log(date)
-  console.log(filter)
+  console.log(showdate)
+  console.log(filterdate)
 
   return (
     <div className="event-main">
@@ -292,9 +288,14 @@ export default function Sidebar() {
           </div>
           <div className="calendar">
             <input
-              value={value}
-              onClick={handleCalendar}
-              placeholder="Select start date"
+            type="date"
+              value={showdate}
+              onChange={(e) => {
+                const date = new Date(e.target.value)
+                setFilterDate(date.toISOString())
+                setShowDate(e.target.value)
+              }}
+              
             />
           </div>
           <div onClick={handleExclusive}>
@@ -308,11 +309,6 @@ export default function Sidebar() {
             </div>
           </div>
 
-          {cal == true ? (
-            <Calendar value={value} onChange={(d) => setValue(d)} />
-          ) : (
-            ""
-          )}
           <div className="filter-input">
           <h4>Search by keyword</h4>
           <input placeholder=" Type here" value={searchKey} onChange={(e)=> {
@@ -401,7 +397,7 @@ export default function Sidebar() {
               <Typography>Page: {page}</Typography>
             </Stack>
           </div>
-        ) : mode || category || date || exclusive || searchKey ? (<div>
+        ) : mode || category || filterdate || exclusive || searchKey ? (<div>
           <h3>No Matching Events</h3>
         </div>) : approvedEvent ? (
           <div>

@@ -8,7 +8,15 @@ import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 
 import TableRow from "@mui/material/TableRow";
-import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  Pagination,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 
 const successToast = {
@@ -27,11 +35,16 @@ export default function TeamMembers() {
   const [loading, setLoading] = useState(false);
   const [makeAdminId, setAdminId] = useState("");
   const [makeUserId, setmakeUserId] = useState("");
+  const [page, setPage] = React.useState(1);
+  const [searchKey, setSearchKey] = React.useState();
+  const [filter, setFilter] = useState();
 
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -107,7 +120,7 @@ export default function TeamMembers() {
   React.useEffect(() => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/getallteammembers",
+      url: `https://api.speakerore.com/api/getallteammembers?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -119,9 +132,26 @@ export default function TeamMembers() {
           setTeamMemberData("");
         }
       });
-  }, [loading]);
+  }, [loading, page]);
 
-  return (
+  React.useEffect(() => {
+    axios({
+      method: "get",
+      url: `https://api.speakerore.com/api/getteammemberbysearch?keyword=${searchKey}&page=${page}`,
+      withCredentials: true,
+    })
+      .then((res) => {
+        setFilter(res.data.queryResult);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status === 422 || 404) {
+          setFilter("");
+        }
+      });
+  }, [searchKey, page]);
+
+  return teamMemberData ? (
     <div className="team-members-container">
       <ToastContainer />
       <div className="search-bar">
@@ -129,11 +159,15 @@ export default function TeamMembers() {
         <input
           placeholder="Search via subscription plan"
           className="search-input"
+          value={searchKey}
+          onChange={(e) => {
+            setSearchKey(e.target.value);
+          }}
         />
       </div>
       <div className="member-list">
-        {teamMemberData ? (
-          teamMemberData.savedTeamMember.map((row) => (
+        {filter ? (
+          filter.map((row) => (
             <div className="member-card" key={row.alphaUnqiueId}>
               <div className="member-info">
                 <div className="info-row">
@@ -150,8 +184,6 @@ export default function TeamMembers() {
                 <div className="info-row">
                   <span className="info-label">Role|</span>
                   <span className="info-value">{row.role}</span>
-                  {/* <span className="info-label">Expiry Date|</span>
-                <span className="info-value">{row.carbs}</span> */}
                 </div>
                 <div className="button-group">
                   <button
@@ -241,10 +273,130 @@ export default function TeamMembers() {
               <hr className="divider" />
             </div>
           ))
+        ) : searchKey ? (
+          <div>
+            <h3>No Matching Team Member</h3>
+          </div>
         ) : (
-          <></>
+          teamMemberData.savedTeamMember.map((row) => (
+            <div className="member-card" key={row.alphaUnqiueId}>
+              <div className="member-info">
+                <div className="info-row">
+                  <span className="info-label">USER ID |</span>
+                  <span className="info-value">{row.alphaUnqiueId}</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-value">{row.calories}</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Email |</span>
+                  <span className="info-value">{row.email}</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Role|</span>
+                  <span className="info-value">{row.role}</span>
+                </div>
+                <div className="button-group">
+                  <button
+                    className="backlist-button"
+                    onClick={() => {
+                      handleClickOpen();
+                      setmakeUserId(row._id);
+                    }}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Make User
+                  </button>
+                  <button
+                    className="make-member-button"
+                    onClick={() => {
+                      handleClickOpen2();
+                      setAdminId(row._id);
+                    }}
+                    style={{ background: "#24754F", cursor: "pointer" }}
+                  >
+                    Make Admin
+                  </button>
+                  <Dialog
+                    fullScreen={fullScreen}
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="responsive-dialog-title"
+                  >
+                    <DialogTitle id="responsive-dialog-title">
+                      {
+                        "Are You Sure You Want To Make This Member a Normal User"
+                      }
+                    </DialogTitle>
+
+                    <DialogActions>
+                      <Button
+                        onClick={() => {
+                          handleClose();
+                        }}
+                        autoFocus
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          handleClose();
+                          maketeammembertouser();
+                        }}
+                        autoFocus
+                      >
+                        Make User
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                  <Dialog
+                    fullScreen={fullScreen}
+                    open={open2}
+                    onClose={handleClose2}
+                    aria-labelledby="responsive-dialog-title"
+                  >
+                    <DialogTitle id="responsive-dialog-title">
+                      {"Do you want to make this Member an Admin"}
+                    </DialogTitle>
+
+                    <DialogActions>
+                      <Button
+                        onClick={() => {
+                          handleClose2();
+                        }}
+                        autoFocus
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          handleClose2();
+                          maketeammembertoadmin();
+                        }}
+                        autoFocus
+                      >
+                        Make Admin
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </div>
+              </div>
+              <hr className="divider" />
+            </div>
+          ))
         )}
       </div>
+      <Stack spacing={2}>
+        <Pagination
+          style={{ justifyContent: "center", marginTop: "20px" }}
+          count={teamMemberData.totalPages}
+          page={page}
+          onChange={handleChange}
+        />
+        <Typography>Page: {page}</Typography>
+      </Stack>
     </div>
+  ) : (
+    <Typography>No team member present</Typography>
   );
 }

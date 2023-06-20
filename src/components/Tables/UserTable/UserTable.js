@@ -19,6 +19,9 @@ import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { ToastContainer, toast } from "react-toastify";
+import { Typography } from "@mui/material";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 const successToast = {
   position: "bottom-right",
@@ -56,11 +59,15 @@ export default function UserTable() {
   const [loading, setLoading] = useState(false);
   const [block, setBlock] = useState("");
   const [makeMemberId, setMakeMemberId] = useState("");
-
+  const [page, setPage] = React.useState(1);
+  const [searchKey, setSearchKey] = React.useState();
+  const [filter, setFilter] = useState();
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -133,10 +140,10 @@ export default function UserTable() {
       });
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/getallregularuser",
+      url: `https://api.speakerore.com/api/getallregularuser?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -148,15 +155,32 @@ export default function UserTable() {
           setUserData("");
         }
       });
-  }, [loading]);
+  }, [loading, page]);
+
+  React.useEffect(() => {
+    axios({
+      method: "get",
+      url: `https://api.speakerore.com/api/getuserbysearch?keyword=${searchKey}&page=${page}`,
+      withCredentials: true,
+    })
+      .then((res) => {
+        setFilter(res.data.queryResult);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status === 422 || 404) {
+          setFilter("");
+        }
+      });
+  }, [searchKey, page]);
 
   function convertDate(e) {
     const date = new Date(e).toLocaleDateString();
     return date;
   }
+  console.log(userData);
 
-
-  return (
+  return userData ? (
     <div className="table-container">
       <ToastContainer />
 
@@ -165,6 +189,10 @@ export default function UserTable() {
         <input
           placeholder="Search via subscription plan"
           className="dash-input"
+          value={searchKey}
+          onChange={(e) => {
+            setSearchKey(e.target.value);
+          }}
         />
       </div>
       <TableContainer component={Paper}>
@@ -180,7 +208,114 @@ export default function UserTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {userData ? (
+            {filter ? (
+              filter.map((row) => (
+                <StyledTableRow key={row.alphaUnqiueId}>
+                  <StyledTableCell align="">
+                    {row.alphaUnqiueId}
+                  </StyledTableCell>
+                  <StyledTableCell component="th" align="right" scope="row">
+                    {row.email}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {row.subcription ? row.subcription.Subcription_Type : null}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {convertDate(row.subcription && row.subcription.StartDate)}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {convertDate(row.subcription && row.subcription.EndDate)}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    <span
+                      onClick={() => {
+                        setLoading(!loading);
+                        handleClickOpen();
+                        setBlock(row._id);
+                      }}
+                      style={{ color: "red", cursor: "pointer" }}
+                    >
+                      BLACKLIST
+                    </span>{" "}
+                    |{" "}
+                    <span
+                      onClick={() => {
+                        setLoading(!loading);
+                        handleClickOpen2();
+                        setMakeMemberId(row._id);
+                      }}
+                      style={{ color: "#24754F", cursor: "pointer" }}
+                    >
+                      MAKE MEMBER
+                    </span>
+                  </StyledTableCell>
+                  <Dialog
+                    fullScreen={fullScreen}
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="responsive-dialog-title"
+                  >
+                    <DialogTitle id="responsive-dialog-title">
+                      {"Are You Sure You Want To Block This User"}
+                    </DialogTitle>
+
+                    <DialogActions>
+                      <Button
+                        onClick={() => {
+                          handleClose();
+                        }}
+                        autoFocus
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          handleClose();
+                          blockRegularUser();
+                        }}
+                        autoFocus
+                      >
+                        Block
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                  <Dialog
+                    fullScreen={fullScreen}
+                    open={open2}
+                    onClose={handleClose2}
+                    aria-labelledby="responsive-dialog-title"
+                  >
+                    <DialogTitle id="responsive-dialog-title">
+                      {"Do you want to make this user to team member"}
+                    </DialogTitle>
+
+                    <DialogActions>
+                      <Button
+                        onClick={() => {
+                          handleClose2();
+                        }}
+                        autoFocus
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          handleClose2();
+                          makeMember();
+                        }}
+                        autoFocus
+                      >
+                        Make Member
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </StyledTableRow>
+              ))
+            ) : searchKey ? (
+              <div>
+                <h3>No Matching User</h3>
+              </div>
+            ) : (
               userData.savedUser.map((row) => (
                 <StyledTableRow key={row.alphaUnqiueId}>
                   <StyledTableCell align="">
@@ -283,12 +418,21 @@ export default function UserTable() {
                   </Dialog>
                 </StyledTableRow>
               ))
-            ) : (
-              <></>
             )}
           </TableBody>
         </Table>
       </TableContainer>
+      <Stack spacing={2}>
+        <Pagination
+          style={{ justifyContent: "center", marginTop: "20px" }}
+          count={userData.totalPages}
+          page={page}
+          onChange={handleChange}
+        />
+        <Typography>Page: {page}</Typography>
+      </Stack>
     </div>
+  ) : (
+    <Typography>No team member present</Typography>
   );
 }

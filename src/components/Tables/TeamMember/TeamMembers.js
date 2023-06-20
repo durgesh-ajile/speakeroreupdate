@@ -19,6 +19,9 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { Typography } from "@mui/material";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 const successToast = {
   position: "bottom-right",
@@ -56,11 +59,17 @@ export default function TeamMembers() {
   const [loading, setLoading] = useState(false);
   const [makeAdminId, setAdminId] = useState("");
   const [makeUserId, setmakeUserId] = useState("");
-
   const [open, setOpen] = React.useState(false);
+  const [page, setPage] = React.useState(1);
+  const [searchKey, setSearchKey] = React.useState();
+  const [filter, setFilter] = useState();
+
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -136,7 +145,7 @@ export default function TeamMembers() {
   React.useEffect(() => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/getallteammembers",
+      url: `https://api.speakerore.com/api/getallteammembers?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -148,11 +157,29 @@ export default function TeamMembers() {
           setTeamMemberData("");
         }
       });
-  }, [loading]);
+  }, [loading, page]);
 
-  console.log(teamMemberData);
+  React.useEffect(() => {
+    axios({
+      method: "get",
+      url: `https://api.speakerore.com/api/getteammemberbysearch?keyword=${searchKey}&page=${page}`,
+      withCredentials: true,
+    })
+      .then((res) => {
+        setFilter(res.data.queryResult);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status === 422 || 404) {
+          setFilter("");
+        }
+      });
+  }, [searchKey, page]);
+
+
 
   return (
+    teamMemberData ? (
     <div className="table-container">
       <ToastContainer />
 
@@ -161,6 +188,10 @@ export default function TeamMembers() {
         <input
           placeholder="Search via subscription plan"
           className="dash-input"
+          value={searchKey}
+                  onChange={(e) => {
+                    setSearchKey(e.target.value);
+                  }}
         />
       </div>
       <TableContainer component={Paper}>
@@ -174,7 +205,106 @@ export default function TeamMembers() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {teamMemberData ? (
+            {filter ? (
+                  filter.map((row) => (
+                    <StyledTableRow key={row.alphaUnqiueId}>
+                  <StyledTableCell align="">
+                    {row.alphaUnqiueId}
+                  </StyledTableCell>
+                  <StyledTableCell component="th" align="right" scope="row">
+                    {row.email}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">{row.role}</StyledTableCell>
+                  <StyledTableCell align="right">
+                    <span
+                      onClick={() => {
+                        handleClickOpen();
+                        setmakeUserId(row._id);
+                      }}
+                      style={{ color: "red", cursor: "pointer" }}
+                    >
+                      MAKE USER
+                    </span>{" "}
+                    |{" "}
+                    <span
+                      onClick={() => {
+                        handleClickOpen2();
+                        setAdminId(row._id);
+                      }}
+                      style={{ color: "#24754F", cursor: "pointer" }}
+                    >
+                      MAKE ADMIN
+                    </span>
+                  </StyledTableCell>
+                  <Dialog
+                    fullScreen={fullScreen}
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="responsive-dialog-title"
+                  >
+                    <DialogTitle id="responsive-dialog-title">
+                      {
+                        "Are You Sure You Want To Make This Member a Normal User"
+                      }
+                    </DialogTitle>
+
+                    <DialogActions>
+                      <Button
+                        onClick={() => {
+                          handleClose();
+                        }}
+                        autoFocus
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          handleClose();
+                          maketeammembertouser();
+                        }}
+                        autoFocus
+                      >
+                        Make User
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                  <Dialog
+                    fullScreen={fullScreen}
+                    open={open2}
+                    onClose={handleClose2}
+                    aria-labelledby="responsive-dialog-title"
+                  >
+                    <DialogTitle id="responsive-dialog-title">
+                      {"Do you want to make this Member an Admin"}
+                    </DialogTitle>
+
+                    <DialogActions>
+                      <Button
+                        onClick={() => {
+                          handleClose2();
+                        }}
+                        autoFocus
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          handleClose2();
+                          maketeammembertoadmin();
+                        }}
+                        autoFocus
+                      >
+                        Make Admin
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </StyledTableRow>
+                ))
+                ) : searchKey ? (
+                  <div>
+                    <h3>No Matching Team Member</h3>
+                  </div>
+                ) : (
               teamMemberData.savedTeamMember.map((row) => (
                 <StyledTableRow key={row.alphaUnqiueId}>
                   <StyledTableCell align="">
@@ -268,13 +398,23 @@ export default function TeamMembers() {
                     </DialogActions>
                   </Dialog>
                 </StyledTableRow>
-              ))
-            ) : (
-              <></>
-            )}
+              )))
+           }
           </TableBody>
         </Table>
       </TableContainer>
+      <Stack spacing={2}>
+                <Pagination
+                  style={{ justifyContent: "center", marginTop: "20px" }}
+                  count={teamMemberData.totalPages}
+                  page={page}
+                  onChange={handleChange}
+                />
+                <Typography>Page: {page}</Typography>
+              </Stack>
     </div>
+     ) : (
+      <Typography>No team member present</Typography>
+    )
   );
 }

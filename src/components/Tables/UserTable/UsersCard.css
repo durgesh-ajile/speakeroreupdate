@@ -41,10 +41,6 @@
     margin-bottom: 12px;
     margin-left:0;
   }
-  
-  
-   
-  
   .plan-type > span,
   .date-wrapper > span {
     font-size: 14px;
@@ -73,12 +69,13 @@
     margin-right:12px;
   }
   .make-members-btn{
-    background-color: green;
+    background-color: #24754F ;
   }
   
   #Button {
     color: white;
-    padding: 10px 20px;
+    padding: 8px 15px;
+    margin-top: 10px;
     border: none;
     border-radius: 2px;
     font-size: 14px;

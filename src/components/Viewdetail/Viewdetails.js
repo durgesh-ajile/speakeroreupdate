@@ -36,21 +36,7 @@ const Viewdetails = () => {
   }, []);
   console.log(data)
   
-  const eventdata = {
-    website: "",
-    date: "Friday ,31march 7-8:30PM",
-    location:
-      "The Hive- Flexible Workspace, Gachibowli Hyderabad The Hive Nanakaramguda, TG 500032",
-    audience_number: 100,
-    audience_type: "student",
-    event_type: "Online",
-    catogary: "Education",
-    para: "Find your Life Changing Event. Speaking is a serious Business. Every Expert must get noticed to build their empire of followers. Knowledge within you wont help the world at large. Your Time is the Most Expensive Opportunity Cost.Find your Life Changing Event. Speaking is a serious Business.Every Expert must get noticed to build their empire of followers. Knowledge within you wont help the world at large. Your Time is the Most Expensive Opportunity Cost.",
-    tags1: "Opportunity",
-    tags2: "Opportunity",
-    tags3: "Opportunity",
-    tags4: "Opportunity",
-  };
+  
 
   return (
     data ? 
@@ -58,7 +44,14 @@ const Viewdetails = () => {
       <div className="head-banner">
         <div className="banner-container">
           <div className="banner-text">
-            <span>Event Title of the event: Just give a </span>
+            <span>{data.TitleOfTheEvent}</span>
+            
+            <p>
+              Find your Life Changing Event. Speaking is a serious Business
+              .Every Expert must get
+              noticed to build their empire of followers. Knowledge
+              within you wont help the world at.
+            </p>
           </div>
           <div className="banner-img">
             <img src={man} />
@@ -68,14 +61,7 @@ const Viewdetails = () => {
 
       <div style={{ margin: "2rem 0 0 0" }}>
         <div className="mail">
-          <div>
-            <span>
-              Find your Life Changing Event. Speaking is a serious Business
-              .Every Expert must get
-              <br /> noticed to build their empire of followers. Knowledge
-              within you wont help the world at.
-            </span>
-          </div>
+          
           <div className="web">
             <img src={web} style={{ textAlign: "center" }} /><span>website: </span>
             <a href={data.EventWebsiteUrl}> {data.EventWebsiteUrl}</a>
@@ -139,10 +125,9 @@ const Viewdetails = () => {
       <div className="tags">
         <h3 style={{ fontWeight: "800" }}>Tags</h3>
         <div className="tag">
-          <span>{eventdata.tags1}</span>
-          <span>{eventdata.tags2}</span>
-          <span>{eventdata.tags3}</span>
-          <span>{eventdata.tags4}</span>
+        {data.Tags.map((e) =>{
+          return (<><span>{e}</span></>)
+        })}
         </div>
       </div>
     </div>

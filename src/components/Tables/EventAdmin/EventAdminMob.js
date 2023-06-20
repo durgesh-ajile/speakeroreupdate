@@ -134,7 +134,7 @@ const EventAdmin = () => {
       .then((res) => {
         console.log(res);
         setLoading(!loading);
-        toast.success(res.data.message, successToast);
+        toast.success(res.data.Message, successToast);
       })
       .catch((err) => {
         console.log(err);
