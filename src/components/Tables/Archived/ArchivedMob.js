@@ -61,7 +61,7 @@ const ArchivedMob = () => {
   const handlePermanentDelete = () => {
     axios({
       method: "delete",
-      url: `http://localhost:5000/api/deleteevent?eventId=${deleteId}`,
+      url: `https://api.speakerore.com/api/deleteevent?eventId=${deleteId}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -78,7 +78,7 @@ const ArchivedMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/geteventbyqueryforarchived?keyword=${searchKey}&page=${page}`,
+      url: `https://api.speakerore.com/api/geteventbyqueryforarchived?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -100,7 +100,7 @@ const ArchivedMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getallarchievedevent?page=${page}`,
+      url: `https://api.speakerore.com/api/getallarchievedevent?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -115,7 +115,7 @@ const ArchivedMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getallarchievedevent?page=${page}`,
+      url: `https://api.speakerore.com/api/getallarchievedevent?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {

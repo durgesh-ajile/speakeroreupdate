@@ -91,7 +91,7 @@ export default function TeamMembers() {
   const maketeammembertouser = () => {
     axios({
       method: "patch",
-      url: "http://localhost:5000/api/maketeammembertouser",
+      url: "https://api.speakerore.com/api/maketeammembertouser",
       withCredentials: true,
       data: {
         userId: makeUserId,
@@ -111,7 +111,7 @@ export default function TeamMembers() {
   const maketeammembertoadmin = () => {
     axios({
       method: "patch",
-      url: "http://localhost:5000/api/maketeammembertoadmin",
+      url: "https://api.speakerore.com/api/maketeammembertoadmin",
       withCredentials: true,
       data: {
         userId: makeAdminId,
@@ -131,7 +131,7 @@ export default function TeamMembers() {
   React.useEffect(() => {
     axios({
       method: "get",
-      url: "http://localhost:5000/api/getallteammembers",
+      url: "https://api.speakerore.com/api/getallteammembers",
       withCredentials: true,
     })
       .then((res) => {
@@ -145,7 +145,7 @@ export default function TeamMembers() {
   React.useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getallteammembers?page=${page}`,
+      url: `https://api.speakerore.com/api/getallteammembers?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -162,7 +162,7 @@ export default function TeamMembers() {
   React.useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getteammemberbysearch?keyword=${searchKey}&page=${page}`,
+      url: `https://api.speakerore.com/api/getteammemberbysearch?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {

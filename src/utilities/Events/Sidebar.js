@@ -132,7 +132,7 @@ export default function Sidebar() {
   useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getallapprovedevent?page=${page}`,
+      url: `https://api.speakerore.com/api/getallapprovedevent?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -147,7 +147,7 @@ export default function Sidebar() {
   useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/geteventbyquery?keyword=${searchKey}&page=${page}`,
+      url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -166,7 +166,7 @@ export default function Sidebar() {
 
   useEffect(() => {
     if (mode || category || filterdate || exclusive) {
-      const apiUrl = `http://localhost:5000/api/geteventsbyfilter?${getQueryParams()}`;
+      const apiUrl = `https://api.speakerore.com/api/geteventsbyfilter?${getQueryParams()}`;
       function getQueryParams() {
         const queryParams = [];
 

@@ -19,7 +19,7 @@ const CouponTableMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://localhost:5000/api/getallcoupons",
+      url: "https://api.speakerore.com/api/getallcoupons",
       withCredentials: true,
     })
       .then((res) => {

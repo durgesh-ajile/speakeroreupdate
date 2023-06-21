@@ -50,7 +50,7 @@ const Admin = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://localhost:5000/api/getprofile",
+      url: "https://api.speakerore.com/api/getprofile",
       withCredentials: true,
     })
       .then((res) => {
@@ -66,7 +66,7 @@ const Admin = () => {
   const handleLogout = () => {
     axios({
       method: "get",
-      url: "http://localhost:5000/api/logout",
+      url: "https://api.speakerore.com/api/logout",
       withCredentials: true,
     })
       .then((res) => {

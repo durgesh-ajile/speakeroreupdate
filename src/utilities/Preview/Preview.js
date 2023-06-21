@@ -36,7 +36,7 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
     setIsDisabled(() => true)
     axios({
       method: "post",
-      url: "http://localhost:5000/api/createEvent",
+      url: "https://api.speakerore.com/api/createEvent",
       data: {
         titleOfTheEvent: event,
         shortDescriptionOfTheEvent: Short_description,

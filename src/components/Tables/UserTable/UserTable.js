@@ -89,7 +89,7 @@ export default function UserTable() {
   const blockRegularUser = () => {
     axios({
       method: "patch",
-      url: "http://localhost:5000/api/blockregularuser",
+      url: "https://api.speakerore.com/api/blockregularuser",
       withCredentials: true,
       data: {
         userId: block,
@@ -109,7 +109,7 @@ export default function UserTable() {
   const makeMember = () => {
     axios({
       method: "patch",
-      url: "http://localhost:5000/api/makeusertoteammember",
+      url: "https://api.speakerore.com/api/makeusertoteammember",
       withCredentials: true,
       data: {
         userId: makeMemberId,
@@ -129,7 +129,7 @@ export default function UserTable() {
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://localhost:5000/api/getallregularuser",
+      url: "https://api.speakerore.com/api/getallregularuser",
       withCredentials: true,
     })
       .then((res) => {
@@ -143,7 +143,7 @@ export default function UserTable() {
   React.useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getallregularuser?page=${page}`,
+      url: `https://api.speakerore.com/api/getallregularuser?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -160,7 +160,7 @@ export default function UserTable() {
   React.useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/getuserbysearch?keyword=${searchKey}&page=${page}`,
+      url: `https://api.speakerore.com/api/getuserbysearch?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
