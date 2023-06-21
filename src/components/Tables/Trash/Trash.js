@@ -62,7 +62,7 @@ const Trash = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getalltrashevents?page=${page}`,
+      url: `http://localhost:5000/api/getalltrashevents?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -76,7 +76,7 @@ const Trash = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getalltrashevents?page=${page}`,
+      url: `http://localhost:5000/api/getalltrashevents?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -93,7 +93,7 @@ const Trash = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventbyqueryfortrash?keyword=${searchKey}&page=${page}`,
+      url: `http://localhost:5000/api/geteventbyqueryfortrash?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -111,7 +111,7 @@ const Trash = () => {
   const handlePermanentDelete = () => {
     axios({
       method: "delete",
-      url: `https://api.speakerore.com/api/deleteevent?eventId=${deleteId}`,
+      url: `http://localhost:5000/api/deleteevent?eventId=${deleteId}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -128,7 +128,7 @@ const Trash = () => {
   const handleReviveCard = () => {
     axios({
       method: "patch",
-      url: "https://api.speakerore.com/api/revivefortrash",
+      url: "http://localhost:5000/api/revivefortrash",
       withCredentials: true,
       data: {
         eventId: reviveId,
@@ -202,7 +202,7 @@ const Trash = () => {
                         <date>
                           {" "}
                           <MdWatchLater size={20} color="grey" />
-                          <q>{convertDate(e.EventEndDateAndTime)}</q>
+                          <q>{convertDate(e.EventStartDateAndTime)}</q>
                         </date>
                         <p></p>
                       </div>
@@ -330,7 +330,7 @@ const Trash = () => {
                         <date>
                           {" "}
                           <MdWatchLater size={20} color="grey" />
-                          <q>{convertDate(e.EventEndDateAndTime)}</q>
+                          <q>{convertDate(e.EventStartDateAndTime)}</q>
                         </date>
                         <p></p>
                       </div>

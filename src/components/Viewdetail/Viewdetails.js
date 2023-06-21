@@ -23,7 +23,7 @@ const Viewdetails = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getsingleevent/${eventId}`,
+      url: `http://localhost:5000/api/getsingleevent/${eventId}`,
       withCredentials: true,
     })
       .then((res) => {

@@ -58,7 +58,7 @@ const Archived = () => {
   const handlePermanentDelete = () => {
     axios({
       method: "delete",
-      url: `https://api.speakerore.com/api/deleteevent?eventId=${deleteId}`,
+      url: `http://localhost:5000/api/deleteevent?eventId=${deleteId}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -75,7 +75,7 @@ const Archived = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventbyqueryforarchived?keyword=${searchKey}&page=${page}`,
+      url: `http://localhost:5000/api/geteventbyqueryforarchived?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -93,7 +93,7 @@ const Archived = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getallarchievedevent?page=${page}`,
+      url: `http://localhost:5000/api/getallarchievedevent?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -108,7 +108,7 @@ const Archived = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getallarchievedevent?page=${page}`,
+      url: `http://localhost:5000/api/getallarchievedevent?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -177,7 +177,7 @@ const Archived = () => {
                         <date>
                           {" "}
                           <MdWatchLater size={20} color="grey" />
-                          <q>{convertDate(e.EventEndDateAndTime)}</q>
+                          <q>{convertDate(e.EventStartDateAndTime)}</q>
                         </date>
                         <p></p>
                       </div>
@@ -263,7 +263,7 @@ const Archived = () => {
                         <date>
                           {" "}
                           <MdWatchLater size={20} color="grey" />
-                          <q>{convertDate(e.EventEndDateAndTime)}</q>
+                          <q>{convertDate(e.EventStartDateAndTime)}</q>
                         </date>
                         <p></p>
                       </div>

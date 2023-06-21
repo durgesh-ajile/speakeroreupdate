@@ -61,7 +61,7 @@ const ArchivedMob = () => {
   const handlePermanentDelete = () => {
     axios({
       method: "delete",
-      url: `https://api.speakerore.com/api/deleteevent?eventId=${deleteId}`,
+      url: `http://localhost:5000/api/deleteevent?eventId=${deleteId}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -78,7 +78,7 @@ const ArchivedMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventbyqueryforarchived?keyword=${searchKey}&page=${page}`,
+      url: `http://localhost:5000/api/geteventbyqueryforarchived?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -100,7 +100,7 @@ const ArchivedMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getallarchievedevent?page=${page}`,
+      url: `http://localhost:5000/api/getallarchievedevent?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -115,7 +115,7 @@ const ArchivedMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getallarchievedevent?page=${page}`,
+      url: `http://localhost:5000/api/getallarchievedevent?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -158,35 +158,48 @@ const ArchivedMob = () => {
           {filter ? (
             filter.map((e) => (
               <div id="Card" className="card">
-                <div id="Card-1" className="card-1">
-                  <small>
-                    <IoSchoolSharp
-                      size={16}
-                      color="green"
-                      style={{ marginRight: "4px" }}
-                    />
-                    {e.Category}{" "}
-                  </small>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <strong
-                      style={{
-                        marginLeft: "35px",
-                        marginTop: "8px",
-                        marginBottom: "8px",
-                        color: "black",
-                      }}
-                    >
-                      {e.OrganizerName},
-                    </strong>
-                    <span
-                      style={{
-                        marginLeft: "5px",
-                        marginTop: "8px",
-                        marginBottom: "8px",
-                      }}
-                    >
-                      {e.City}
-                    </span>
+              <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div id="Card-1" className="card-1">
+                    <small>
+                      <IoSchoolSharp
+                        size={16}
+                        color="green"
+                        style={{ marginRight: "4px" }}
+                      />
+                      {e.Category}{" "}
+                    </small>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <strong
+                        style={{
+                          marginLeft: "35px",
+                          marginTop: "8px",
+                          marginBottom: "8px",
+                          color: "black",
+                        }}
+                      >
+                        {e.OrganizerName},
+                      </strong>
+                      <span
+                        style={{
+                          marginLeft: "5px",
+                          marginTop: "8px",
+                          marginBottom: "8px",
+                        }}
+                      >
+                        {e.City}
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    {e.isSpeakerOreExclusive ? (
+                      <img src={exclusiveimg} />
+                    ) : null}
                   </div>
                 </div>
                 <div id="Card-2" className="card-2">
@@ -198,7 +211,7 @@ const ArchivedMob = () => {
                   <date>
                     {" "}
                     <MdWatchLater id="WatchLater" size={20} color="grey" />
-                    {convertDate(e.EventEndDateAndTime)}
+                    {convertDate(e.EventStartDateAndTime)}
                   </date>
                   <p></p>
                 </div>
@@ -273,35 +286,48 @@ const ArchivedMob = () => {
           ) : (
             archivedData.savedEvents.map((e) => (
               <div id="Card" className="card">
-                <div id="Card-1" className="card-1">
-                  <small>
-                    <IoSchoolSharp
-                      size={16}
-                      color="green"
-                      style={{ marginRight: "4px" }}
-                    />
-                    {e.Category}{" "}
-                  </small>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <strong
-                      style={{
-                        marginLeft: "35px",
-                        marginTop: "8px",
-                        marginBottom: "8px",
-                        color: "black",
-                      }}
-                    >
-                      {e.OrganizerName},
-                    </strong>
-                    <span
-                      style={{
-                        marginLeft: "5px",
-                        marginTop: "8px",
-                        marginBottom: "8px",
-                      }}
-                    >
-                      {e.City}
-                    </span>
+              <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div id="Card-1" className="card-1">
+                    <small>
+                      <IoSchoolSharp
+                        size={16}
+                        color="green"
+                        style={{ marginRight: "4px" }}
+                      />
+                      {e.Category}{" "}
+                    </small>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <strong
+                        style={{
+                          marginLeft: "35px",
+                          marginTop: "8px",
+                          marginBottom: "8px",
+                          color: "black",
+                        }}
+                      >
+                        {e.OrganizerName},
+                      </strong>
+                      <span
+                        style={{
+                          marginLeft: "5px",
+                          marginTop: "8px",
+                          marginBottom: "8px",
+                        }}
+                      >
+                        {e.City}
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    {e.isSpeakerOreExclusive ? (
+                      <img src={exclusiveimg} />
+                    ) : null}
                   </div>
                 </div>
                 <div id="Card-2" className="card-2">
@@ -313,7 +339,7 @@ const ArchivedMob = () => {
                   <date>
                     {" "}
                     <MdWatchLater id="WatchLater" size={20} color="grey" />
-                    {convertDate(e.EventEndDateAndTime)}
+                    {convertDate(e.EventStartDateAndTime)}
                   </date>
                   <p></p>
                 </div>

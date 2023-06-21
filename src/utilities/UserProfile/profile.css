@@ -4,7 +4,7 @@
 }
 .left-container{
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    width: 350px;
+    width: 330px;
     height: 100vh;
     /* border-right: 2px solid gray; */
     position: fixed;
@@ -18,9 +18,10 @@ line-height: 19px;
     font-weight: 400;
 font-size: 14px;
 line-height: 17px;
-
-
 color: #625C5C;
+}
+.allevent .input-div{
+margin-left: 8%;
 }
 .right-container{
     width: 80%;
@@ -95,9 +96,9 @@ hr{
     color: #24754F !important;
 }
 .allevent{
-    display: flex;
+    /* display: flex; */
     gap: 1rem;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
     overflow: hidden;    
     /* flex-direction: column; */
 }

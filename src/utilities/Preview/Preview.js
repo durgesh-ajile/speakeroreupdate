@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
-import Eventdetails from "../Eventdetails/Eventdetails";
-import Organizerdetails from "../organizerdeatails/Organizerdetails";
+import React, { useState } from "react";
+// import Eventdetails from "../Eventdetails/Eventdetails";
+// import Organizerdetails from "../organizerdeatails/Organizerdetails";
 import { TagsInput } from "react-tag-input-component";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
 
-const setToast = {
+const successToast = {
   position: "bottom-right",
   autoClose: 3000,
   hideProgressBar: false,
@@ -14,35 +15,16 @@ const setToast = {
   draggable: true,
   progress: undefined,
   theme: "light",
-  }
-
+};
 const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
-  const {
-    Short_description,
-    audienceSize,
-    audienceType,
-    category,
-    city,
-    country,
-    engagementType,
-    event,
-    eventType,
-    eventWebsiteUrl,
-    location,
-    longDescription,
-    mode,
-    pincode,
-    organizerName,
-    organizerEmail,
-    organizerContactNumber,
-    tags,
-    startdate,
-    enddate,
-    endtime,
-    starttime,
-    exclusive
-  } = stateData;
-  console.log("stateDate", stateData)
+
+  const [isDisabled, setIsDisabled] = useState(false)
+  const navigate = useNavigate();
+
+  const { Short_description, audienceSize, audienceType, category, city, country,
+    engagementType, event, eventType, eventWebsiteUrl, location, longDescription,
+    mode, pincode, organizerName, organizerEmail, organizerContactNumber, tags,
+    startdate, enddate, endtime, starttime, exclusive } = stateData;
 
 
   const previous_Button = () => {
@@ -51,9 +33,10 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
 
   const handleCreateEvent = (e) => {
     e.preventDefault();
+    setIsDisabled(() => true)
     axios({
       method: "post",
-      url: "https://api.speakerore.com/api/createEvent",
+      url: "http://localhost:5000/api/createEvent",
       data: {
         titleOfTheEvent: event,
         shortDescriptionOfTheEvent: Short_description,
@@ -83,17 +66,43 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
     })
       .then((res) => {
         console.log(res.data);
-        toast.success(res.data.message, setToast)
+        localStorage.removeItem("handleFormInput");
+        localStorage.removeItem("handleOrganizerDetails");
+        toast.success(res.data.message, successToast);
+        setTimeout(() => {
+          navigate('/profile');
+        }, 3000);
+        setIsDisabled(() => false)
       })
       .catch((err) => {
         console.log(err);
-        toast.error(err.response.data.message, setToast)
+        setIsDisabled(() => false)
+        toast.error(err.response.data.message, successToast);
       });
   };
 
+  const style = {
+
+    float: 'right',
+    height: '40px',
+    width: '130px',
+    border: 'none',
+    color: 'white',
+    background: '#24754F',
+    // cursor: 'pointer',
+    margin: '20px 0px 20px 0px',
+    borderRadius: '7px',
+    fontWeight: '600',
+    cursor: isDisabled ? "no-drop" : "pointer",
+    // float: 'right',
+    marginRight: '10px',
+    marginTop: '30px'
+
+  }
+
   return (
     <div>
-            <ToastContainer/>
+    <ToastContainer/>
       <div className="listevent-container">
         <div>
           <div>
@@ -190,7 +199,7 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
                 </div>
 
                 <div className="input-details">
-                  <label>Cateogary</label>
+                  <label>Category</label>
                   <input type="text" required
                     defaultValue={category}
                     disabled />
@@ -289,7 +298,7 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
           </div>
         </div>
       </div>
-      <div style={{ marginLeft: "16.5%", color: "#4D4B4B" }}>
+      <div className="Organizer_Details" >
         <h1>Organizer Details</h1>
       </div>
       <div>
@@ -340,15 +349,12 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
           </div>
         </form>
       </div>
-      <div
-        className="card-3 next-button"
-        style={{ width: "85%", textAlign: "right" }}
-      >
-        <div className="card-3 next-button">
-          <button type="click" onClick={(e) => previous_Button(e)} style={{ marginRight: '10px' }}>Previous</button>
-          <button onClick={handleCreateEvent} >Submit</button>
-        </div>
+
+      <div className="card_3next_buttons">
+        <button onClick={handleCreateEvent} disabled={isDisabled} style={style}> {isDisabled ? 'Loading...' : 'Submit'} </button>
+        <button type="click" onClick={(e) => previous_Button(e)} style={style}>Previous</button>
       </div>
+
     </div>
   );
 };

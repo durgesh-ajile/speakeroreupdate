@@ -18,7 +18,7 @@ const CurrentUserMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventforcurrentuser?${page}`,
+      url: `http://localhost:5000/api/geteventforcurrentuser?${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -33,7 +33,7 @@ const CurrentUserMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventforcurrentuser?${page}`,
+      url: `http://localhost:5000/api/geteventforcurrentuser?${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -48,7 +48,7 @@ const CurrentUserMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventbyqueryforcurrentuser?keyword=${searchKey}&page=${page}`,
+      url: `http://localhost:5000/api/geteventbyqueryforcurrentuser?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -152,7 +152,7 @@ const CurrentUserMob = () => {
                 </small>
                 <date>
                   <MdWatchLater size={15} color="grey" />
-                  {convertDate(e.EventEndDateAndTime)}
+                  {convertDate(e.EventStartDateAndTime)}
                 </date>
               </div>
               <div id="card-content">
@@ -239,7 +239,7 @@ const CurrentUserMob = () => {
                 </small>
                 <date>
                   <MdWatchLater size={15} color="grey" />
-                  {convertDate(e.EventEndDateAndTime)}
+                  {convertDate(e.EventStartDateAndTime)}
                 </date>
               </div>
               <div id="card-content">

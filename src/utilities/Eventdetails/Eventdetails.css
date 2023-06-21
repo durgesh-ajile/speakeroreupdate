@@ -1,6 +1,7 @@
 form {
-    width: 65%;
-    margin: auto;
+    width: 100%;
+    /* margin: auto; */
+    /* background-color: aliceblue; */
 }
 
 .input-details {
@@ -12,29 +13,24 @@ form {
 
 .input-details label {
     color: #595959;
-    margin: 1rem 0;
+    margin: 40px 0px 10px 0px;
     font-size: 20px;
     font-weight: 500;
-    line-height: 24px;
-    letter-spacing: -0.33101603388786316px;
 
 }
 
-.event-form {
-    margin-top: 50px;
-}
 
 .listevent-container {
     margin-top: 50px;
 }
 
 .input-details input {
-    padding: 10px;
+    padding: 20px;
     border: 1px solid #DBDAE3;
 }
 
 .input-details textarea {
-    padding: 1rem;
+    padding: 2rem;
     border: 1px solid #DBDAE3;
 
 }
@@ -48,42 +44,43 @@ form {
 .input-details select {
     padding: 1rem;
     border: 1px solid #DBDAE3;
+    width: 100%;
+    margin-left: 0px;
 }
 
-.input-details select option {
-    padding: 1rem;
+select option {
+    background-color: rgba(222, 222, 222, 0.347);
 }
 
-.next-button {
-    text-align: right;
-    margin-top: 3rem;
-}
-
-.input-details span {
-    color: #595959;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 19px;
-    letter-spacing: 0em;
-    text-align: left;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
 
 .event_details_inputbox_checkbox {
     display: flex;
 }
-.event_details_inputbox_checkbox > input{
+
+.event_details_inputbox_checkbox>input {
     width: 20px;
     height: 35px;
     margin-top: 20px;
 }
-.event_details_inputbox_checkbox > input[type="checkbox"]{
-    background-color: aqua !important;
-    color: #595959 !;
-}
-.event_details_inputbox_checkbox > p{
+
+.event_details_inputbox_checkbox>p {
     margin-top: 30px;
     margin-left: 10px;
     color: rgb(86, 86, 86);
+}
+
+
+
+@media screen and (max-width: 480px) {
+    .input-details label {
+        margin: 25px 0px 16px 0px;
+    }
+    /* 
+    .input-details label {
+        font-size: 15px;
+    }
+
+    .event_details_inputbox_checkbox>p {
+        font-size: 15px;
+    } */
 }

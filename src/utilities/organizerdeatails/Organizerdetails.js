@@ -1,5 +1,4 @@
-import { AddAlert } from "@mui/icons-material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { TagsInput } from "react-tag-input-component";
 
 const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Preview }) => {
@@ -7,21 +6,26 @@ const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Pre
   const [handleOrganizerDetails, setHandleOrganizerDetails] = useState([])
   const [checkReqierdField, setcheckReqierdField] = useState(false)
   const [tags, setTags] = useState([]);
+  const inputRefsOrganizerdetails = useRef([]);
 
   const onSubmit = (e) => {
     e.preventDefault();
     setcheckReqierdField(true)
-    if (handleOrganizerDetails?.organizerName &&
+    if ((handleOrganizerDetails?.organizerName &&
       handleOrganizerDetails?.organizerEmail &&
-      handleOrganizerDetails?.organizerContactNumber 
-      // &&  tags.length > 0
-      ) {
+      handleOrganizerDetails?.organizerContactNumber?.length === 0) ||
+      (handleOrganizerDetails?.organizerName &&
+        handleOrganizerDetails?.organizerEmail &&
+        handleOrganizerDetails?.organizerContactNumber.length > 9)) {
       setStateHandle_Event_Organiser_Preview(p => {
         p.organise = false
         p.preview = true
         return { ...p }
       })
     }
+    // if (handleOrganizerDetails?.organizerContactNumber?.length >= 1 && handleOrganizerDetails?.organizerContactNumber.length <= 9){
+    //   // alert('1-9')
+    // }
   };
 
   organizerDetails(handleOrganizerDetails, tags);
@@ -55,23 +59,49 @@ const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Pre
     setStateHandle_Event_Organiser_Preview(p => { p.event = !false; p.organise = !true; return { ...p } });
   }
 
-  // useEffect(() => {
-  //   const handleOrganizerDetailsLocal = JSON.parse(localStorage.getItem('handleOrganizerDetails'))
-  //   setHandleOrganizerDetails(() => handleOrganizerDetailsLocal)
-  // }, [])
+  const handleKeyDown = (event, index) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const nextIndex = index + 1;
+      if (nextIndex < inputRefsOrganizerdetails.current.length) {
+        inputRefsOrganizerdetails.current[nextIndex].focus();
+      }
+    }
+  };
+
+  const registerRef = (ref, index) => {
+    inputRefsOrganizerdetails.current[index] = ref;
+  };
+
+  useEffect(() => {
+    let handleOrganizerDetailsLocal = null
+    inputRefsOrganizerdetails.current[0].focus();
+
+    try {
+      handleOrganizerDetailsLocal = JSON.parse(localStorage.getItem('handleOrganizerDetails'))
+    } catch (error) {
+      console.error('Error parsing JSON:', error);
+      alert(error)
+    }
+    if (handleOrganizerDetailsLocal !== null) {
+      setHandleOrganizerDetails(() => handleOrganizerDetailsLocal)
+    }
+  }, [])
+
+  // console.log('handleOrganizerDetails?.organizerContactNumber', handleOrganizerDetails?.organizerContactNumber?.length)
 
   return (
-    <div>
+    <div className="Organizerdetails">
       <form>
         <div className="input-details">
           <label>Organizer Name</label>
-          <input
+          <input ref={(ref) => registerRef(ref, 0)} onKeyDown={(event) => handleKeyDown(event, 0)}
+            onChange={(e) => { handleChangeOrganizerDetailsForm(e) }}
             name="organizerName"
             type="text"
             value={handleOrganizerDetails?.organizerName}
 
             placeholder="Enter the Organizer Name"
-            onChange={(e) => { handleChangeOrganizerDetailsForm(e) }}
           />
           {
             checkReqierdField &&
@@ -82,12 +112,13 @@ const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Pre
         <div className="double">
           <div className="input-details">
             <label>Organizer Email</label>
-            <input
+            <input ref={(ref) => registerRef(ref, 1)} onKeyDown={(event) => handleKeyDown(event, 1)}
+              onChange={(e) => { handleChangeOrganizerDetailsForm(e) }}
               name="organizerEmail"
               type="email"
+              placeholder="Enter the Organizer Name"
               required
               value={handleOrganizerDetails?.organizerEmail}
-              onChange={(e) => { handleChangeOrganizerDetailsForm(e) }}
             />
             {
               checkReqierdField &&
@@ -97,21 +128,19 @@ const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Pre
 
           <div className="input-details">
             <label>Organizer Contact Number</label>
-            <input
+            <input ref={(ref) => registerRef(ref, 2)} onKeyDown={(event) => handleKeyDown(event, 2)}
+              onChange={(e) => { handleChangeOrganizerDetailsForm(e) }}
               type="number"
               name="organizerContactNumber"
-              // maxLength={13}
-              // min={10}
+              placeholder="Enter the Number Here..."              
               disabled={!true}
-              // max={10}
               required
               maxLength={10}
               value={handleOrganizerDetails?.organizerContactNumber}
-              onChange={(e) => { handleChangeOrganizerDetailsForm(e) }}
             />
             {
               checkReqierdField &&
-              !handleOrganizerDetails?.organizerContactNumber && <p style={{ color: 'red', fontSize: '13px' }}> Above field is required </p>
+              handleOrganizerDetails?.organizerContactNumber?.length >= 1 && handleOrganizerDetails?.organizerContactNumber?.length <= 9 && <p style={{ color: 'red', fontSize: '13px' }}> Number Should Be 10 Digits </p>
             }
           </div>
         </div>
@@ -128,15 +157,11 @@ const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Pre
             name="tag"
             placeHolder="Press Enter To Add a Field"
           />
-          {
-            checkReqierdField &&
-            tags.length < 1 && <p style={{ color: 'red', fontSize: '13px' }}> Above field is required </p>
-          }
         </div>
 
-        <div className="card-3 next-button">
+        <div className="card_3next_button">
+          <button ref={(ref) => registerRef(ref, 3)} onKeyDown={(event) => handleKeyDown(event, 3)} type="submit" onClick={(e) => onSubmit(e)} >Next</button>
           <button type="button" onClick={(e) => previous_Button(e)} style={{ marginRight: '10px' }}>Previous</button>
-          <button type="submit" onClick={(e) => onSubmit(e)} >Next</button>
         </div>
       </form>
     </div>

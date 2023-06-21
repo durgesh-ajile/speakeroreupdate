@@ -11,11 +11,11 @@
     display:flex;
 }
 .events-content {
-    width:70%;
+    width:77%;
     /* margin: 50px; */
     overflow: scroll;
-    height: 100vh;
-    margin-left: 30%;
+    height: 90vh;
+     margin-left: 330px;
 }
 .dash-input{
     border: 1px solid #767676;

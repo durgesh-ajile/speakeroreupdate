@@ -132,7 +132,7 @@ export default function Sidebar() {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getallapprovedevent?page=${page}`,
+      url: `http://localhost:5000/api/getallapprovedevent?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -147,7 +147,7 @@ export default function Sidebar() {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}&page=${page}`,
+      url: `http://localhost:5000/api/geteventbyquery?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -166,7 +166,7 @@ export default function Sidebar() {
 
   useEffect(() => {
     if (mode || category || filterdate || exclusive) {
-      const apiUrl = `https://api.speakerore.com/api/geteventsbyfilter?${getQueryParams()}`;
+      const apiUrl = `http://localhost:5000/api/geteventsbyfilter?${getQueryParams()}`;
       function getQueryParams() {
         const queryParams = [];
 
@@ -368,9 +368,9 @@ export default function Sidebar() {
                     <date>
                       {" "}
                       <MdWatchLater size={20} />
-                      <q>{convertDate(e.EventEndDateAndTime)}</q>
+                      <q>{convertDate(e.EventStartDateAndTime)}</q>
                     </date>
-                    <p></p>
+                    {/* <p></p> */}
                   </div>
                   <div className="desc">
                     <p>{e.ShortDescriptionOfTheEvent}</p>
@@ -434,9 +434,9 @@ export default function Sidebar() {
                     <date>
                       {" "}
                       <MdWatchLater size={20} />
-                      <q>{convertDate(e.EventEndDateAndTime)}</q>
+                      <q>{convertDate(e.EventStartDateAndTime)}</q>
                     </date>
-                    <p></p>
+                    {/* <p></p> */}
                   </div>
                   <div className="desc">
                     <p>{e.ShortDescriptionOfTheEvent}</p>

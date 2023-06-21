@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./listyourevent.css";
-import tech from "../../images/tech-support 1.png";
+import tech from "../../images/tech_support.png";
 import Eventdetails from "../../utilities/Eventdetails/Eventdetails";
 import Organizerdetails from "../../utilities/organizerdeatails/Organizerdetails";
 import Preview from "../../utilities/Preview/Preview";
-import { Event } from "@mui/icons-material";
-import pinkback from "../../images/Vector 9.png";
-import orangeback from "../../images/Vector 10.png";
+// import { Event } from "@mui/icons-material";
+// import pinkback from "../../images/Vector 9.png";
+// import orangeback from "../../images/Vector 10.png";
 
 const ListYourEvent = () => {
   const [handleFormInputListYourEvent, setHandleFormInputListYourEvent] = useState([]);
@@ -71,69 +71,64 @@ const ListYourEvent = () => {
 
 
   return (
-    <div>
-      <div className="event-logo">
-        <div className="list-img">
-          <img id="orange-list" src={orangeback} />
-          <img id="pink-list" src={pinkback} />
-          <img id="man-img" src={tech} />
+    <div className="ListYourEvent_container">
+      <div className="ListYourEvent_container_fluid">
+        <div className="ListYourEvent_container_fluid_image_heading_p">
+          <div>
+            <img id="man-img" src={tech} alt="ListYourEvent_container_tech" />
+            <h2>List your Event</h2>
+            <div>
+              <p>Get the best Industry experts on your stage for your audience without
+              any middlemen. Any niche, any location, any occasion. Interviews,
+              Keynotes, Emcees, Trainers, Workshops, Webinars, Seminars,
+              Collaborations or more. We have got you covered.</p>
+            </div>
+          </div>
         </div>
-        <h2>List your Event</h2>
-        <div className="list-event">
-          <span>
-            Get the best Industry experts on your stage for your audience
-            without any middlemen. Any <br />
-            niche, any location, any occasion. Interviews, Keynotes, Emcees,
-            Trainers, Workshops,
-            <br /> Webinars, Seminars, Collaborations or more. We have got you
-            covered.
-          </span>
+        <div className="List_Your_Event_Tab_Container">
+          <div className="List_Your_Event_Tab_Container_Fluid">
+            <div className={"green_border_bottom"}>
+              <button onClick={() => handle_Event_Organiser_Preview("event")}
+                style={{ backgroundColor: stateHandle_Event_Organiser_Preview?.event === false ? 'rgba(180, 208, 195, 1)' : '', cursor: organiseInableDisable ? "no-drop" : "no-drop" }}
+                disabled={true} id={stateHandle_Event_Organiser_Preview?.event === true ? "green" : ""}>
+                1. Event details
+              </button>
+            </div>
+            <div className={((stateHandle_Event_Organiser_Preview?.organise === true) || (stateHandle_Event_Organiser_Preview?.organise === false && stateHandle_Event_Organiser_Preview?.preview === true)) && "green_border_bottom"}>
+              <button onClick={() => handle_Event_Organiser_Preview("organise")}
+                disabled={true}
+                id={stateHandle_Event_Organiser_Preview?.organise === true ? "green" : ""} style={{ backgroundColor: stateHandle_Event_Organiser_Preview?.preview === !false ? 'rgba(180, 208, 195, 1)' : '', cursor: organiseInableDisable ? "no-drop" : "no-drop" }}>
+                2. Organizer details
+              </button>
+            </div>
+            <div className={stateHandle_Event_Organiser_Preview?.preview === true && "green_border_bottom"}>
+              <button onClick={() => handle_Event_Organiser_Preview("preview")} disabled={true} id={stateHandle_Event_Organiser_Preview?.preview === true ? "green" : ""} style={{ cursor: organiseInableDisable ? "no-drop" : "no-drop" }}>
+                3. Preview
+              </button>
+            </div>
+          </div>
+        </div>
+        <div>
+          {stateHandle_Event_Organiser_Preview?.event === true ? (
+            <Eventdetails
+              eventDetails={eventDetails}
+              setStateHandle_Event_Organiser_Preview={setStateHandle_Event_Organiser_Preview}
+              stateHandle_Event_Organiser_Preview={stateHandle_Event_Organiser_Preview}
+            />
+          ) : stateHandle_Event_Organiser_Preview?.organise === true ? (
+            <Organizerdetails
+              organizerDetails={organizerDetails}
+              setStateHandle_Event_Organiser_Preview={setStateHandle_Event_Organiser_Preview}
+              stateHandle_Event_Organiser_Preview={stateHandle_Event_Organiser_Preview}
+            />
+          ) : (
+            <Preview stateData={stateData}
+              setStateHandle_Event_Organiser_Preview={setStateHandle_Event_Organiser_Preview}
+              stateHandle_Event_Organiser_Preview={stateHandle_Event_Organiser_Preview}
+            />
+          )}
         </div>
       </div>
-      <div className="List_Your_Event_Tab_Container">
-        <div className="List_Your_Event_Tab_Container_Fluid">
-          <div className={true && "green_border_bottom"}>
-            <button onClick={() => handle_Event_Organiser_Preview("event")}
-              style={{ backgroundColor: stateHandle_Event_Organiser_Preview?.event === false ? 'rgba(180, 208, 195, 1)' : '', cursor: organiseInableDisable ? "no-drop" : "no-drop" }}
-              disabled={true} id={stateHandle_Event_Organiser_Preview?.event === true ? "green" : ""}>
-              1. Event details
-            </button>
-          </div>
-          <div className={((stateHandle_Event_Organiser_Preview?.organise ===true)||(stateHandle_Event_Organiser_Preview?.organise ===false && stateHandle_Event_Organiser_Preview?.preview === true)) && "green_border_bottom"}>
-            <button onClick={() => handle_Event_Organiser_Preview("organise")}
-              disabled={true}
-              id={stateHandle_Event_Organiser_Preview?.organise === true ? "green" : ""} style={{ backgroundColor: stateHandle_Event_Organiser_Preview?.preview === !false ? 'rgba(180, 208, 195, 1)' : '', cursor: organiseInableDisable ? "no-drop" : "no-drop" }}>
-              2. Organizer details
-            </button>
-          </div>
-          <div className={stateHandle_Event_Organiser_Preview?.preview === true && "green_border_bottom"}>
-            <button onClick={() => handle_Event_Organiser_Preview("preview")} disabled={true} id={stateHandle_Event_Organiser_Preview?.preview === true ? "green" : ""} style={{ cursor: organiseInableDisable ? "no-drop" : "no-drop" }}>
-              3. Preview
-            </button>
-          </div>
-        </div>
-
-
-      </div>
-
-      {stateHandle_Event_Organiser_Preview?.event === true ? (
-        <Eventdetails
-          eventDetails={eventDetails}
-          setStateHandle_Event_Organiser_Preview={setStateHandle_Event_Organiser_Preview}
-          stateHandle_Event_Organiser_Preview={stateHandle_Event_Organiser_Preview}
-        />
-      ) : stateHandle_Event_Organiser_Preview?.organise === true ? (
-        <Organizerdetails
-          organizerDetails={organizerDetails}
-          setStateHandle_Event_Organiser_Preview={setStateHandle_Event_Organiser_Preview}
-          stateHandle_Event_Organiser_Preview={stateHandle_Event_Organiser_Preview}
-        />
-      ) : (
-        <Preview stateData={stateData}
-          setStateHandle_Event_Organiser_Preview={setStateHandle_Event_Organiser_Preview}
-          stateHandle_Event_Organiser_Preview={stateHandle_Event_Organiser_Preview}
-        />
-      )}
     </div>
   );
 };

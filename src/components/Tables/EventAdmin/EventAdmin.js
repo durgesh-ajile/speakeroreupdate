@@ -78,7 +78,7 @@ const EventAdmin = () => {
   const geteventforapproval = () => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventforapproval?page=${page}`,
+      url: `http://localhost:5000/api/geteventforapproval?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -95,7 +95,7 @@ const EventAdmin = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}&page=${page}`,
+      url: `http://localhost:5000/api/geteventbyquery?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -121,7 +121,7 @@ const EventAdmin = () => {
   const handleSingleView = () => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getsingleevent/${eventId}`,
+      url: `http://localhost:5000/api/getsingleevent/${eventId}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -135,7 +135,7 @@ const EventAdmin = () => {
   const handleEventDelete = () => {
     axios({
       method: "patch",
-      url: "https://api.speakerore.com/api/makeeventdecline",
+      url: "http://localhost:5000/api/makeeventdecline",
       data: {
         eventId: deleteevent,
         feedback: feedback,
@@ -156,7 +156,7 @@ const EventAdmin = () => {
   const handleApproveEvent = (id) => {
     axios({
       method: "patch",
-      url: "https://api.speakerore.com/api/makeeventapprove",
+      url: "http://localhost:5000/api/makeeventapprove",
       data: {
         eventId: id,
       },
@@ -229,7 +229,7 @@ const EventAdmin = () => {
                       <date>
                         {" "}
                         <MdWatchLater size={20} color="grey" />
-                        <q>{convertDate(e.EventEndDateAndTime)}</q>
+                        <q>{convertDate(e.EventStartDateAndTime)}</q>
                       </date>
                       <div className="arrow-icon">
                         <BsArrowRightCircle
@@ -339,7 +339,7 @@ const EventAdmin = () => {
                       <date>
                         {" "}
                         <MdWatchLater size={20} color="grey" />
-                        <q>{convertDate(e.EventEndDateAndTime)}</q>
+                        <q>{convertDate(e.EventStartDateAndTime)}</q>
                       </date>
                       <div className="arrow-icon">
                         <BsArrowRightCircle

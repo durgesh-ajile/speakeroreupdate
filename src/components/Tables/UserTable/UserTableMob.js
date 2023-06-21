@@ -61,7 +61,7 @@ const UsersWrapper = () => {
   const blockRegularUser = () => {
     axios({
       method: "patch",
-      url: "https://api.speakerore.com/api/blockregularuser",
+      url: "http://localhost:5000/api/blockregularuser",
       withCredentials: true,
       data: {
         userId: block,
@@ -80,7 +80,7 @@ const UsersWrapper = () => {
   const makeMember = () => {
     axios({
       method: "patch",
-      url: "https://api.speakerore.com/api/makeusertoteammember",
+      url: "http://localhost:5000/api/makeusertoteammember",
       withCredentials: true,
       data: {
         userId: makeMemberId,
@@ -100,7 +100,7 @@ const UsersWrapper = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/getallregularuser",
+      url: "http://localhost:5000/api/getallregularuser",
       withCredentials: true,
     })
       .then((res) => {
@@ -114,7 +114,7 @@ const UsersWrapper = () => {
   React.useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getallregularuser?page=${page}`,
+      url: `http://localhost:5000/api/getallregularuser?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -131,7 +131,7 @@ const UsersWrapper = () => {
   React.useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getuserbysearch?keyword=${searchKey}&page=${page}`,
+      url: `http://localhost:5000/api/getuserbysearch?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {

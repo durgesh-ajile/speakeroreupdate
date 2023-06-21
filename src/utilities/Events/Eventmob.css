@@ -6,7 +6,7 @@
     }
     .view-text h5 {
         /* font-family: Inter; */
-        font-size: 16px;
+        font-size: 12px;
         font-weight: 500;
         line-height: 18px;
         margin-top: 10px;
@@ -71,7 +71,7 @@
     height: 100vh;
     background-color: #E4E4E4;
     position: fixed;
-    top: 250px;
+    top: 225px;
     right: -70%;
     display: none;
     /* box-shadow: -20px 30px 100px 0px #e4ffd8; */
@@ -121,6 +121,7 @@
 
 .EventlistInfo_container_fluid {
     width: 77%;
+    margin-top: 12px;
 }
 
 .EventlistInfo_container_fluid>div {

@@ -22,7 +22,7 @@ const Profile = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/getprofile",
+      url: "http://localhost:5000/api/getprofile",
       withCredentials: true,
     })
       .then((res) => {
@@ -41,7 +41,7 @@ const Profile = () => {
   const handleAffiliateSubmit = () => {
     axios({
       method: "post",
-      url: "https://api.speakerore.com/api/createaffilatecoupon",
+      url: "http://localhost:5000/api/createaffilatecoupon",
       withCredentials: true,
     })
       .then((res) => {
@@ -57,7 +57,7 @@ const Profile = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/getaffilatecoupon",
+      url: "http://localhost:5000/api/getaffilatecoupon",
       withCredentials: true,
     })
       .then((res) => {
@@ -72,7 +72,7 @@ const Profile = () => {
     useEffect(() => {
       axios({
         method: "get",
-        url: "https://api.speakerore.com/api/getaffilatecoupon",
+        url: "http://localhost:5000/api/getaffilatecoupon",
         withCredentials: true,
       })
         .then((res) => {
@@ -87,7 +87,7 @@ const Profile = () => {
       const handleLogout = () => {
         axios({
           method: "get",
-          url: "https://api.speakerore.com/api/logout",
+          url: "http://localhost:5000/api/logout",
           withCredentials: true,
         })
           .then((res) => {
@@ -103,7 +103,7 @@ const Profile = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/geteventforcurrentuser",
+      url: "http://localhost:5000/api/geteventforcurrentuser",
       withCredentials: true,
     })
       .then((res) => {
@@ -218,7 +218,7 @@ const Profile = () => {
                       <date>
                         {" "}
                         <MdWatchLater size={20} />
-                        <q>{convertDate(e.EventEndDateAndTime)}</q>
+                        <q>{convertDate(e.EventStartDateAndTime)}</q>
                       </date>
                       <p></p>
                     </div>

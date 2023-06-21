@@ -63,7 +63,7 @@ const TrashMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getalltrashevents?page=${page}`,
+      url: `http://localhost:5000/api/getalltrashevents?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -77,7 +77,7 @@ const TrashMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getalltrashevents?page=${page}`,
+      url: `http://localhost:5000/api/getalltrashevents?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -94,7 +94,7 @@ const TrashMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventbyqueryfortrash?keyword=${searchKey}&page=${page}`,
+      url: `http://localhost:5000/api/geteventbyqueryfortrash?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -112,7 +112,7 @@ const TrashMob = () => {
   const handlePermanentDelete = () => {
     axios({
       method: "delete",
-      url: `https://api.speakerore.com/api/deleteevent?eventId=${deleteId}`,
+      url: `http://localhost:5000/api/deleteevent?eventId=${deleteId}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -129,7 +129,7 @@ const TrashMob = () => {
   const handleReviveCard = () => {
     axios({
       method: "patch",
-      url: "https://api.speakerore.com/api/revivefortrash",
+      url: "http://localhost:5000/api/revivefortrash",
       withCredentials: true,
       data: {
         eventId: reviveId,
@@ -180,35 +180,48 @@ const TrashMob = () => {
           {filter ? (
             filter.map((e) => (
               <div id="Card" className="card">
-                <div id="Card-1" className="card-1">
-                  <small>
-                    <IoSchoolSharp
-                      size={16}
-                      color="green"
-                      style={{ marginRight: "4px" }}
-                    />
-                    {e.Category}{" "}
-                  </small>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <strong
-                      style={{
-                        marginLeft: "35px",
-                        marginTop: "8px",
-                        marginBottom: "8px",
-                        color: "black",
-                      }}
-                    >
-                      {e.OrganizerName},
-                    </strong>
-                    <span
-                      style={{
-                        marginLeft: "5px",
-                        marginTop: "8px",
-                        marginBottom: "8px",
-                      }}
-                    >
-                      {e.City}
-                    </span>
+              <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div id="Card-1" className="card-1">
+                    <small>
+                      <IoSchoolSharp
+                        size={16}
+                        color="green"
+                        style={{ marginRight: "4px" }}
+                      />
+                      {e.Category}{" "}
+                    </small>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <strong
+                        style={{
+                          marginLeft: "35px",
+                          marginTop: "8px",
+                          marginBottom: "8px",
+                          color: "black",
+                        }}
+                      >
+                        {e.OrganizerName},
+                      </strong>
+                      <span
+                        style={{
+                          marginLeft: "5px",
+                          marginTop: "8px",
+                          marginBottom: "8px",
+                        }}
+                      >
+                        {e.City}
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    {e.isSpeakerOreExclusive ? (
+                      <img src={exclusiveimg} />
+                    ) : null}
                   </div>
                 </div>
                 <div id="Card-2" className="card-2">
@@ -220,7 +233,7 @@ const TrashMob = () => {
                   <date>
                     {" "}
                     <MdWatchLater id="WatchLater" size={20} color="grey" />
-                    {convertDate(e.EventEndDateAndTime)}{" "}
+                    {convertDate(e.EventStartDateAndTime)}{" "}
                   </date>
                   <p></p>
                 </div>
@@ -326,35 +339,48 @@ const TrashMob = () => {
           ) : (
             trashData.deletedEvents.map((e) => (
               <div id="Card" className="card">
-                <div id="Card-1" className="card-1">
-                  <small>
-                    <IoSchoolSharp
-                      size={16}
-                      color="green"
-                      style={{ marginRight: "4px" }}
-                    />
-                    {e.Category}{" "}
-                  </small>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <strong
-                      style={{
-                        marginLeft: "35px",
-                        marginTop: "8px",
-                        marginBottom: "8px",
-                        color: "black",
-                      }}
-                    >
-                      {e.OrganizerName},
-                    </strong>
-                    <span
-                      style={{
-                        marginLeft: "5px",
-                        marginTop: "8px",
-                        marginBottom: "8px",
-                      }}
-                    >
-                      {e.City}
-                    </span>
+              <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div id="Card-1" className="card-1">
+                    <small>
+                      <IoSchoolSharp
+                        size={16}
+                        color="green"
+                        style={{ marginRight: "4px" }}
+                      />
+                      {e.Category}{" "}
+                    </small>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <strong
+                        style={{
+                          marginLeft: "35px",
+                          marginTop: "8px",
+                          marginBottom: "8px",
+                          color: "black",
+                        }}
+                      >
+                        {e.OrganizerName},
+                      </strong>
+                      <span
+                        style={{
+                          marginLeft: "5px",
+                          marginTop: "8px",
+                          marginBottom: "8px",
+                        }}
+                      >
+                        {e.City}
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    {e.isSpeakerOreExclusive ? (
+                      <img src={exclusiveimg} />
+                    ) : null}
                   </div>
                 </div>
                 <div id="Card-2" className="card-2">
@@ -366,7 +392,7 @@ const TrashMob = () => {
                   <date>
                     {" "}
                     <MdWatchLater id="WatchLater" size={20} color="grey" />
-                    {convertDate(e.EventEndDateAndTime)}{" "}
+                    {convertDate(e.EventStartDateAndTime)}{" "}
                   </date>
                   <p></p>
                 </div>

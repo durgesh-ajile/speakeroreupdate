@@ -102,7 +102,7 @@ const Eventlist = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getallapprovedevent?page=${page}`,
+      url: `http://localhost:5000/api/getallapprovedevent?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -117,7 +117,7 @@ const Eventlist = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}&page=${page}`,
+      url: `http://localhost:5000/api/geteventbyquery?keyword=${searchKey}&page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -136,7 +136,7 @@ const Eventlist = () => {
 
   useEffect(() => {
     if (mode || category || date || exclusive) {
-      const apiUrl = `https://api.speakerore.com/api/geteventsbyfilter?${getQueryParams()}`;
+      const apiUrl = `http://localhost:5000/api/geteventsbyfilter?${getQueryParams()}`;
       function getQueryParams() {
         const queryParams = [];
 
@@ -338,14 +338,47 @@ const Eventlist = () => {
               <>
                 <div className="EventlistInfo_container">
                   <div className="EventlistInfo_container_fluid">
-                    <div>
-                      {/* <img src={education} alt="" /> */}
-                      <p>{e.Category}</p>
+                  <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div id="Card-1" className="card-1">
+                    <small  style={{
+                          marginLeft: "5px",
+                        }}>
+                      {e.Category}{" "}
+                    </small>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <strong
+                        style={{
+                          marginLeft: "5px",
+                          marginTop: "8px",
+                          marginBottom: "8px",
+                          color: "black",
+                        }}
+                      >
+                        {e.OrganizerName},
+                      </strong>
+                      <span
+                        style={{
+                          marginLeft: "5px",
+                          marginTop: "8px",
+                          marginBottom: "8px",
+                        }}
+                      >
+                        {e.City}
+                      </span>
                     </div>
-
-                    <p style={{ margin: "0" }}>
-                      <b>{e.OrganizerName},</b> <span>{e.City}</span>{" "}
-                    </p>
+                  </div>
+                  <div>
+                    {e.isSpeakerOreExclusive ? (
+                      <img src={exclusiveimg} />
+                    ) : null}
+                  </div>
+                </div>
 
                     <div>
                       <div
@@ -359,7 +392,7 @@ const Eventlist = () => {
                         <div style={{ marginLeft: "20px" }}>
                           <MdWatchLater size={20} />
                           <p style={{ marginLeft: "4px" }}>
-                            {convertDate(e.EventEndDateAndTime)}
+                            {convertDate(e.EventStartDateAndTime)}
                           </p>
                         </div>
                       </div>
@@ -413,12 +446,9 @@ const Eventlist = () => {
                   }}
                 >
                   <div id="Card-1" className="card-1">
-                    <small>
-                      {/* <IoSchoolSharp
-                        size={16}
-                        color="green"
-                        style={{ marginRight: "4px" }}
-                      /> */}
+                    <small  style={{
+                          marginLeft: "5px",
+                        }}>
                       {e.Category}{" "}
                     </small>
                     <div style={{ display: "flex", alignItems: "center" }}>
@@ -462,7 +492,7 @@ const Eventlist = () => {
                         <div style={{ marginLeft: "20px" }}>
                           <MdWatchLater size={20} />
                           <p style={{ marginLeft: "4px" }}>
-                            {convertDate(e.EventEndDateAndTime)}
+                            {convertDate(e.EventStartDateAndTime)}
                           </p>
                         </div>
                       </div>
