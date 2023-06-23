@@ -17,6 +17,7 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import exclusiveimg from "../../images/Group.png";
 import { BiSearchAlt } from "react-icons/bi";
+import Footer from "../footer/Footer";
 
 const successToast = {
   position: "bottom-right",
@@ -42,9 +43,10 @@ const Eventlist = () => {
   const [page, setPage] = React.useState(1);
   const [mode, setMode] = React.useState();
   const [category, setCategory] = React.useState();
-  const [date, setDate] = React.useState();
   const [searchKey, setSearchKey] = React.useState();
   const [filter, setFilter] = useState();
+  const [showdate, setShowDate] = React.useState();
+  const [filterdate, setFilterDate] = React.useState();
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -135,7 +137,7 @@ const Eventlist = () => {
   console.log(inperson);
 
   useEffect(() => {
-    if (mode || category || date || exclusive) {
+    if (mode || category || filterdate || exclusive) {
       const apiUrl = `https://api.speakerore.com/api/geteventsbyfilter?${getQueryParams()}`;
       function getQueryParams() {
         const queryParams = [];
@@ -148,8 +150,8 @@ const Eventlist = () => {
           queryParams.push(`category=${category}`);
         }
 
-        if (date) {
-          queryParams.push(`date=${date}`);
+        if (filterdate) {
+          queryParams.push(`date=${filterdate}`);
         }
 
         if (exclusive) {
@@ -173,10 +175,10 @@ const Eventlist = () => {
           setFilter("");
         });
     }
-    if (!mode && !category && !date && !exclusive) {
+    if (!mode && !category && !filterdate && !exclusive) {
       setFilter("");
     }
-  }, [mode, category, date, exclusive]);
+  }, [mode, category, filterdate, exclusive]);
 
   function convertDate(e) {
     const date = new Date(e).toLocaleString();
@@ -205,7 +207,7 @@ const Eventlist = () => {
   return (
     <>
     <div className="head-banner">
-          <div className="banner-container">
+          <div className="banner-container" >
             <div className="view-text">
               <h3>Gold Deposits - Events Exploration Page </h3>
               <h5>
@@ -257,18 +259,18 @@ const Eventlist = () => {
           <h3>Filter</h3>
           <p>Models</p>
           <div className="Eventlist_input_type_checkbox" onClick={handleOnline}>
-            <input type="checkbox" checked={online} name="" id="" />
+            <input type="radio" checked={online} name="" id="" />
             <p>online</p>
           </div>
           <div
             className="Eventlist_input_type_checkbox"
             onClick={handleInperson}
           >
-            <input type="checkbox" name="" id="" checked={inperson} />
+            <input type="radio" name="" id="" checked={inperson} />
             <p>In-person</p>
           </div>
           <div className="Eventlist_input_type_checkbox" onClick={handleHybrid}>
-            <input type="checkbox" name="" id="" checked={hybrid} />
+            <input type="radio" name="" id="" checked={hybrid} />
             <p>Hybrid</p>
           </div>
 
@@ -312,9 +314,14 @@ const Eventlist = () => {
 
           <div className="calendar">
             <input
-              value={value}
-              onClick={handleCalendar}
-              placeholder="Select start date"
+            type="date"
+              value={showdate}
+              onChange={(e) => {
+                const date = new Date(e.target.value)
+                setFilterDate(date.toISOString())
+                setShowDate(e.target.value)
+              }}
+              
             />
           </div>
 
@@ -323,7 +330,7 @@ const Eventlist = () => {
             className="Eventlist_input_type_checkbox"
             onClick={handleExclusive}
           >
-            <input type="checkbox" name="" id="" checked={exclusive} />
+            <input type="radio" name="" id="" checked={exclusive} />
             <p className="p">SpeakerOre Exclusive</p>
           </div>
         </div>
@@ -427,7 +434,7 @@ const Eventlist = () => {
             <Typography>Page: {page}</Typography>
           </Stack>
         </div>
-      ) : mode || category || date || exclusive || searchKey ? (
+      ) : mode || category || filterdate || exclusive || searchKey ? (
         <div>
           <h3>No Matching Events</h3>
         </div>
@@ -526,6 +533,7 @@ const Eventlist = () => {
             />
             <Typography>Page: {page}</Typography>
           </Stack>
+          <Footer/>
         </div>
       ) : (
         ""

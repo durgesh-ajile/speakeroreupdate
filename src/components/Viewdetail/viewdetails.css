@@ -3,6 +3,9 @@
 }
 .view-detail{
     margin-top: 72px;
+    background-image: url("../../images/Vector\ 8.png");
+    background-repeat: no-repeat;
+    background-position: right top;
 }
 .banner-text{
     color: white;
@@ -129,9 +132,18 @@
     border-radius:30px ;
     text-align: center;
 }
+#Icon-view {
+  margin: 0px 10px 0px 0px;
+  background: #e3d9f759;
+  color: #24754F;
+  padding: 0.5rem 0.6rem 0.5rem 0.6rem;
+  border-radius: 5px;
+  height: fit-content;
+}
 
-
-
+#website{
+  color:#595959
+}
 /* media query */
 
 

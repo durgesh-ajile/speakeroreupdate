@@ -14,53 +14,10 @@ import { useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import exclusiveimg from "../../images/Group.png";
+import Footer from "../footer/Footer";
 
 const drawerWidth = 340;
 
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && {
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
-  })
-);
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  transition: theme.transitions.create(["margin", "width"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: "flex-end",
-}));
 
 export default function Sidebar() {
   const theme = useTheme();
@@ -213,8 +170,8 @@ export default function Sidebar() {
     const date = new Date(e).toLocaleString();
     return date;
   }
-  console.log(showdate)
-  console.log(filterdate)
+  // console.log(showdate)
+  // console.log(filterdate)
 
   return (
     <div className="event-main">
@@ -228,20 +185,20 @@ export default function Sidebar() {
           </div>
           <div className="mode">
             <div onClick={handleOnline}>
-              <input type="checkbox" checked={online}  />
+              <input type="radio" checked={online}  />
               <lable>Online</lable>
             </div>
 
             <div onClick={handleInperson}>
               <input
-                type="checkbox"
+                type="radio"
                 checked={inperson}
               />
               <lable>In-person</lable>
             </div>
 
             <div onClick={handleHybrid}>
-              <input type="checkbox" checked={hybrid} />
+              <input type="radio" checked={hybrid} />
               <lable>Hybrid</lable>
             </div>
           </div>
@@ -302,7 +259,7 @@ export default function Sidebar() {
             <h4>SpeakerOre</h4>
             <div className="speaker-exclusive">
               <input
-                type="checkbox"
+                type="radio"
                 checked={exclusive}
               />
               <lable>Exclusive</lable>
@@ -462,6 +419,7 @@ export default function Sidebar() {
               />
               <Typography>Page: {page}</Typography>
             </Stack>
+            <Footer/>
           </div>
         ) : (
           ""

@@ -2,10 +2,22 @@
     display: flex;
     justify-content: space-between;
 }
-
+#nav-select{
+  color:#24754F
+}
+#side-select{
+  color: white;
+  background-color: #EF7676;
+}
 @media screen and (min-width: 651px) {
 .Navbar_coontainer {
     display: none;
+}
+.Navbar_coontainer .logout{
+  text-align: center;
+    display: flex;
+    margin: 29px;
+    align-items: center;
 }
 
 }

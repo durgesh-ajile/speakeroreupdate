@@ -64,7 +64,7 @@ const Viewdetails = () => {
           
           <div className="web">
             <img src={web} style={{ textAlign: "center" }} /><span>website: </span>
-            <a href={data.EventWebsiteUrl}> {data.EventWebsiteUrl}</a>
+            <a href={data.EventWebsiteUrl} id="website"> {data.EventWebsiteUrl}</a>
           </div>
         </div>
       </div>
@@ -75,7 +75,7 @@ const Viewdetails = () => {
         </div>
         <div className="venue-details-container">
           <div className="dateandtime box">
-            <div className="icon-view">
+            <div className="icon-view"  id="Icon-view">
               <MdDateRange />
             </div>
             <div className="view-description">
@@ -85,7 +85,7 @@ const Viewdetails = () => {
           </div>
 
           <div className="location box">
-            <div className="icon-view">
+            <div className="icon-view" id="Icon-view">
               <MdOutlineLocationOn />
             </div>
             <div className="view-description">
@@ -95,7 +95,7 @@ const Viewdetails = () => {
           </div>
 
           <div className="audience box">
-            <div className="icon-view">
+            <div className="icon-view"  id="Icon-view">
               <BsFillPersonFill />
             </div>
             <div className="view-description">

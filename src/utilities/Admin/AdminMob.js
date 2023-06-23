@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UserTable1 from "../../components/Tables/UserTable/UserTable1";
 import "./Admin.css";
-import { IoMdLogOut } from "react-icons/io";
-
 import TeamMembers1 from "../../components/Tables/TeamMember/TeamMembers1";
 import CouponTable1 from "../../components/Tables/CouponTable/CouponTable1";
 import EventAdmin1 from "../../components/Tables/EventAdmin/EventAdmin1";
@@ -55,20 +53,7 @@ const AdminMob = () => {
       });
   }, []);
 
-  const handleLogout = () => {
-    axios({
-      method: "get",
-      url: "https://api.speakerore.com/api/logout",
-      withCredentials: true,
-    })
-      .then((res) => {
-        window.location.reload();
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+ 
 
   // console.log(eventsForApproval)
   let navigate = useNavigate();
@@ -147,13 +132,7 @@ const AdminMob = () => {
             </button>
           </div>
         </div>
-        <hr />
-        <div className="logout">
-          <span onClick={handleLogout}>
-            {" "}
-            <IoMdLogOut /> Logout
-          </span>
-        </div>
+        
       </div>
       <div id="Events-content" className="events-content">
         {select === "event" ? <EventAdmin1 /> : ""}

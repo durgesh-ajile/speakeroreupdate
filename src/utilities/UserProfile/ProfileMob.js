@@ -259,11 +259,7 @@ const Profile = () => {
                 </button>
               </div>
             </div>
-            <div className="logout">
-              <span onClick={handleLogout}>
-                <IoMdLogOut /> Logout
-              </span>
-            </div>
+           
           </div>
         ) : (
           <></>

@@ -1,47 +1,50 @@
+
+
 import React, { useEffect, useState } from "react";
 import "./subcription.css";
 import mic from "../../images/FINAL-07 1.png";
 import pinkback from "../../images/Vector 9.png";
 import orangeback from "../../images/Vector 10.png";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { Button } from "@mui/material";
 
-const successToast = {
-  position: "bottom-right",
-  autoClose: 3000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: "light",
-};
 
-const pricedata = [
+const priceData = [
+  // if changing the price of the subscription you need to change it in input field also with classname apply-coupon-input in this file only
   {
     type: "HalfYearly",
+    name: "Half Yearly",
     price: 7000,
-    desc: "Find your Life Changing Event. ",
+    showPrice: 7000,
+    desc: "Find your Life Changing Event.",
   },
   {
     type: "Quaterly",
+    name: "Quaterly",
     price: 5000,
-    desc: "Find your Life Changing Event. ",
+    showPrice: 5000,
+    desc: "Find your Life Changing Event.",
   },
   {
     type: "Yearly",
+    name: "Monthly",
     price: 9996,
-    desc: "Paid on annual basis.  ",
+    showPrice: 833,
+    desc: "Paid on annual basis.",
   },
 ];
 
 const Subscription = () => {
   const [selectedType, setSelectedType] = useState("");
+  const [staticPrice, setStaticPrice] = useState(priceData);
   const [selectPrice, setSelectPrice] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [applied, setApplied] = useState(false);
   const [couponCode, setCouponCode] = useState("");
   const [discount, setDiscount] = useState(0);
-  const selectedPriceData = pricedata.find(
+  const [checkCouponData, setCheckCouponData] = useState(null);
+  const [error, setError] = useState(null);
+
+  const selectedPriceData = priceData.find(
     (item) => item.type === selectedType
   );
 
@@ -51,6 +54,14 @@ const Subscription = () => {
     }
   }, [selectedPriceData]);
 
+
+  useEffect(() => {
+    const selectedPriceData = staticPrice.find((item) => item.type === selectedType);
+    if (selectedPriceData) {
+      setSelectPrice(selectedPriceData.price);
+    }
+  }, [selectedType, staticPrice]);
+
   const handleChange = (e) => {
     setSelectedType(e.target.value);
   };
@@ -58,15 +69,21 @@ const Subscription = () => {
   const handleApplyCoupon = async (e) => {
     e.preventDefault();
     try {
-      if (couponCode && selectedType && selectPrice) {
+      if (couponCode && selectedType && selectPrice && !applied) {
         const checkCoupon = await axios({
           method: "get",
           url: `https://api.speakerore.com/api/applycouponcode?couponCode=${couponCode}&amount=${selectPrice}&subcriptionType=${selectedType}`,
           withCredentials: true,
         });
+        setCheckCouponData(checkCoupon.data)
+        setSelectPrice(checkCoupon.data.finalPrice)
+        setApplied(true)
+        setError('')
         console.log(checkCoupon)
       }
     } catch (error) {
+      setCheckCouponData('')
+      setError(error)
       console.log(error);
     }
   };
@@ -83,44 +100,16 @@ const Subscription = () => {
     try {
       if (selectedType && selectedPriceData) {
        window.location.href = `https://api.speakerore.com/api/paymentform?merchant_id=2560771&order_id=${generateOrderId()}&currency=INR&amount=${selectPrice}&merchant_param1=${selectedType}&merchant_param2=${couponCode}`
-
-        // const order = response.data;
-        // console.log(order);
-        // let couponCodeExist = order.order.notes.couponCode || "No Coupon Code";
-        // let subcriptionType = order.order.notes.subcriptionType;
-
-        // const options = {
-        //   key: "rzp_live_bzuVO7uY2e0AZp",
-        //   amount: order.order.amount,
-        //   currency: "INR",
-        //   name: "",
-        //   email: "",
-        //   contact: "",
-        //   description: "This is testing",
-        //   image:
-        //     "https://pbs.twimg.com/profile_images/1528248719585734657/roEyxCoi_400x400.jpg",
-        //   order_id: order.order.id,
-        //   callback_url: `https://api.speakerore.com/api/payment/verify?subscriptionType=${subcriptionType}&couponCode=${couponCodeExist}`,
-        //   prefill: {},
-        //   notes: {
-        //     address: "Razorpay Corporate Office",
-        //   },
-        //   theme: {
-        //     color: "#121212",
-        //   },
-        // };
-        
-        // const razor = new window.Razorpay(options);
-        // razor.open();
       }
     } catch (error) {
       console.log(error);
     }
   };
   console.log(selectedType)
+  console.log(selectPrice)
 
   return (
-    <div className="subscribe-conatiner">
+    <div className="subscribe-container">
       <div className="text-container">
         <div className="mic-img">
           <img id="orange" src={orangeback} />
@@ -136,61 +125,85 @@ const Subscription = () => {
         <div className="para">
           <span>
             Find your Life Changing Event. Speaking is a serious
-            <br /> Business .Every Expert must get noticed to build their <br />
-            empire of followers. Knowledge within you wont help
+            <br /> Business. Every Expert must get noticed to build their <br />
+            empire of followers. Knowledge within you won't help
             <br /> the world at large. Your Time is the Most Expensive <br />
             Opportunity Cost.
           </span>
         </div>
       </div>
       <div className="price-container">
-        {pricedata.map((e, index) => (
-          <div className="pricebox" key={index} onClick={() => {
-                setSelectedType(e.type)
-              }}>
-            <div className="price-details">
-              <div className="input" >
-                <input
-                  type="radio"
-                  name="subscriptionType"
-                  value={e.type}
-                  checked={selectedType === e.type}
-                  // onChange={(e) => {
-                  //   handleChange(e);
-                  // }}
-                />
+        {staticPrice && (
+          <div>
+            {staticPrice.map((e, index) => (
+              <div
+                className="pricebox"
+                key={index}
+                onClick={() => {
+                  setSelectedType(e.type);
+                  setSelectPrice(e.price)
+                  setApplied(false)
+                  setCheckCouponData('')
+                  setError('')
+                }}
+               id= {selectedType === e.type? 'selected-price' : null}
+              >
+                <div className="price-details">
+                  <div className="price-type">
+                    <small>{e.name}</small>
+                    <span>{e.desc}</span>
+                  </div>
+                </div>
+                <div className="price">
+                  <price>₹ {e.showPrice}</price>
+                </div>
               </div>
-              <div className="price-type">
-                {e.type === "Yearly" ? (
-                  <small>Monthly</small>
-                ) : (
-                  <small>{e.type}</small>
-                )}
-                <span>{e.desc}</span>
-              </div>
-            </div>
-            <div className="price">
-              {e.type === "Yearly" ? (
-                <price>₹ 833</price>
-              ) : (
-                <price>₹ {e.price}</price>
-              )}
-            </div>
+            ))}
           </div>
-        ))}
-        <input
+        )}
+   <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+          <input
+          className="apply-coupon-input"
           onChange={(e) => {
             setCouponCode(e.target.value);
+            setSelectPrice(() =>{
+             if(selectedType === 'HalfYearly'){
+              return 7000
+             } else if(selectedType === 'Yearly'){
+              return 9996
+              } else if(selectedType === 'Quaterly'){
+              return 5000
+             }
+            });
+            setCheckCouponData('')
+            setApplied(false)
           }}
         />
-        <button
+        <Button
+        variant="contained"
+        id='apply-coupon-button'
           onClick={(e) => {
             handleApplyCoupon(e);
           }}
         >
-          Check
-        </button>
-        <div className="price-continue">
+          Apply 
+        </Button>
+        </div>
+          <div>
+        
+        </div>  
+        {error ? (
+  <div>
+    <p>❌ {error.response.data.message}</p>
+  </div>
+) : checkCouponData  ? (
+  <div>
+    <p>✅ {checkCouponData.message}</p>
+    <p>⏰ Final Price : <span style={{fontSize:'24px', fontWeight:"600"}}>{selectPrice}</span> </p>
+  </div>
+) : <h3 style={{marginTop:'0'}}>Apply Coupon Code</h3>}
+
+        <div id="price-continue">
           <button onClick={handlePayments}>CONTINUE</button>
         </div>
       </div>

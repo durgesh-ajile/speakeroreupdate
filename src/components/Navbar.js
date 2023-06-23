@@ -1,108 +1,162 @@
 import React, { useEffect, useState } from "react";
 import LoginPopup from "../utilities/Pop/LoginPopup";
 import axios from "axios";
-import { useRef } from 'react'
-import './Navbar.css'
-import logo from '../../src/images/mobilelogo.png'
+import { useRef } from "react";
+import "./Navbar.css";
+import logo from "../../src/images/mobilelogo.png";
 import { Link } from "react-router-dom";
-import { GiHamburgerMenu } from 'react-icons/gi';
+import { GiHamburgerMenu } from "react-icons/gi";
 import { Button } from "@mui/material";
-
+import { IoMdLogOut } from "react-icons/io";
 
 // import logo from '../../assets/img/logo.jpg'
 // import hambergure_icon from '../../assets/img/hamburger_icon.jpg'
 
-const MobileNavbar = ({userData, isAuthenticated, showPopup, setShowPopup}) => {
-    const [sidebarToggle, setSidebarToggle] = useState(true)
-    const NavbarboxRef = useRef(null);
+const MobileNavbar = ({
+  userData,
+  isAuthenticated,
+  showPopup,
+  setShowPopup,
+  select,
+  setSelect
+}) => {
+  const [sidebarToggle, setSidebarToggle] = useState(true);
+  const NavbarboxRef = useRef(null);
 
-    const handleToggle = () => {
-        const box = NavbarboxRef.current;
-        // Apply initial styles
-        box.style.transition = 'transform 0.3s ease-in-out';
-        box.style.transform = sidebarToggle && 'translateX(70%)' ;
-        box.style.right = !sidebarToggle && '-21%' ;
-        box.style.display = sidebarToggle ?  'block':'none' ;
+  const handleLogout = () => {
+    axios({
+      method: "get",
+      url: "https://api.speakerore.com/api/logout",
+      withCredentials: true,
+    })
+      .then((res) => {
+        window.location.reload();
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-        // Delay style changes to ensure initial styles are applied before transition
-        setTimeout(() => {
-            box.style.transition = 'transform 0.3s ease-out';
-            box.style.transform = sidebarToggle ? 'translateX(-0%)' : 'translateX(70%)';
-            box.style.right = sidebarToggle ? '0%' : '-21%';
-        }, 200);
-        setSidebarToggle(!sidebarToggle)
-    };
-    const handleSignInClick = () => {
-      setShowPopup(true);
-    };
-  
-    const handleClosePopup = () => {
-      setShowPopup(false);
-    };
-    
+  const handleToggle = () => {
+    const box = NavbarboxRef.current;
+    // Apply initial styles
+    box.style.transition = "transform 0.3s ease-in-out";
+    box.style.transform = sidebarToggle && "translateX(70%)";
+    box.style.right = !sidebarToggle && "-21%";
+    box.style.display = sidebarToggle ? "block" : "none";
 
-    return (<>
-        <div className='Navbar_coontainer'>
-        <Link to='/'>
-            <div className="Navbar_logo">
-                <img src={logo} alt="" />
+    // Delay style changes to ensure initial styles are applied before transition
+    setTimeout(() => {
+      box.style.transition = "transform 0.3s ease-out";
+      box.style.transform = sidebarToggle
+        ? "translateX(-0%)"
+        : "translateX(70%)";
+      box.style.right = sidebarToggle ? "0%" : "-21%";
+    }, 200);
+    setSidebarToggle(!sidebarToggle);
+  };
+  const handleSignInClick = () => {
+    setShowPopup(true);
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
+  return (
+    <>
+      <div className="Navbar_coontainer">
+        <Link to="/">
+          <div className="Navbar_logo">
+            <img src={logo} alt="" />
+          </div>
+        </Link>
+        {isAuthenticated ? (
+          <div
+            onClick={() => handleToggle()}
+            style={{ color: "#24754F" }}
+            className="Navbar_hambergure_icon"
+          >
+            <h4 style={{ marginRight: "10px" }}>HI {userData}!</h4>
+            <GiHamburgerMenu />
+          </div>
+        ) : (
+          <>
+            <Button
+              variant="outlined"
+              className="bg-sign-up"
+              onClick={handleSignInClick}
+            >
+              Sign Up
+            </Button>
+            {showPopup && <LoginPopup onClose={handleClosePopup} />}
+          </>
+        )}
+      </div>
+      {
+        // !sidebarToggle &&
+        <div
+          ref={NavbarboxRef}
+          id="Navbar_sidebar_id"
+          className="Navbar_sidebar"
+        >
+          <div>
+            <div>
+              <img src={logo} alt="" />
             </div>
-            </Link>
-            {isAuthenticated ? (
-              <div onClick={() => handleToggle()} style={{color:'#24754F'}} className="Navbar_hambergure_icon">
-                <h4 style={{marginRight:'10px'}}>HI {userData}!</h4>
-                <GiHamburgerMenu/>
-            </div>) : (
-              <>
-              <Button variant="outlined" className="bg-sign-up" onClick={handleSignInClick}>
-                Sign Up
+            <div className="Navbar_inputfield">
+              <div>
+                <Link to="/event" onClick={() => {
+                  setSelect('event')
+                }}>
+                  <div className="nav-select" id={select === 'event' ? 'side-select' :''} onClick={() => handleToggle()}>
+                    Events
+                  </div>
+                </Link>
+                <Link to="/createnewevent" onClick={() => {
+                  setSelect('create')
+                }}>
+                  <div className="nav-select" id={select === 'create' ? 'side-select' :''} onClick={() => handleToggle()}>
+                    Create new event
+                  </div>
+                </Link>
+                <Link to="/subscription" onClick={() => {
+                  setSelect('subs')
+                }}>
+                  <div className="nav-select" id={select === 'subs' ? 'side-select' :''} onClick={() => handleToggle()}>
+                    Upgrade
+                  </div>
+                </Link>
+                <Link to="/profile" onClick={() => {
+                  setSelect('pro')
+                }}>
+                  <div className="nav-select" id={select === 'pro' ? 'side-select' :''} onClick={() => handleToggle()}>
+                    View Profile
+                  </div>
+                </Link>
+              </div>
+            </div>
+            <hr />
+            <div className="logout" style={{marginTop:'20px'}} >
+              <Button variant="outlined" color="error" onClick={handleLogout}>
+                {" "}
+                <IoMdLogOut /> <span style={{margin:'2px 0 0 3px'}}>Logout</span>
               </Button>
-              {showPopup && <LoginPopup onClose={handleClosePopup} />}
-            </>
-            )}
-        </div>
-        {
-            // !sidebarToggle &&
-            <div ref={NavbarboxRef} id='Navbar_sidebar_id' className='Navbar_sidebar'>
-                <div>
-                    <div>
-
-                        <img src={logo} alt="" />
-                    </div>
-                    <div className='Navbar_inputfield'>
-                        <div>
-                        <Link to='/event'>
-                            <div className="nav-select" onClick={() => handleToggle()}>Events</div>
-
-                        </Link>
-                        <Link to='/createnewevent'>
-                            <div className="nav-select" onClick={() => handleToggle()}>Create new event</div>
-                          
-                        </Link>
-                        <Link to='/subscription'>
-                            <div className="nav-select" onClick={() => handleToggle()}>Upgrade</div>
-                          
-                        </Link>
-                        <Link to='/profile'>
-                            <div className="nav-select" onClick={() => handleToggle()}>View Profile</div>
-                          
-                        </Link>
-
-                        </div>
-                    </div>
-                </div>
             </div>
-        }
+          </div>
+        </div>
+      }
     </>
-    )
-}
-
+  );
+};
 
 const Navbar = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [isAuthenticated, setIsAutheticated] = useState(false);
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState("");
+  const [select, setSelect] = useState('event');
 
   useEffect(() => {
     setLoading(true);
@@ -134,7 +188,7 @@ const Navbar = () => {
         withCredentials: true,
       })
         .then((res) => {
-          if(res.data.status){
+          if (res.data.status) {
             setUserData(res.data.response.first_name);
           }
         })
@@ -153,40 +207,57 @@ const Navbar = () => {
     setShowPopup(false);
   };
 
-  console.log(showPopup);
+  console.log(select);
 
   return (
     <div>
-    <MobileNavbar isAuthenticated = {isAuthenticated} userData={userData} showPopup ={showPopup} setShowPopup={setShowPopup} />
+      <MobileNavbar
+        isAuthenticated={isAuthenticated}
+        userData={userData}
+        showPopup={showPopup}
+        setShowPopup={setShowPopup}
+        select={select}
+        setSelect={setSelect}
+      />
       <div className="bg-navbar">
-      <Link to='/'> <div className="bg-logo"></div></Link>
-        
+        <Link to="/">
+          {" "}
+          <div className="bg-logo"></div>
+        </Link>
+
         <div className="bg-nav">
           {isAuthenticated && (
             <div className="bg-nav">
-            <Link to='/event'>
-            <a className="bg-events" >
-                Events
-              </a>
-            </Link>
-            <Link to='/createnewevent'>
-            <a className="bg-events">
-                Create New Event
-              </a>
-            </Link>
-              <Link to='/subscription'>
-
-              <button className="bg-btn">Upgrade</button>
+              <Link to="/event" onClick={() => {
+                  setSelect('event')
+                }}>
+                <a className="bg-events" id={select === 'event' ? 'nav-select' :''}>Events</a>
               </Link>
-              <span >| </span>
-              <Link to='/profile'>
-              <span className="nav-name"> Hi {userData}!</span>
+              <Link to="/createnewevent" onClick={() => {
+                  setSelect('create')
+                }}>
+                <a className="bg-events" id={select === 'create' ? 'nav-select' :''}>Create New Event</a>
+              </Link>
+              <Link to="/subscription" onClick={() => {
+                  setSelect('subs')
+                }}>
+                <button className="bg-btn">Upgrade</button>
+              </Link>
+              <span>| </span>
+              <Link to="/profile">
+                <span className="nav-name"  onClick={() => {
+                  setSelect('pro')
+                }}> Hi {userData}!</span>
               </Link>
             </div>
           )}
           {!isAuthenticated && (
             <>
-              <Button variant="outlined" className="bg-sign-up" onClick={handleSignInClick}>
+              <Button
+                variant="outlined"
+                className="bg-sign-up"
+                onClick={handleSignInClick}
+              >
                 Sign Up
               </Button>
               {showPopup && <LoginPopup onClose={handleClosePopup} />}
