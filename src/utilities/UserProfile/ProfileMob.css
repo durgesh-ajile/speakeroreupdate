@@ -17,6 +17,7 @@
  #right-container {
     flex-basis: 100%;
     max-width: 100%;
+    min-height: 50vh;
   }
   
   #profile-pic {

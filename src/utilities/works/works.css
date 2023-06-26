@@ -1,46 +1,66 @@
-.works-heading{
+.works-heading {
     text-align: center;
     margin-bottom: 2rem;
 }
-.works-heading h2{
+
+.works-heading h2 {
     font-weight: 700;
 }
-.works-heading span{
+
+.works-heading span {
     color: #444444;
     font-weight: 500;
 }
-.workcontainer{
+
+.workcontainer {
     padding: 1rem;
+    font-weight: 700;
+
 }
-.green{
+
+.green {
     background-color: #24754F;
     color: white;
     font-size: 1rem;
     font-weight: 800;
 }
-.works-container{
+
+.works-container {
     display: flex;
-    /* flex-direction: column; */
-    justify-content: center;
-    margin: 3rem;
-    gap: 2rem;
+    justify-content: space-between;
+    width: 100%;
 }
 
-.works-box1{
-    width: 400px;
+.works-box1 {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.works-box1 img{
-    width: 6rem;
-     /* background-color: pink; */
-     /* border-radius: ; */
-}
-.joinowbtn{
+
+.works-box1>p {
+    width: 100%;
     text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    color: #606060
 }
-.joinowbtn button{
+
+.works-box1>p>b {
+    color: black;
+}
+
+.works-box1>img {
+    margin-top: 50px;
+    width: 100px;
+}
+
+.joinowbtn {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.joinowbtn button {
     background-color: #EF7676;
     color: white;
     padding: 14px;
@@ -51,36 +71,64 @@
     font-size: 1rem;
     font-weight: 800;
 }
-.swapbutton{
-    /* text-align: center;
-    padding: 2rem;
-   display: flex;
-   justify-content: center; */
-}
-.swapbutton button{
-  width: 250px;
+
+.swapbutton button {
+    width: 250px;
     padding: 1rem;
     font-size: 1rem;
     font-weight: 800;
-    margin:0.3rem;
+    margin: 0.3rem;
     border: none;
     border-radius: 7px;
     line-height: 24px;
     font-weight: 700;
 }
-.initial{
+
+.initial {
     background-color: #E5E5E5;
-    color:#606060
+    color: #606060
 }
 
-.in-swap{
-   background-color: #E5E5E5;
-   text-align: center;
-   margin-top: 2rem;
-    /* padding: 2rem; */
+.in-swap {
+    background-color: #E5E5E5;
+    text-align: center;
+    margin-top: 2rem;
     display: flex;
     justify-content: center;
     width: 523px;
     margin: auto;
     border-radius: 9px;
+}
+
+
+@media screen and (max-width: 500px) {
+
+    .works-heading>h2 {
+        font-size: 17px;
+    }
+
+    .works-heading>span {
+        font-weight: 500;
+        font-size: 13px;
+    }
+
+    .works-box1>img {
+        width: 50px;
+        margin-top: 20px;
+    }
+
+    .works-box1>p {
+        font-size: 10px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .joinowbtn button {
+        padding: 5px 10px 5px 10px;
+        font-size: 9px;
+    }
+
+    .joinowbtn {
+        margin-bottom: 10px;
+    }
 }

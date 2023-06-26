@@ -32,7 +32,7 @@ const UsersWrapper = () => {
   const [block, setBlock] = useState("");
   const [makeMemberId, setMakeMemberId] = useState("");
   const [page, setPage] = React.useState(1);
-  const [searchKey, setSearchKey] = React.useState();
+  const [searchKey, setSearchKey] = React.useState('');
   const [filter, setFilter] = useState();
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
@@ -56,6 +56,26 @@ const UsersWrapper = () => {
 
   const handleClose2 = () => {
     setOpen2(false);
+  };
+
+  const handleUnblock = (unblockId) => {
+    axios({
+      method: "patch",
+      url: "https://api.speakerore.com/api/unblockregularuser",
+      withCredentials: true,
+      data: {
+        userId: unblockId,
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+        setLoading(!loading);
+        toast.success(res.data.message, successToast);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.response.data.message, successToast);
+      });
   };
 
   const blockRegularUser = () => {
@@ -111,7 +131,10 @@ const UsersWrapper = () => {
       });
   }, []);
 
+  
+
   React.useEffect(() => {
+    console.log('run')
     axios({
       method: "get",
       url: `https://api.speakerore.com/api/getallregularuser?page=${page}`,
@@ -197,7 +220,7 @@ const UsersWrapper = () => {
                 {convertDate(row.subcription && row.subcription.EndDate)}
               </div>
               <div>
-                <button
+                {!row.blocked ? <button
                   id="Button"
                   className="blacklist-btn"
                   onClick={() => {
@@ -207,7 +230,15 @@ const UsersWrapper = () => {
                   }}
                 >
                   Blacklist
-                </button>
+                </button>:<button
+                 id="Button"
+                  className="blacklist-btn"
+                      onClick={() => {
+                        handleUnblock(row._id);
+                      }}
+                    >
+                      UNBLOCK
+                    </button>}
                 <button
                   id="Button"
                   className="make-members-btn"
@@ -309,7 +340,7 @@ const UsersWrapper = () => {
                 {convertDate(row.subcription && row.subcription.EndDate)}
               </div>
               <div>
-                <button
+              {!row.blocked ? <button
                   id="Button"
                   className="blacklist-btn"
                   onClick={() => {
@@ -319,7 +350,15 @@ const UsersWrapper = () => {
                   }}
                 >
                   Blacklist
-                </button>
+                </button>:<button
+                 id="Button"
+                  className="blacklist-btn"
+                      onClick={() => {
+                        handleUnblock(row._id);
+                      }}
+                    >
+                      UNBLOCK
+                    </button>}
                 <button
                   id="Button"
                   className="make-members-btn"

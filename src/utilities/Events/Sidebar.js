@@ -2,7 +2,6 @@ import * as React from "react";
 import { useState } from "react";
 import "./sidebar.css";
 import { styled, useTheme } from "@mui/material/styles";
-import MuiAppBar from "@mui/material/AppBar";
 import Typography from "@mui/material/Typography";
 import man from "../../images/Group 11450.png";
 import { MdLocationOn } from "react-icons/md";
@@ -14,14 +13,11 @@ import { useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import exclusiveimg from "../../images/Group.png";
-import Footer from "../footer/Footer";
+import UserPopup from "../Pop/UserPopUp";
 
-const drawerWidth = 340;
 
 
 export default function Sidebar() {
-  const theme = useTheme();
-  const [cal, setcal] = React.useState(false);
   const [approvedEvent, setApprovedEvent] = useState();
   const [online, setOnline] = useState(false);
   const [inperson, setInperson] = useState(false);
@@ -34,6 +30,7 @@ export default function Sidebar() {
   const [searchKey, setSearchKey] = React.useState();
   const [filter, setFilter] = useState();
   const [showdate, setShowDate] = React.useState();
+  const [user, setUser] = useState('')
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -85,7 +82,24 @@ export default function Sidebar() {
   `;
  
  
+  useEffect(() => {
+      axios({
+        method: "get",
+        url: "https://api.speakerore.com/api/getprofile",
+        withCredentials: true,
+      })
+        .then((res) => {
+          if (res.data.status) {
+            setUser(res.data.response.role);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  , []);
 
+  console.log(user)
   useEffect(() => {
     axios({
       method: "get",
@@ -170,11 +184,10 @@ export default function Sidebar() {
     const date = new Date(e).toLocaleString();
     return date;
   }
-  // console.log(showdate)
-  // console.log(filterdate)
-
+  
   return (
     <div className="event-main">
+    {user === 'Regular-user' ? <UserPopup/> : null}
       <div className="filter-sidebar">
         <div className="filter-child">
           <div>
@@ -419,7 +432,7 @@ export default function Sidebar() {
               />
               <Typography>Page: {page}</Typography>
             </Stack>
-            <Footer/>
+            {/* <Footer/> */}
           </div>
         ) : (
           ""

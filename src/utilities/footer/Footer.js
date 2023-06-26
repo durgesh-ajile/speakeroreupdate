@@ -10,18 +10,18 @@ const Footer = () => {
   return (
     <div className="footer-container">
       <div className="social">
-       <a href='https://www.facebook.com/speakerore' target="_blank"><BsFacebook /></a>
-       <a href='https://www.instagram.com/speakerore/' target="_blank"><GrInstagram /></a>
-       <a href='https://www.linkedin.com/in/speakerore' target="_blank"><AiFillLinkedin /></a> 
-       <a href='https://twitter.com/speakerore' target="_blank"><AiFillTwitterCircle /></a> 
+        <a rel="noreferrer" href='https://www.facebook.com/speakerore' target="_blank"><BsFacebook /></a>
+        <a rel="noreferrer" href='https://www.instagram.com/speakerore/' target="_blank"><GrInstagram /></a>
+        <a rel="noreferrer" href='https://www.linkedin.com/in/speakerore' target="_blank"><AiFillLinkedin /></a>
+        <a rel="noreferrer" href='https://twitter.com/speakerore' target="_blank"><AiFillTwitterCircle /></a>
       </div>
       <div className="events">
-      <Link to='/event'><span>Events</span></Link>
-      <Link to='/createnewevent'><span>Create New Events</span></Link>
-      <Link to='/subscription'> <span>Upgrade</span></Link>
-      <Link to='/termsandconditions' target="_blank"><span>Terms and Conditions</span></Link> 
-      <Link to='/privacypolicy' target="_blank"><span>Privacy Policy</span></Link> 
-      <Link to='/faq' target="_blank"> <span>FAQ's</span></Link>
+        <Link to='/event'><p>Events</p></Link>
+        <Link to='/createnewevent'><p>Create New Events</p></Link>
+        <Link to='/subscription'> <p>Upgrade</p></Link>
+        <Link to='/termsandconditions' target="_blank"><p>Terms and Conditions</p></Link>
+        <Link to='/privacypolicy' target="_blank"><p>Privacy Policy</p></Link>
+        <Link to='/faq' target="_blank"> <p>FAQ's</p></Link>
       </div>
       <div className="copyright">
         <p>Copyright SpeakerOre@2023 | All rights reserved</p>

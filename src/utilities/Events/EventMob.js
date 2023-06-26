@@ -17,18 +17,8 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import exclusiveimg from "../../images/Group.png";
 import { BiSearchAlt } from "react-icons/bi";
-import Footer from "../footer/Footer";
+import UserPopup from "../Pop/UserPopUp";
 
-const successToast = {
-  position: "bottom-right",
-  autoClose: 4000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: "light",
-  }
   
 const Eventlist = () => {
   const [filterToggle, setFilterToggle] = useState(true);
@@ -47,6 +37,7 @@ const Eventlist = () => {
   const [filter, setFilter] = useState();
   const [showdate, setShowDate] = React.useState();
   const [filterdate, setFilterDate] = React.useState();
+  const [user, setUser] = useState('')
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -93,13 +84,22 @@ const Eventlist = () => {
     setInperson(false);
   };
 
-  const StyledCalendar = styled(Calendar)`
-    --moedim-primary: #f00;
-  `;
-
-  const handleCalendar = () => {
-    setcal((prev) => !prev);
-  };
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "https://api.speakerore.com/api/getprofile",
+      withCredentials: true,
+    })
+      .then((res) => {
+        if (res.data.status) {
+          setUser(res.data.response.role);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+, []);
 
   useEffect(() => {
     axios({
@@ -206,6 +206,7 @@ const Eventlist = () => {
 
   return (
     <>
+        {user === 'Regular-user' ? <UserPopup /> : null}
     <div className="head-banner">
           <div className="banner-container" >
             <div className="view-text">
@@ -533,7 +534,7 @@ const Eventlist = () => {
             />
             <Typography>Page: {page}</Typography>
           </Stack>
-          <Footer/>
+          {/* <Footer/> */}
         </div>
       ) : (
         ""

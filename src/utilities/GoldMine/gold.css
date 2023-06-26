@@ -1,43 +1,97 @@
-.gold-top{
+.Goldmine_container {
+    margin-top: 60px;
+    width: 100%;
     display: flex;
-    gap: 3rem;
-}
-.gold-box{
-    display: flex;
-    flex-direction: column;
+    color: #444444;
     justify-content: center;
-    width:100px;
-    gap: 1rem;
-    align-items: center;
 }
-.gold-box img{
-    width: 70px;
+
+.Goldmine_container_fluid {
+    width: 80%;
+    display: flex;
 }
-.gold-box span{
+
+.Goldmine_container_fluid_left {
+    width: 50%;
+}
+
+.Goldmine_container_fluid_right {
+    width: 58%;
+    margin-left: 10%;
+}
+
+.Goldmine_container_fluid_right>div>div button {
+    float: left;
+    margin-bottom: 30px;
+}
+
+.Goldmine_container_fluid_right>div>h1 {
+    margin-top: 0px;
+}
+
+.Goldmine_container_fluid_right>div>div>ul>li {
+    color: #444444;
+    line-height: 34px;
+    margin-left: -23px;
+}
+
+.Goldmine_container_fluid_left_img {
+    width: 100%;
+    display: flex;
+}
+
+.Goldmine_container_fluid_left_img_N_p {
+    width: 33.33%;
     text-align: center;
-    color:#444444;
-    font-weight: 600;
-    font-size: 18px;
+    font-weight: 700;
 }
 
-.gold-left{
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-    margin: 2rem;
+.Goldmine_container_fluid_left_img_N_p>img {
+    width: 100px;
 }
-.gold-right{
-    display: flex;
-    flex-direction: column;
 
-}
-.gold-container{
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    padding: 2rem;
-}
-.gold-right li {
-    color:#444444;
-    line-height:34px
+@media screen and (max-width: 500px) {
+
+    .Goldmine_container_fluid {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .Goldmine_container_fluid_left {
+        width: 100%;
+    }
+
+    .Goldmine_container_fluid_right {
+        width: 100%;
+        margin-left: 0%;
+        margin-top: 50px;
+        text-align: center;
+        font-size: 12px;
+    }
+
+    .Goldmine_container_fluid_left_img_N_p>img {
+        width: 40px;
+    }
+
+    .Goldmine_container_fluid_left_img_N_p>p {
+        font-size: 10px;
+    }
+
+    .Goldmine_container_fluid_right>div>h1 {
+        font-size: 15px;
+    }
+
+    .Goldmine_container_fluid_right>div>div>ul {
+        list-style: none;
+    }
+
+    .Goldmine_container_fluid_right>div>div>ul>li {
+        line-height: 20px;
+    }
+
+    .Goldmine_container_fluid_right>div>div button {
+        float: none;
+        margin-bottom: 0px;
+    }
+
 }

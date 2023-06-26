@@ -60,7 +60,7 @@ export default function UserTable() {
   const [block, setBlock] = useState("");
   const [makeMemberId, setMakeMemberId] = useState("");
   const [page, setPage] = React.useState(1);
-  const [searchKey, setSearchKey] = React.useState();
+  const [searchKey, setSearchKey] = React.useState('');
   const [filter, setFilter] = useState();
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
@@ -93,6 +93,26 @@ export default function UserTable() {
       withCredentials: true,
       data: {
         userId: block,
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+        setLoading(!loading);
+        toast.success(res.data.message, successToast);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.response.data.message, successToast);
+      });
+  };
+
+  const handleUnblock = (unblockId) => {
+    axios({
+      method: "patch",
+      url: "https://api.speakerore.com/api/unblockregularuser",
+      withCredentials: true,
+      data: {
+        userId: unblockId,
       },
     })
       .then((res) => {
@@ -178,7 +198,7 @@ export default function UserTable() {
     const date = new Date(e).toLocaleDateString();
     return date;
   }
-  console.log(userData);
+  console.log(filter);
 
   return userData ? (
     <div className="table-container">
@@ -227,7 +247,7 @@ export default function UserTable() {
                     {convertDate(row.subcription && row.subcription.EndDate)}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    <span
+                  {!row.blocked ? <span
                       onClick={() => {
                         setLoading(!loading);
                         handleClickOpen();
@@ -235,8 +255,15 @@ export default function UserTable() {
                       }}
                       style={{ color: "red", cursor: "pointer" }}
                     >
-                      BLACKLIST
-                    </span>{" "}
+                      BLACKLIST 
+                    </span>:<span
+                      onClick={() => {
+                        handleUnblock(row._id);
+                      }}
+                      style={{ color: "red", cursor: "pointer" }}
+                    >
+                      UNBLOCK
+                    </span>}{" "}
                     |{" "}
                     <span
                       onClick={() => {
@@ -334,7 +361,7 @@ export default function UserTable() {
                     {convertDate(row.subcription && row.subcription.EndDate)}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    <span
+                  {!row.blocked ? <span
                       onClick={() => {
                         setLoading(!loading);
                         handleClickOpen();
@@ -342,8 +369,16 @@ export default function UserTable() {
                       }}
                       style={{ color: "red", cursor: "pointer" }}
                     >
-                      BLACKLIST
-                    </span>{" "}
+                      BLACKLIST 
+                    </span>:<span
+                      onClick={() => {
+                        handleUnblock(row._id);
+                      }}
+                      style={{ color: "red", cursor: "pointer" }}
+                    >
+                      UNBLOCK
+                    </span>}
+                    {" "}
                     |{" "}
                     <span
                       onClick={() => {

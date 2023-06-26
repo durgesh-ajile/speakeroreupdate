@@ -52,10 +52,8 @@ letter-spacing: 1.5px;
 .card-1{
     background-color: #FDFAE8;
     display: flex;
-    /* flex-direction: column; */
-    /* align-items: center; */
-    padding-bottom: 9px;
-    padding-top: 17px;
+    padding-bottom: 16px;
+    padding-top: 20px;
     justify-content: space-between;
 }
 .card-1 img{
@@ -71,12 +69,15 @@ letter-spacing: 1.5px;
     margin-left: 2rem;
     color:#595959;
     display: block;
+    margin-bottom: 5px;
 } 
+.card-1 bold{
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
 .card-2{
-    /* margin-top: 1rem; */
-    /* display: flex; */
     align-items: center;
-    
+    color:#656565;
 }
 .card-2 small{
     margin-left: 2rem;
@@ -114,7 +115,7 @@ letter-spacing: 1.5px;
     padding: 40px;
 }
 .right-container-e{
-    margin-left: 360px;
+    /* margin-left: 360px; */
     width: calc(100% - 360px);
 }
 .card-2 span{
@@ -132,6 +133,8 @@ margin-bottom: 5px;
 .card-2 h{
     color:#464545;
     margin: 0 8px 0px 5px;
+    font-weight: 700;
+
 }
 .card-2 q{
     color:#464545;
@@ -139,7 +142,11 @@ margin-bottom: 5px;
 }
 .desc p{
     margin-left: 2rem;
-    font-size: 14px;
+    margin-right: 1.8rem;
+    line-height: 21px;
+    font-size: 15px;
+    margin-top: 0;
+    margin-bottom: 0;
     color: grey;
 }
 .filter-sidebar{
@@ -147,7 +154,7 @@ margin-bottom: 5px;
     background-color: #F6F6F6;
     height: 100vh;
     top: 72px;
-    position: fixed;
+    position: sticky;
 }
 .mode{
     display: flex;

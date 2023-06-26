@@ -59,7 +59,7 @@ function App() {
         <Route path='/termsandconditions' element={<Terms_N_Conditions/>}></Route>
         <Route path='/privacypolicy' element={<Privacy_Policy/>}></Route>
       </Routes>
-      {/* <Footer/> */}
+      <Footer/>
     </BrowserRouter>
   );
 }

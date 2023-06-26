@@ -7,25 +7,25 @@ const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Pre
   const [checkReqierdField, setcheckReqierdField] = useState(false)
   const [tags, setTags] = useState([]);
   const inputRefsOrganizerdetails = useRef([]);
+  const [isValid, setIsValid] = useState(!false);
 
   const onSubmit = (e) => {
     e.preventDefault();
     setcheckReqierdField(true)
     if ((handleOrganizerDetails?.organizerName &&
       handleOrganizerDetails?.organizerEmail &&
+      isValid &&
       handleOrganizerDetails?.organizerContactNumber?.length === 0) ||
       (handleOrganizerDetails?.organizerName &&
         handleOrganizerDetails?.organizerEmail &&
-        handleOrganizerDetails?.organizerContactNumber.length > 9)) {
+        isValid &&
+        handleOrganizerDetails?.organizerContactNumber?.length > 9)) {
       setStateHandle_Event_Organiser_Preview(p => {
         p.organise = false
         p.preview = true
         return { ...p }
       })
     }
-    // if (handleOrganizerDetails?.organizerContactNumber?.length >= 1 && handleOrganizerDetails?.organizerContactNumber.length <= 9){
-    //   // alert('1-9')
-    // }
   };
 
   organizerDetails(handleOrganizerDetails, tags);
@@ -45,7 +45,18 @@ const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Pre
         }
         return { ...prev }
       });
-    } else {
+    } else if (e.target.name === 'organizerEmail') {
+      setHandleOrganizerDetails(prev => {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const isValidEmail = emailPattern.test(e.target.value);
+        setIsValid(isValidEmail);
+        prev[e.target.name] = e.target.value
+        tempprev = prev
+        // localStorage.setItem('handleOrganizerDetails', JSON.stringify(tempprev))
+        return { ...prev }
+      });
+    }
+    else {
       setHandleOrganizerDetails(prev => {
         prev[e.target.name] = e.target.value
         tempprev = prev
@@ -54,6 +65,8 @@ const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Pre
     }
     localStorage.setItem('handleOrganizerDetails', JSON.stringify(tempprev))
   }
+
+  // const
 
   const previous_Button = () => {
     setStateHandle_Event_Organiser_Preview(p => { p.event = !false; p.organise = !true; return { ...p } });
@@ -114,6 +127,7 @@ const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Pre
             <label>Organizer Email</label>
             <input ref={(ref) => registerRef(ref, 1)} onKeyDown={(event) => handleKeyDown(event, 1)}
               onChange={(e) => { handleChangeOrganizerDetailsForm(e) }}
+              // onBlur={()=>handleValidateEmail()}
               name="organizerEmail"
               type="email"
               placeholder="Enter the Organizer Name"
@@ -124,6 +138,8 @@ const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Pre
               checkReqierdField &&
               !handleOrganizerDetails?.organizerEmail && <p style={{ color: 'red', fontSize: '13px' }}> Above field is required </p>
             }
+            {checkReqierdField &&
+              handleOrganizerDetails?.organizerEmail && !isValid && <p style={{ color: 'red', fontSize: '13px' }}> Invalid Email ID </p>}
           </div>
 
           <div className="input-details">
@@ -132,7 +148,7 @@ const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Pre
               onChange={(e) => { handleChangeOrganizerDetailsForm(e) }}
               type="number"
               name="organizerContactNumber"
-              placeholder="Enter the Number Here..."              
+              placeholder="Enter the Number Here..."
               disabled={!true}
               required
               maxLength={10}
@@ -140,7 +156,7 @@ const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Pre
             />
             {
               checkReqierdField &&
-              handleOrganizerDetails?.organizerContactNumber?.length >= 1 && handleOrganizerDetails?.organizerContactNumber?.length <= 9 && <p style={{ color: 'red', fontSize: '13px' }}> Number Should Be 10 Digits </p>
+              handleOrganizerDetails?.organizerContactNumber?.length >= 1 && handleOrganizerDetails?.organizerContactNumber?.length <= 9 && <p style={{ color: 'red', fontSize: '13px' }}> Phone number should be of 10 digits </p>
             }
           </div>
         </div>

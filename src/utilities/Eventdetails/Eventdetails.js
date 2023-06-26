@@ -106,7 +106,7 @@ const Eventdetails = ({ eventDetails, stateHandle_Event_Organiser_Preview, setSt
 
             <div className="input-details">
               <label>Short description Of the event</label>
-              <textarea ref={(ref) => registerRef(ref, 1)} onKeyDown={(event) => handleKeyDown(event, 1)} name="Short_description" value={handleFormInput?.Short_description} maxLength={120} placeholder="A very short one line description of the event here.." onChange={(e) => { handleChangeEventDetailsForm(e) }} required />
+              <textarea ref={(ref) => registerRef(ref, 1)} onKeyDown={(event) => handleKeyDown(event, 1)} name="Short_description" value={handleFormInput?.Short_description} maxLength={140} placeholder="A very short one line description of the event here.." onChange={(e) => { handleChangeEventDetailsForm(e) }} required />
               {checkReqierdField && !handleFormInput?.Short_description && <p style={{ color: 'red', fontSize: '13px' }}> Above field is required </p>}
             </div>
 
@@ -118,7 +118,7 @@ const Eventdetails = ({ eventDetails, stateHandle_Event_Organiser_Preview, setSt
 
             <div className="input-details">
               <label>Event website URL</label>
-              <input ref={(ref) => registerRef(ref, 3)} onKeyDown={(event) => handleKeyDown(event, 3)} name="eventWebsiteUrl" type="text" value={handleFormInput?.eventWebsiteUrl} required onChange={(e) => { handleChangeEventDetailsForm(e) }} />
+              <input ref={(ref) => registerRef(ref, 3)} onKeyDown={(event) => handleKeyDown(event, 3)} placeholder='eg. https://www.google.com' name="eventWebsiteUrl" type="text" value={handleFormInput?.eventWebsiteUrl} required onChange={(e) => { handleChangeEventDetailsForm(e) }} />
               {checkReqierdField && !handleFormInput?.eventWebsiteUrl && <p style={{ color: 'red', fontSize: '13px' }}> Above field is required </p>}
             </div>
             <div className="event_details_inputbox_checkbox" >

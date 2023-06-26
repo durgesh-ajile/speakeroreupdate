@@ -12,19 +12,18 @@ import { Link } from "react-router-dom";
 
 
 const Works = () => {
-    const [left,setLeft] = useState(true);
-    const [right,setRight] = useState(false);
+  const [left, setLeft] = useState(true);
+  const [right, setRight] = useState(false);
 
-    const handleLeft = ()=>{
-                setLeft(true);
-                setRight(false)
-    }
+  const handleLeft = () => {
+    setLeft(true);
+    setRight(false)
+  }
 
-    const handleRight = ()=>{
-        setRight(true)
-        setLeft(false);
-    }
-
+  const handleRight = () => {
+    setRight(true)
+    setLeft(false);
+  }
 
   return (
     <div className="workcontainer">
@@ -33,61 +32,49 @@ const Works = () => {
         <span>Your GoldMine start Mining</span>
       </div>
       <div className="in-swap">
-      <div className="swapbutton">
-      <button onClick={handleLeft} className={left==true ?"green":"initial"}>I am a Speaker</button>
-        <button onClick={handleRight} className={right==true ? "green":"initial"}>I am a Event Manager</button>
-      </div>
-       </div>
-
-      {left==true ? <div className = "works-container " >
-        <div className="works-box1">
-          <img src={savetime} style={{backgroundImage:{vector}}}/>
-          
-          <p>
-          Save time, find Events <br/>of your interest
-          </p>
-        </div>
-
-        <div className="works-box1">
-          <img src={partnership} />
-          <p>Directly finalise with <br/>organisers. Speak to get<br/> noticed.</p>
-         
-        </div>
-
-        <div className="works-box1">
-          <img src={goal1} />
-          <p>
-          Achieve your Professional <br/> and personal. Goals
-- Fame, <br/>Power, Money & Peace
-          </p>
-         
-        </div>
-      </div> : 
-      
-      <div className="works-container">
-        <div className="works-box1">
-          <img src={list} style={{backgroundImage:{vector}}}/>
-          <p>
-          Post your event’s Speaker <br/> requirement for free.
-          </p>
-        </div>
-
-        <div className="works-box1">
-          <img src={debate} />
-          <p>Receive profiles directly from <br/> <bold>best speakers / Experts.</bold></p>
-        </div>
-
-        <div className="works-box1">
-          <img src={fan} />
-          <p>
-          Happy Audience, Successful <br/> Event, <bold>Newer Opportunities.</bold>
-          </p>
+        <div className="swapbutton">
+          <button onClick={handleLeft} className={left === true ? "green" : "initial"}>I am a Speaker</button>
+          <button onClick={handleRight} className={right === true ? "green" : "initial"}>I am an Event Manager</button>
         </div>
       </div>
-      }
-     
+
+      {left === true ?
+        <div className="works-container " >
+          <div className="works-box1">
+            <img alt="img" src={savetime} style={{ backgroundImage: { vector } }} />
+            <p> <b>Save time</b>, find Events <br />of your interest</p>
+          </div>
+          <div className="works-box1">
+            <img alt="img" src={partnership} />
+            <p>Directly finalise with <br /> <b>organisers.</b> Speak to get<br /> noticed.</p>
+          </div>
+          <div className="works-box1">
+            <img alt="img" src={goal1} />
+            <p>Achieve your Professional <br /> and personal. <b>Goals - Fame, </b><br /><b>Power, Money & Peace</b></p>
+          </div>
+        </div>
+        :
+        <div className="works-container">
+          <div className="works-box1">
+            <img alt="img" src={list} style={{ backgroundImage: { vector } }} />
+            <p>
+              Post your event’s Speaker <br /> requirement for free.
+            </p>
+          </div>
+
+          <div className="works-box1">
+            <img alt="img" src={debate} />
+            <p>Receive profiles directly from <br /> <bold>best speakers / Experts.</bold></p>
+          </div>
+
+          <div className="works-box1">
+            <img alt="img" src={fan} />
+            <p>Happy Audience, Successful <br /> Event, <bold>Newer Opportunities.</bold></p>
+          </div>
+        </div>}
+
       <div className="joinowbtn">
-      <Link to='/subscription'><button>Join now</button></Link>
+        <Link to='/subscription'><button>Join now</button></Link>
       </div>
     </div>
   );
