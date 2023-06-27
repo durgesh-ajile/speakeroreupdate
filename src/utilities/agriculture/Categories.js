@@ -1,64 +1,43 @@
 import React, { useEffect, useState } from 'react'
 import './Categories.css'
-import agriculture from '../../images/categories_img/agriculture.png'
-import Advertising from '../../images/categories_img/Advertising.png'
-import banking from '../../images/categories_img/banking.png'
-import marketing from '../../images/categories_img/marketing.png'
-import parenting from '../../images/categories_img/parenting.png'
 
-import Artificial_Intelligence from '../../images/categories_img/Artificial_Intelligence.png'
-import Automobile from '../../images/categories_img/Automobile.png'
-import Business from '../../images/categories_img/Business.png'
-import Coaching from '../../images/categories_img/Coaching.png'
-import Communication from '../../images/categories_img/Communication.png'
-import Creativity from '../../images/categories_img/Creativity.png'
-import Design_Thinking from '../../images/categories_img/Design_Thinking.png'
-import Education from '../../images/categories_img/Education.png'
-import Finance from '../../images/categories_img/Finance.png'
-import Health from '../../images/categories_img/Health.png'
-import Human_Resources from '../../images/categories_img/Human_Resources.png'
-import Innovation from '../../images/categories_img/Innovation.png'
-import IT from '../../images/categories_img/IT.png'
-import Leadership from '../../images/categories_img/Leadership.png'
-import LGBTQ from '../../images/categories_img/LGBTQ.png'
-import Manufacturing from '../../images/categories_img/Manufacturing.png'
+// import agriculture from '../../images/categories_img/agriculture.png'
+// import Advertising from '../../images/categories_img/Advertising.png'
+// import banking from '../../images/categories_img/banking.png'
+// import marketing from '../../images/categories_img/marketing.png'
+// import parenting from '../../images/categories_img/parenting.png'
+
+// import Artificial_Intelligence from '../../images/categories_img/Artificial_Intelligence.png'
+// import Automobile from '../../images/categories_img/Automobile.png'
+// import Business from '../../images/categories_img/Business.png'
+// import Coaching from '../../images/categories_img/Coaching.png'
+// import Communication from '../../images/categories_img/Communication.png'
+// import Creativity from '../../images/categories_img/Creativity.png'
+// import Design_Thinking from '../../images/categories_img/Design_Thinking.png'
+// import Education from '../../images/categories_img/Education.png'
+// import Finance from '../../images/categories_img/Finance.png'
+// import Health from '../../images/categories_img/Health.png'
+// import Human_Resources from '../../images/categories_img/Human_Resources.png'
+// import Innovation from '../../images/categories_img/Innovation.png'
+// import IT from '../../images/categories_img/IT.png'
+// import Leadership from '../../images/categories_img/Leadership.png'
+// import LGBTQ from '../../images/categories_img/LGBTQ.png'
+// import Manufacturing from '../../images/categories_img/Manufacturing.png'
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 
-const Categories = () => {
+const Categories = ({ data, text }) => {
 
-    const [carousel, setCarousel] = useState([
-        ["agriculture", agriculture],
-        ["Advertising", Advertising],
-        ["banking", banking],
-        ["marketing", marketing],
-        ["parenting", parenting],
-        ["Artificial", Artificial_Intelligence],
-        ["Automobile", Automobile],
-        ["Business", Business],
-        ["Coaching", Coaching],
-        ["Communication", Communication],
-        ["Creativity", Creativity],
-        ["Design Thinking", Design_Thinking],
-        ["Education", Education],
-        ["Finance", Finance],
-        ["Health", Health],
-        ["Human Resources", Human_Resources],
-        ["Innovation", Innovation],
-        ["IT", IT],
-        ["Leadership", Leadership],
-        ["LGBTQ", LGBTQ],
-        ["Manufacturing", Manufacturing]
-    ].map(([label, value]) => [label.toUpperCase(), value]))
+    const [carousel, setCarousel] = useState(data)
     var settings = {
         dots: !true,
         infinite: true,
         slidesToShow: 4,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 2000,
+        autoplaySpeed: text ? 2000 : 4000,
         pauseOnHover: true,
         // nextArrow: <SampleNextArrow />,
         // prevArrow: <SamplePrevArrow />,
@@ -113,21 +92,35 @@ const Categories = () => {
         };
 
         sortArrayFunction(carousel)
+
+        if (text) {
+            // Convert the first element of each subarray to uppercase
+            const modifiedCarousel = carousel.map(([title, value]) => [title.toUpperCase(), value]);
+            setCarousel(modifiedCarousel);
+        }
+
     }, [])
 
     return (
-        <div className='Categories_container'>
+        <div className='Categories_container' style={{ backgroundColor: text && '#FDFAE8' }}>
             <div className='Categories_container_fluid'>
-                <div className="Categories_container_fluid_text">
-                    <h1>4000-40000 worldwide opportunities </h1>
-                    <h1>across <span style={{color:'#24754F'}}>categories</span> annually</h1>
-                </div>
+                {
+                    text ?
+                        <div className="Categories_container_fluid_text">
+                            <h1>4000-40000 worldwide opportunities </h1>
+                            <h1>across <span style={{ color: '#24754F' }}>categories</span> annually</h1>
+                        </div>
+                        :
+                        <div className="Categories_container_fluid_text">
+                            <h1 style={{ fontSize: '13px' }}> <span style={{ color: '#24754F' }}> SpeakerOre - </span>A Goldmine for Speakers</h1>
+                        </div>
+                }
                 <Slider {...settings}>
                     {
                         carousel?.map((value, i) => {
                             return (<div key={i} className='Categories_carousel_imgNh3'>
                                 <img src={carousel[i][1]} alt="" />
-                                <h3>{carousel[i][0]}</h3>
+                                <h3 style={{ fontSize: !text && '10px' }}>{carousel[i][0]}</h3>
                             </div>)
                         })
                     }

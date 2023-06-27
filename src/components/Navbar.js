@@ -156,7 +156,7 @@ const Navbar = () => {
   const [isAuthenticated, setIsAutheticated] = useState(false);
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState("");
-  const [select, setSelect] = useState('event');
+  const [select, setSelect] = useState('');
 
   useEffect(() => {
     setLoading(true);

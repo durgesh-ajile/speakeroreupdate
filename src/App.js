@@ -9,7 +9,7 @@ import ListYourEvent from './components/Listyourevent/ListYourEvent';
 import Viewdetails1 from './components/Viewdetail/Viewdetails1';
 import Admin from './utilities/Admin/Admin';
 import Profile1 from './utilities/UserProfile/Profile1';
-import Categories from './utilities/Categories/Categories';
+// import Categories from './utilities/Categories/Categories';
 import Navbar from './components/Navbar';
 import Appp from './utilities/Pop/LoginPopup';
 import AuthHOC from './utilities/Auth/AuthHOC'

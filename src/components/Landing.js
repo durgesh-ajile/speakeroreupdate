@@ -64,9 +64,7 @@ const Landing = () => {
       <Home/>
       <Works/>
       <Categories data={cerousel} text/>
-      {/* <Agriculture/> */}
       <Goldmine/>
-      {/* <Footer/> */}
     </div>
   )
 }

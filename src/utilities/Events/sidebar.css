@@ -117,10 +117,9 @@ letter-spacing: 1.5px;
 .right-container-e{
     /* margin-left: 360px; */
     width: calc(100% - 360px);
+    margin-bottom: 72px;
 }
 .card-2 span{
-    /* font-family: Inter; */
-/* font-size: 14px; */
 font-weight: 500;
 line-height: 17px;
 letter-spacing: 0em;

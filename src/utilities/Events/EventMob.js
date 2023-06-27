@@ -38,9 +38,10 @@ const Eventlist = () => {
   const [showdate, setShowDate] = React.useState();
   const [filterdate, setFilterDate] = React.useState();
   const [user, setUser] = useState('')
-
+  const [filterPage, setFilterPage] = React.useState(1);
+  const [filterTotalPage, setFilterTotalPage] = React.useState();
   const handleChange = (event, value) => {
-    setPage(value);
+    setFilterPage(value);
   };
 
   let navigate = useNavigate();
@@ -109,7 +110,14 @@ const Eventlist = () => {
     })
       .then((res) => {
         console.log(res);
-        setApprovedEvent(res.data);
+        if (approvedEvent) {
+          setApprovedEvent((prevData) => [
+            ...prevData,
+            ...res.data.savedEvents,
+          ]);
+        } else {
+          setApprovedEvent(res.data.savedEvents);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -119,12 +127,13 @@ const Eventlist = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}&page=${page}`,
+      url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}&page=${filterPage}`,
       withCredentials: true,
     })
       .then((res) => {
         console.log(res);
         setFilter(res.data.queryResult);
+        setFilterTotalPage(res.data.totalPages)
       })
       .catch((err) => {
         console.log(err);
@@ -133,12 +142,11 @@ const Eventlist = () => {
         }
       });
   }, [searchKey]);
-  console.log(filter);
-  console.log(inperson);
+
 
   useEffect(() => {
     if (mode || category || filterdate || exclusive) {
-      const apiUrl = `https://api.speakerore.com/api/geteventsbyfilter?${getQueryParams()}`;
+      const apiUrl = `https://api.speakerore.com/api/geteventsbyfilter?${getQueryParams()}&page=${filterPage}`;
       function getQueryParams() {
         const queryParams = [];
 
@@ -169,6 +177,7 @@ const Eventlist = () => {
         .then((res) => {
           console.log(res);
           setFilter(res.data.savedEvents);
+          setFilterTotalPage(res.data.totalPages)
         })
         .catch((err) => {
           console.log(err);
@@ -178,12 +187,27 @@ const Eventlist = () => {
     if (!mode && !category && !filterdate && !exclusive) {
       setFilter("");
     }
-  }, [mode, category, filterdate, exclusive]);
+  }, [mode, category, filterdate, exclusive, filterPage]);
 
   function convertDate(e) {
     const date = new Date(e).toLocaleString();
     return date;
   }
+
+  const handleScroll = () => {
+    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+    if (scrollTop + clientHeight >= scrollHeight - 20) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
 
   const handleToggle = () => {
     const box = NavbarboxRefFilter.current;
@@ -426,14 +450,14 @@ const Eventlist = () => {
             ))}
           </div>
           <Stack spacing={2}>
-            <Pagination
-              style={{ justifyContent: "center", marginTop: "20px" }}
-              count={filter.totalPages}
-              page={page}
-              onChange={handleChange}
-            />
-            <Typography>Page: {page}</Typography>
-          </Stack>
+              <Pagination
+                style={{ justifyContent: "center", marginTop: "20px" }}
+                count={filterTotalPage}
+                page={filterPage}
+                onChange={handleChange}
+              />
+              <Typography>Page: {filterPage}</Typography>
+            </Stack>
         </div>
       ) : mode || category || filterdate || exclusive || searchKey ? (
         <div>
@@ -442,7 +466,7 @@ const Eventlist = () => {
       ) : approvedEvent ? (
         <div>
           <div>
-            {approvedEvent?.savedEvents.map((e) => (
+            {approvedEvent?.map((e) => (
               <>
                 <div className="EventlistInfo_container">
                   <div className="EventlistInfo_container_fluid">
@@ -525,7 +549,7 @@ const Eventlist = () => {
               </>
             ))}
           </div>
-          <Stack spacing={2}>
+          {/* <Stack spacing={2}>
             <Pagination
               style={{ justifyContent: "center", marginTop: "20px" }}
               count={approvedEvent.totalPages}
@@ -533,7 +557,7 @@ const Eventlist = () => {
               onChange={handleChange}
             />
             <Typography>Page: {page}</Typography>
-          </Stack>
+          </Stack> */}
           {/* <Footer/> */}
         </div>
       ) : (

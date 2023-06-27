@@ -236,7 +236,7 @@ const Eventdetails = ({ eventDetails, stateHandle_Event_Organiser_Preview, setSt
             <div className="double">
               <div className="input-details">
                 <label for="start">Start Date:</label>
-                <input ref={(ref) => registerRef(ref, 11)} onKeyDown={(event) => handleKeyDown(event, 11)} onChange={(e) => { handleChangeEventDetailsForm(e) }} type="date" id="start" name="startdate" value={handleFormInput?.startdate} min={new Date().toISOString().split('T')[0]} max={handleFormInput.enddate}></input>
+                <input ref={(ref) => registerRef(ref, 11)} onKeyDown={(event) => handleKeyDown(event, 11)} onChange={(e) => { handleChangeEventDetailsForm(e) }} type="date" id="start" name="startdate" value={handleFormInput?.startdate} max={handleFormInput.enddate}></input>
                 {checkReqierdField && !handleFormInput?.startdate && <p style={{ color: 'red', fontSize: '13px' }}> Above field is required </p>}
               </div>
               <div className="input-details">

@@ -4,10 +4,18 @@ import "./Home.css";
 function Home() {
 
   const goToTop = () => {
-    window.scrollTo({
-      top: 675,
-      behavior: 'smooth',
-    });
+    let innerWidth = window.innerWidth
+    if(innerWidth < 700){
+      window.scrollTo({
+        top: 375,
+        behavior: 'smooth',
+      });
+    } else {
+      window.scrollTo({
+        top: 675,
+        behavior: 'smooth',
+      });
+    }
   };
 
   return (
