@@ -25,7 +25,7 @@
 }
 .Eventlist_filter_sidebar_empty_div{
     position: absolute;
-
+    z-index: 1;
     top: 36px;
     left: 0%;
     width: 100%;
@@ -71,7 +71,7 @@
     height: 100vh;
     background-color: #E4E4E4;
     position: fixed;
-    top: 225px;
+    top: 0px;
     right: -70%;
     display: none;
     /* box-shadow: -20px 30px 100px 0px #e4ffd8; */
@@ -80,6 +80,7 @@
 
 .Eventlist_filter_sidebar_fluid{
     margin-left: 7%;
+    margin-top: 30px;
 }
 .Eventlist_filter_sidebar_fluid > h3{
     color: #404041;
@@ -92,8 +93,12 @@
     margin: 15px 0px 15px 0px;
 }
 .Eventlist_input_type_checkbox{
-    display: flex;
+    display: flex
 }
+.Eventlist_input_type_checkbox input{
+    margin-bottom: 3px;
+}
+
 .Eventlist_input_type_checkbox > p{
     margin: 5px 0px 5px 10px;
 }

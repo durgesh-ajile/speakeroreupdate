@@ -70,7 +70,7 @@ a:-webkit-any-link{
     height: 100vh;
     background-color: #E4E4E4;
     position: fixed;
-    /* top: 36px; */
+    top: 0px;
     right: -70%;
     display: none;
     z-index: 1;
@@ -90,6 +90,7 @@ margin-left: 15px;
 }
 .Navbar_sidebar>div>div {
     position: relative;
+    margin-top: 20px;
 }
 
 .Navbar_sidebar>div>div>img {

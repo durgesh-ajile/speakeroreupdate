@@ -46,11 +46,12 @@
     .events p {
         text-align: center;
         line-height: 0px;
-        font-size: 10px;
+        font-size: 12px;
     }
 
     .copyright {
         text-align: center;
         font-size: 10px;
     }
+    
 }

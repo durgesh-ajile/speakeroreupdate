@@ -94,6 +94,12 @@ const MobileNavbar = ({
           </>
         )}
       </div>
+      {!sidebarToggle && (
+        <div
+          onClick={() => handleToggle()}
+          className="Eventlist_filter_sidebar_empty_div"
+        ></div>
+      )}
       {
         // !sidebarToggle &&
         <div

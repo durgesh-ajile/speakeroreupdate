@@ -1,29 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import './Categories.css'
-
-// import agriculture from '../../images/categories_img/agriculture.png'
-// import Advertising from '../../images/categories_img/Advertising.png'
-// import banking from '../../images/categories_img/banking.png'
-// import marketing from '../../images/categories_img/marketing.png'
-// import parenting from '../../images/categories_img/parenting.png'
-
-// import Artificial_Intelligence from '../../images/categories_img/Artificial_Intelligence.png'
-// import Automobile from '../../images/categories_img/Automobile.png'
-// import Business from '../../images/categories_img/Business.png'
-// import Coaching from '../../images/categories_img/Coaching.png'
-// import Communication from '../../images/categories_img/Communication.png'
-// import Creativity from '../../images/categories_img/Creativity.png'
-// import Design_Thinking from '../../images/categories_img/Design_Thinking.png'
-// import Education from '../../images/categories_img/Education.png'
-// import Finance from '../../images/categories_img/Finance.png'
-// import Health from '../../images/categories_img/Health.png'
-// import Human_Resources from '../../images/categories_img/Human_Resources.png'
-// import Innovation from '../../images/categories_img/Innovation.png'
-// import IT from '../../images/categories_img/IT.png'
-// import Leadership from '../../images/categories_img/Leadership.png'
-// import LGBTQ from '../../images/categories_img/LGBTQ.png'
-// import Manufacturing from '../../images/categories_img/Manufacturing.png'
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";

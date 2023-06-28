@@ -19,5 +19,5 @@ export default function Viewdetails1() {
     };
   }, []);
 
-  return windowWidth < 967 ? <MobileComponent /> : <MainComponent />;
+  return windowWidth < 700 ? <MobileComponent /> : <MainComponent />;
 }

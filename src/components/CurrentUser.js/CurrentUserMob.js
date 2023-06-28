@@ -79,8 +79,8 @@ const CurrentUserMob = () => {
             border: "1px solid #ccc",
             borderRadius: "5px",
             backgroundColor: "#f5f5f5",
-            width: "280px",
-            margin: "20px 0",
+            width: "85%",
+            margin: "20px auto",
             backgroundImage: `url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"%3E%3Ccircle cx="11" cy="11" r="8" fill="white" /%3E%3Cpath d="M21 21l-4.35-4.35" /%3E%3C/svg%3E')`,
             backgroundRepeat: "no-repeat",
             backgroundPosition: "8px center",
@@ -168,7 +168,7 @@ const CurrentUserMob = () => {
                 </button>
                 <hr
                   style={{
-                    marginLeft: "-20px",
+                    marginLeft: "-31px",
                     marginTop: "35px",
                     width: "100vw",
                   }}
@@ -232,16 +232,19 @@ const CurrentUserMob = () => {
                   </div>
                 </div>
               </div>
-              <div id="card-content">
-                <small>
-                  <MdLocationOn color="grey" size={15} />
-                  {e.Mode}
-                </small>
-                <date>
-                  <MdWatchLater size={15} color="grey" />
-                  {convertDate(e.EventStartDateAndTime)}
-                </date>
-              </div>
+              <div className="card-2">
+                    <span style={{marginLeft:'0'}}>
+                      <MdLocationOn size={20} />
+                      <h>{e.Mode}</h>
+                    </span>
+
+                    <date>
+                      {" "}
+                      <MdWatchLater size={20} />
+                      <q>{convertDate(e.EventStartDateAndTime)}</q>
+                    </date>
+                    {/* <p></p> */}
+                  </div> 
               <div id="card-content">
                 <p>{e.ShortDescriptionOfTheEvent}</p>
               </div>

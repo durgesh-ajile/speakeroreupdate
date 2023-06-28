@@ -7,7 +7,7 @@ const Eventdetails = ({ eventDetails, stateHandle_Event_Organiser_Preview, setSt
   const [checkReqierdField, setCheckReqierdField] = useState(!true);
   const [loading, setLoading] = useState(false);
   const inputRefs = useRef([]);
-
+  const [isValid, setIsValid] = useState(true);
 
   eventDetails(handleFormInput);
 
@@ -49,6 +49,17 @@ const Eventdetails = ({ eventDetails, stateHandle_Event_Organiser_Preview, setSt
         localStorage.setItem('handleFormInput', JSON.stringify(tempprev))
         return { ...prev }
       })
+    } else if (e.target.name === 'eventWebsiteUrl') {
+      setHandleFormInput(prev => {
+        var input = e.target.value.trim();
+        var linkPattern = /^(ftp|http|https):\/\/[^ "]+$/;
+        const isValidSite = linkPattern.test(input)
+        setIsValid(isValidSite);
+        prev[e.target.name] = e.target.value
+        tempprev = prev
+        // localStorage.setItem('handleOrganizerDetails', JSON.stringify(tempprev))
+        return { ...prev }
+      });
     }
     else {
       setHandleFormInput(prev => {
@@ -120,6 +131,7 @@ const Eventdetails = ({ eventDetails, stateHandle_Event_Organiser_Preview, setSt
               <label>Event website URL</label>
               <input ref={(ref) => registerRef(ref, 3)} onKeyDown={(event) => handleKeyDown(event, 3)} placeholder='eg. https://www.google.com' name="eventWebsiteUrl" type="text" value={handleFormInput?.eventWebsiteUrl} required onChange={(e) => { handleChangeEventDetailsForm(e) }} />
               {checkReqierdField && !handleFormInput?.eventWebsiteUrl && <p style={{ color: 'red', fontSize: '13px' }}> Above field is required </p>}
+              {!isValid && <p style={{ color: 'red', fontSize: '13px' }}>Invalid website link</p>}
             </div>
             <div className="event_details_inputbox_checkbox" >
               <input ref={(ref) => registerRef(ref, 4)} onKeyDown={(event) => handleKeyDown(event, 4)} type="checkbox" name="exclusive" checked={handleFormInput?.exclusive} onChange={(e) => { handleChangeEventDetailsForm(e) }}></input>

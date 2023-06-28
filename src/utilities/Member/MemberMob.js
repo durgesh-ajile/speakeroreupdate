@@ -155,13 +155,7 @@ const Member = () => {
               </button>
             </div>
           </div>
-          <hr style={{ marginTop: "29px" }} />
-          <div className="logout">
-            <span onClick={handleLogout}>
-              {" "}
-              <IoMdLogOut /> Logout
-            </span>
-          </div>
+         
         </div>
         ) : (
             <></>

@@ -1,19 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./works.css";
 import savetime from "../../images/savetime.png";
 import goal1 from "../../images/goal.png";
 import partnership from "../../images/partnership.png";
 import vector from "../../images/Vector.png";
-
+import axios from "axios";
 import debate from '../../images/debate-1.png'
 import fan from '../../images/fan-club-1.png'
 import list from '../../images/list-1.png'
 import { Link } from "react-router-dom";
+import LoginPopup from "../Pop/LoginPopup";
 
 
 const Works = () => {
   const [left, setLeft] = useState(true);
   const [right, setRight] = useState(false);
+  const [isAuthenticated, setIsAutheticated] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "https://api.speakerore.com/api/auth/check",
+      withCredentials: true,
+    })
+      .then((res) => {
+        if (res.status === 202) {
+          setIsAutheticated(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err.response.status);
+        if (err.response.status === 401) {
+          setIsAutheticated(false);
+        }
+      });
+  }, []);
 
   const handleLeft = () => {
     setLeft(true);
@@ -24,6 +46,13 @@ const Works = () => {
     setRight(true)
     setLeft(false);
   }
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+  const handleSignInClick = () => {
+    setShowPopup(true);
+  };
+
 
   return (
     <div className="workcontainer">
@@ -74,7 +103,8 @@ const Works = () => {
         </div>}
 
       <div className="joinowbtn">
-        <Link to='/subscription'><button>Join now</button></Link>
+        {isAuthenticated?<Link to='/subscription'><button>Join now</button></Link>:
+        <><button onClick={handleSignInClick}>Join now</button>{showPopup && <LoginPopup onClose={handleClosePopup} />}</>}
       </div>
     </div>
   );

@@ -18,13 +18,12 @@ import Stack from "@mui/material/Stack";
 import exclusiveimg from "../../images/Group.png";
 import { BiSearchAlt } from "react-icons/bi";
 import UserPopup from "../Pop/UserPopUp";
+import { Button } from "@mui/material";
 
   
 const Eventlist = () => {
   const [filterToggle, setFilterToggle] = useState(true);
   const NavbarboxRefFilter = useRef(null);
-  const [cal, setcal] = React.useState(false);
-  const [value, setValue] = useState(new Date());
   const [approvedEvent, setApprovedEvent] = useState();
   const [online, setOnline] = useState(false);
   const [inperson, setInperson] = useState(false);
@@ -262,6 +261,7 @@ const Eventlist = () => {
       <div className="input-div" style={{ marginTop: "20px" }}>
         <BiSearchAlt style={{ top: "13px" }} className="ico" />
         <input
+        style={{ width: "80%" }}
           placeholder="Search via keyword"
           className="dash-input"
           value={searchKey}
@@ -285,7 +285,7 @@ const Eventlist = () => {
           <p>Models</p>
           <div className="Eventlist_input_type_checkbox" onClick={handleOnline}>
             <input type="radio" checked={online} name="" id="" />
-            <p>online</p>
+            <p>Online</p>
           </div>
           <div
             className="Eventlist_input_type_checkbox"
@@ -346,8 +346,11 @@ const Eventlist = () => {
                 setFilterDate(date.toISOString())
                 setShowDate(e.target.value)
               }}
-              
             />
+            <Button onClick={(e) => {
+              setFilterDate('')
+                setShowDate('')
+            }}>Reset date</Button>
           </div>
 
           <p>SpeakerOre</p>
