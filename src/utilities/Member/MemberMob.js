@@ -96,10 +96,10 @@ const Member = () => {
   const handleArcheived = () => {
     setSubs("archeived");
   };
-  function convertDate(e) {
-    const date = new Date(e).toLocaleString();
-    return date;
-  }
+  // function convertDate(e) {
+  //   const date = new Date(e).toLocaleString();
+  //   return date;
+  // }
   function convertDate2(e) {
     const date = new Date(e).toLocaleDateString();
     return date;

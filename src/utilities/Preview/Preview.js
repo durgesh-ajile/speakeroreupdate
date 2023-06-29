@@ -31,6 +31,7 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
     setStateHandle_Event_Organiser_Preview(p => { p.event = false; p.organise = true; p.preview = false; return { ...p } })
   }
 
+  console.log(starttime, endtime)
   const handleCreateEvent = (e) => {
     e.preventDefault();
     setIsDisabled(() => true)

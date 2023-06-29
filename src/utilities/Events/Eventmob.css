@@ -25,12 +25,12 @@
 }
 .Eventlist_filter_sidebar_empty_div{
     position: absolute;
-    z-index: 1;
+    z-index: 3;
     top: 36px;
     left: 0%;
     width: 100%;
     height: 100vh;
-    background-color: #59ff0000;
+    background-color: #141a1209;
 }
 
 .Eventlist_container_left {
@@ -66,7 +66,7 @@
 /* --------Eventlist_filter_sidebar---------------- */
 
 .Eventlist_filter_sidebar {
-
+    z-index: 4;
     width: 70%;
     height: 100vh;
     background-color: #E4E4E4;

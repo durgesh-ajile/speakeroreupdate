@@ -71,8 +71,18 @@ const EventAdmin = () => {
   let navigate = useNavigate();
 
   function convertDate(e) {
-    const date = new Date(e).toLocaleString();
-    return date;
+    const dateObject = new Date(e);
+    const year = dateObject.getUTCFullYear();
+    const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(dateObject);
+    const day = dateObject.getUTCDate();
+    const hours = dateObject.getUTCHours();
+    const minutes = dateObject.getUTCMinutes();
+    const seconds = dateObject.getUTCSeconds();
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 || 12;
+  
+    const dateTimeString = `${day} ${month} ${year} ${formattedHours}:${minutes}:${seconds} ${period}`;
+    return dateTimeString;
   }
 
   const geteventforapproval = () => {
@@ -185,17 +195,6 @@ const EventAdmin = () => {
         <div>
           {eventsForApproval ? (
             <div>
-              {/* <div className="input-div" style={{marginTop:'20px'}}>
-                <BiSearchAlt className="ico" />
-                <input
-                
-                  placeholder="Search via keyword"
-                  className="dash-input"
-                  value={searchKey} onChange={(e)=> {
-            setSearchKey(e.target.value)
-          }} 
-                />
-              </div> */}
               <div className="card-container">
                 { filter ? filter.map((e) => (
                   <div className="card">

@@ -4,10 +4,9 @@ import axios from "axios";
 import { useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import { styled } from "@mui/material/styles";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 
-import TableRow from "@mui/material/TableRow";
+
+// import TableRow from "@mui/material/TableRow";
 import {
   Button,
   Dialog,
@@ -36,7 +35,7 @@ export default function TeamMembers() {
   const [makeAdminId, setAdminId] = useState("");
   const [makeUserId, setmakeUserId] = useState("");
   const [page, setPage] = React.useState(1);
-  const [searchKey, setSearchKey] = React.useState();
+  const [searchKey, setSearchKey] = React.useState('');
   const [filter, setFilter] = useState();
 
   const [open, setOpen] = React.useState(false);

@@ -81,25 +81,7 @@ export default function Sidebar() {
     setInperson(false);
   };
  
- 
-  useEffect(() => {
-      axios({
-        method: "get",
-        url: "https://api.speakerore.com/api/getprofile",
-        withCredentials: true,
-      })
-        .then((res) => {
-          if (res.data.status) {
-            setUser(res.data.response.role);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  , []);
 
-  // console.log(user)
   useEffect(() => {
     axios({
       method: "get",
@@ -119,6 +101,7 @@ export default function Sidebar() {
       })
       .catch((err) => {
         console.log(err);
+        setUser(err.response.data.message)
       });
   }, [page]);
 
@@ -140,7 +123,6 @@ export default function Sidebar() {
         }
       });
   }, [searchKey]);
-
 
 
   useEffect(() => {
@@ -203,13 +185,23 @@ export default function Sidebar() {
   }, []);
 
   function convertDate(e) {
-    const date = new Date(e).toLocaleString();
-    return date;
+    const dateObject = new Date(e);
+    const year = dateObject.getUTCFullYear();
+    const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(dateObject);
+    const day = dateObject.getUTCDate();
+    const hours = dateObject.getUTCHours();
+    const minutes = dateObject.getUTCMinutes();
+    const seconds = dateObject.getUTCSeconds();
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 || 12;
+  
+    const dateTimeString = `${day} ${month} ${year} ${formattedHours}:${minutes}:${seconds} ${period}`;
+    return dateTimeString;
   }
   
   return (
     <div className="event-main">
-    {user === 'Regular-user' ? <UserPopup/> : null}
+    {user === 'User is not subcribed to view this page' ? <UserPopup/> : null}
       <div className="filter-sidebar">
         <div className="filter-child">
           <div>

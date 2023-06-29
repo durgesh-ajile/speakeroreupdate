@@ -54,8 +54,18 @@ const ArchivedMob = () => {
   let navigate = useNavigate();
 
   function convertDate(e) {
-    const date = new Date(e).toLocaleString();
-    return date;
+    const dateObject = new Date(e);
+    const year = dateObject.getUTCFullYear();
+    const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(dateObject);
+    const day = dateObject.getUTCDate();
+    const hours = dateObject.getUTCHours();
+    const minutes = dateObject.getUTCMinutes();
+    const seconds = dateObject.getUTCSeconds();
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 || 12;
+  
+    const dateTimeString = `${day} ${month} ${year} ${formattedHours}:${minutes}:${seconds} ${period}`;
+    return dateTimeString;
   }
 
   const handlePermanentDelete = () => {

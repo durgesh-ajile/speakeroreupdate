@@ -61,7 +61,7 @@ export default function TeamMembers() {
   const [makeUserId, setmakeUserId] = useState("");
   const [open, setOpen] = React.useState(false);
   const [page, setPage] = React.useState(1);
-  const [searchKey, setSearchKey] = React.useState();
+  const [searchKey, setSearchKey] = React.useState('');
   const [filter, setFilter] = useState();
 
   const theme = useTheme();
@@ -142,6 +142,9 @@ export default function TeamMembers() {
       });
   }, []);
 
+  console.log(teamMemberData)
+  console.log(filter)
+
   React.useEffect(() => {
     axios({
       method: "get",
@@ -176,7 +179,7 @@ export default function TeamMembers() {
       });
   }, [searchKey, page]);
 
-
+console.log(searchKey)
 
   return (
     teamMemberData ? (

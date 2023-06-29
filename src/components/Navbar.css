@@ -9,6 +9,15 @@
   color: white;
   background-color: #EF7676;
 }
+.Eventlist_speakerore_sidebar_empty_div {
+  position: absolute;
+  z-index: 2;
+  top: 36px;
+  left: 0%;
+  width: 100%;
+  height: 100vh;
+  background-color: #59ff0000;
+}
 @media screen and (min-width: 651px) {
 .Navbar_coontainer {
     display: none;
@@ -66,6 +75,7 @@ a:-webkit-any-link{
 /* -----------------Navbar_sidebar-------------- */
 
 .Navbar_sidebar {
+  z-index: 3;
     width: 70%;
     height: 100vh;
     background-color: #E4E4E4;
@@ -73,7 +83,6 @@ a:-webkit-any-link{
     top: 0px;
     right: -70%;
     display: none;
-    z-index: 1;
     /* box-shadow: -20px 30px 100px 0px #e4ffd8; */
 
     /* transition: transform 0.3s; */

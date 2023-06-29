@@ -3,8 +3,6 @@ import "./Eventmob.css";
 // import filter_icon from '../../assets/img/filter_icon.jpg'
 import { useState } from "react";
 import "./sidebar.css";
-import { styled, useTheme } from "@mui/material/styles";
-import MuiAppBar from "@mui/material/AppBar";
 import Typography from "@mui/material/Typography";
 import man from "../../images/Group 11450.png";
 import { MdLocationOn } from "react-icons/md";
@@ -189,10 +187,19 @@ const Eventlist = () => {
   }, [mode, category, filterdate, exclusive, filterPage]);
 
   function convertDate(e) {
-    const date = new Date(e).toLocaleString();
-    return date;
+    const dateObject = new Date(e);
+    const year = dateObject.getUTCFullYear();
+    const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(dateObject);
+    const day = dateObject.getUTCDate();
+    const hours = dateObject.getUTCHours();
+    const minutes = dateObject.getUTCMinutes();
+    const seconds = dateObject.getUTCSeconds();
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 || 12;
+  
+    const dateTimeString = `${day} ${month} ${year} ${formattedHours}:${minutes}:${seconds} ${period}`;
+    return dateTimeString;
   }
-
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
     if (scrollTop + clientHeight >= scrollHeight - 20) {
