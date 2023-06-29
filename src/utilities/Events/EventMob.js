@@ -82,22 +82,6 @@ const Eventlist = () => {
     setInperson(false);
   };
 
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: "https://api.speakerore.com/api/getprofile",
-      withCredentials: true,
-    })
-      .then((res) => {
-        if (res.data.status) {
-          setUser(res.data.response.role);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-, []);
 
   useEffect(() => {
     axios({
@@ -118,6 +102,8 @@ const Eventlist = () => {
       })
       .catch((err) => {
         console.log(err);
+        setUser(err.response.data.message)
+
       });
   }, [page]);
 
@@ -236,7 +222,7 @@ const Eventlist = () => {
 
   return (
     <>
-        {user === 'Regular-user' ? <UserPopup /> : null}
+        {user === 'User is not subcribed to view this page' ? <UserPopup /> : null}
     <div className="head-banner">
           <div className="banner-container" >
             <div className="view-text">
