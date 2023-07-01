@@ -10,7 +10,7 @@ const Agriculture = () => {
 
     <div className='agri-container'>
     <div className="agri-heading">
-        <h1> 4000-4000 worldwide oppotunities <br/> across <span style={{color:'#24754F'}}>categories</span> annually</h1>
+        <h1>Up to 2,00,000 speaking slots in 4000-4000 worldwide oppotunities <br/> across <span style={{color:'#24754F'}}>categories</span> annually</h1>
     </div>
     <div className='agri-imgs'>
             <div className="agri-img-box">

@@ -10,6 +10,7 @@ import Admin from "../Admin/Admin";
 import { Button } from "@mui/material";
 import Member from "../Member/Member";
 import CurrentUserEvent from "../../components/CurrentUser.js/CurrentUserEvent";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const [subs, setSubs] = useState("event");
@@ -207,7 +208,15 @@ const Profile = () => {
                   <div className="billing date">
                   <h5>Next Billing Date : {convertDate2(userData.subcription.EndDate)}</h5>
                 </div>
-                </>) : (<h3>No subscription plan please subscribe or renew the plan</h3>)
+                </>) : (<>
+                  <h3>No subscription plan please subscribe or renew the plan</h3>
+                  <Link to="/subscription" >
+                  <Button variant="contained" color="success" >
+                    Upgrade
+                  </Button>
+                </Link>
+                </>
+                 )
                   }
                   
                 </div>

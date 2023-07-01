@@ -7,6 +7,7 @@ import Archived from "../../components/Tables/Archived/Archived1";
 import ArchivedMob from "../../components/Tables/Archived/ArchivedMob";
 import CurrentUserEvent from "../../components/CurrentUser.js/CurrentUserEvent";
 import CurrentUserMob from "../../components/CurrentUser.js/CurrentUserMob";
+import { Link } from "react-router-dom";
 
 const Member = () => {
   const [subs, setSubs] = useState("event");
@@ -168,25 +169,32 @@ const Member = () => {
             <div className="subs-details">
               <h2>Subscription Details</h2>
               <div>
-                <div className="plan-head">
-                  {" "}
-                  <span>Subscription Plan</span>
+                  
+                  {userData.subcription ? 
+                   ( 
+                    <>
+                    <div className="plan-head">
+                    {" "}
+                    <span>Subscription Plan</span>
+                  </div>
+                    <div className="plan">
+                    <h3>{userData.subcription.Subcription_Type}</h3>
+                  </div>
+                  <div className="billing date">
+                  <h5>Next Billing Date : {convertDate2(userData.subcription.EndDate)}</h5>
                 </div>
-                <div className="plan">
-                  <h3>
-                    {userData.subcription &&
-                      userData.subcription.Subcription_Type}
-                  </h3>
+                </>) : (<>
+                  <h3>No subscription plan please subscribe or renew the plan</h3>
+                  <Link to="/subscription" >
+                  <Button variant="contained" color="success" >
+                    Upgrade
+                  </Button>
+                </Link>
+                </>
+                 )
+                  }
+                  
                 </div>
-              </div>
-
-              <div className="billing date">
-                <h5>
-                  Next Billing Date :{" "}
-                  {userData.subcription &&
-                    convertDate2(userData.subcription.EndDate)}
-                </h5>
-              </div>
             </div>
           ) : subs === "affs" ? (
             <>

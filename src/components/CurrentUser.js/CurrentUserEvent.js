@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { MdLocationOn } from "react-icons/md";
 import { MdWatchLater } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import exclusiveimg from "../../images/Group.png";
 import axios from "axios";
-import { Pagination, Stack, Typography } from "@mui/material";
+import { Button, Pagination, Stack, Typography } from "@mui/material";
 import { BiSearchAlt } from "react-icons/bi";
+import man from "../../images/Group 11450.png";
 
 const CurrentUserEvent = () => {
   const [userEvent, setUserEvent] = useState("");
   const [page, setPage] = React.useState(1);
   const [searchKey, setSearchKey] = React.useState();
   const [filter, setFilter] = useState();
+  const [noEvent, setNoEvent] = useState(false);
+
   const handleChange = (event, value) => {
     setPage(value);
   };
@@ -27,6 +30,9 @@ const CurrentUserEvent = () => {
       })
       .catch((err) => {
         console.log(err);
+        if(err.response.status===404){
+          setNoEvent(true)
+        }
       });
   }, []);
 
@@ -44,6 +50,8 @@ const CurrentUserEvent = () => {
         console.log(err);
       });
   }, [page]);
+
+  console.log(userEvent)
 
   useEffect(() => {
     axios({
@@ -214,7 +222,28 @@ const CurrentUserEvent = () => {
               <Typography>Page: {page}</Typography>
             </Stack>
           </div>
-        ) : (
+        ) : noEvent ? <>
+          <div className="no-event">
+          <div className="head-banner">
+        <div className="banner-container">
+          <div className="banner-text">
+            
+            <p>
+            Create Your first Event
+            </p>
+          </div>
+          <div className="banner-img">
+            <img src={man} />
+          </div>
+        </div>
+      </div>
+      <div style={{padding:"40px 10%"}}>
+      <Link to='/createnewevent'><Button variant="contained" color="success" >
+                      Create New Event
+                    </Button></Link></div>
+      
+          </div>
+        </> : (
           <></>
         )}
       </div>

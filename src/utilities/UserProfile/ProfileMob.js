@@ -5,6 +5,7 @@ import MemberMob from "../Member/MemberMob";
 import AdminMob from "../Admin/AdminMob";
 import { Button } from "@mui/material";
 import CurrentUserMob from "../../components/CurrentUser.js/CurrentUserMob";
+import { Link } from "react-router-dom";
 
 
 const Profile = () => {
@@ -168,7 +169,14 @@ const Profile = () => {
                   <div className="billing date">
                   <h5>Next Billing Date : {convertDate2(userData.subcription.EndDate)}</h5>
                 </div>
-                </>) : (<h3>No subscription plan please subscribe or renew the plan</h3>)
+                </>) : (<>
+                  <h3>No subscription plan please subscribe or renew the plan</h3>
+                  <Link to="/subscription" >
+                  <Button variant="contained" color="success" >
+                    Upgrade
+                  </Button>
+                </Link>
+                </>)
                   }
               </div>
             </div>

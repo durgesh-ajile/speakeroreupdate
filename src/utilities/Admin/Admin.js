@@ -11,14 +11,14 @@ import CreateCoupon from "../../components/Tables/CreateCoupon";
 import Trash1 from "../../components/Tables/Trash/Trash1";
 import Archived1 from "../../components/Tables/Archived/Archived1";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ManageAdmin from "../../components/Tables/ManageAdmin/ManageAdmin";
+import Download from "../../components/Download/Download";
 
-const data = {
-  name: "Divya Devendar",
-  email: "example123@gmail.com",
-};
-
+const adminEMail = 'durgeshrajak254@gmail.com'
+const isAdminStyle = {
+  display:'block'
+}
 const Admin = () => {
   const [select, setSelect] = useState('event');
  
@@ -29,6 +29,9 @@ const Admin = () => {
   };
   const handleMember = () => {
     setSelect('member')
+  };
+  const handleAdmin = () => {
+    setSelect('admin')
   };
   const handleEvent = () => {
    setSelect('event')
@@ -44,6 +47,9 @@ const Admin = () => {
   };
   const handleArchieved = () => {
     setSelect('archieved')
+  };
+  const handleDownload = () => {
+    setSelect('download')
   };
   
 
@@ -121,6 +127,14 @@ const Admin = () => {
               Team <span id='Span'>Members</span> 
             </button>
             <button
+              style={adminEMail === profile?.email ? isAdminStyle : null}
+              onClick={handleAdmin}
+              id='nonadmin'
+              className={select == 'admin' ? "backgreen" : ""}
+            >
+              Admins
+            </button>
+            <button
               onClick={handleCoupon}
               className={select == 'coupon' ? "backgreen" : ""}
             >
@@ -147,6 +161,14 @@ const Admin = () => {
             >
               Create Coupon
             </button>
+            <button
+              style={adminEMail === profile?.email ? isAdminStyle : null}
+              onClick={handleDownload}
+              id='nonadmin'
+              className={select == 'download' ? "backgreen" : ""}
+            >
+              Download
+            </button>
             </div>
         </div>
         <hr />
@@ -162,6 +184,8 @@ const Admin = () => {
         {select === 'coupon' ? <CouponTable1 /> : ""}
         {select === 'createCoupon' ? <CreateCoupon /> : ""}
         {select === 'archieved' ? <Archived1 /> : ""}
+        {select === 'admin' ? <ManageAdmin /> : ""}
+        {select === 'download' ? <Download /> : ""}
       </div>
     </div>
   );

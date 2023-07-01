@@ -1,25 +1,21 @@
 import React from "react";
 import CouponCard from "./CouponCard";
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
+import { Pagination, Stack, Typography } from "@mui/material";
 
 const CouponTableMob = () => {
   const [couponData, setCouponData] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [page, setPage] = React.useState(1);
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/getallcoupons",
+      url: `https://api.speakerore.com/api/getallcoupons?${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -28,7 +24,7 @@ const CouponTableMob = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [page]);
 
   function convertDate(e) {
     const date = new Date(e).toLocaleDateString();
@@ -37,7 +33,8 @@ const CouponTableMob = () => {
 
   return (
     <div>
-     {couponData && couponData.savedCoupon.map((row) => (
+     {couponData && 
+    couponData.savedCoupon.map((row) => (
       <>
       <div className="coupon-card-continer">
       <div className="user-id">
@@ -70,9 +67,19 @@ const CouponTableMob = () => {
     </div>
       <hr style={{ marginLeft: 0, width: "100vw" }} />
     </>
-    ))}
-    </div>
-  );
-};
+    ))
+    }
+    <Stack spacing={2}>
+              <Pagination
+                style={{ justifyContent: "center", marginTop: "20px" }}
+                count={couponData.totalPages}
+                page={page}
+                onChange={handleChange}
+              />
+              <Typography>Page: {page}</Typography>
+            </Stack>
+
+  </div>
+)};
 
 export default CouponTableMob;

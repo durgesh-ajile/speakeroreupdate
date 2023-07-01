@@ -11,18 +11,19 @@ import { Button } from "@mui/material";
 
 const priceData = [
   // if changing the price of the subscription you need to change it in input field also with classname apply-coupon-input in this file only
-  {
-    type: "HalfYearly",
-    name: "Half Yearly",
-    price: 7000,
-    showPrice: 7000,
-    desc: "Find your Life Changing Event.",
-  },
+ 
   {
     type: "Quaterly",
     name: "Quaterly",
     price: 5000,
     showPrice: 5000,
+    desc: "Find your Life Changing Event.",
+  },
+  {
+    type: "HalfYearly",
+    name: "Half Yearly",
+    price: 7000,
+    showPrice: 7000,
     desc: "Find your Life Changing Event.",
   },
   {
@@ -157,6 +158,7 @@ const Subscription = () => {
                   </div>
                   <div>
                     <h4>₹ {value.showPrice}</h4>
+                   
                   </div>
                 </div>
               )
@@ -190,7 +192,7 @@ const Subscription = () => {
                   <p>✅ {checkCouponData.message}</p>
                   <p>⏰ Final Price : <span style={{ fontSize: '24px', fontWeight: "600" }}>{selectPrice}</span> </p>
                 </div>
-              ) : <h3 style={{ marginTop: '15px', textAlign: 'center', fontSize: '15px' }}>Apply Coupon Code</h3>}
+              ) : <h3 style={{ marginTop: '15px', textAlign: 'center', fontSize: '15px' }}></h3>}
             </div>
             <button onClick={handlePayments}>CONTINUE</button>
           </div>

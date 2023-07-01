@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
+import { Pagination, Stack, Typography } from "@mui/material";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -35,11 +36,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function CouponTable() {
   const [couponData, setCouponData] = useState("");
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = React.useState(1);
+
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
 
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://api.speakerore.com/api/getallcoupons",
+      url: `https://api.speakerore.com/api/getallcoupons?${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -48,7 +54,7 @@ export default function CouponTable() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [page]);
 
   function convertDate(e) {
     const date = new Date(e).toLocaleDateString();
@@ -66,12 +72,13 @@ export default function CouponTable() {
             <StyledTableCell align="center">Discount</StyledTableCell>
             <StyledTableCell align="center">Max Usage</StyledTableCell>
             <StyledTableCell align="right">Expiry Date</StyledTableCell>
-            <StyledTableCell align="right">Action Required</StyledTableCell>
+            <StyledTableCell align="right">Coupon Type</StyledTableCell>
 
           </TableRow>
         </TableHead>
         <TableBody>
-          {couponData && couponData.savedCoupon.map((row) => (
+          {couponData && 
+          couponData.savedCoupon.map((row) => (
             <StyledTableRow key={row.coupon_code}>
               <StyledTableCell component="th" scope="row">
                 {row.coupon_code}
@@ -85,6 +92,15 @@ export default function CouponTable() {
         </TableBody>
       </Table>
     </TableContainer>
+    <Stack spacing={2}>
+              <Pagination
+                style={{ justifyContent: "center", marginTop: "20px" }}
+                count={couponData.totalPages}
+                page={page}
+                onChange={handleChange}
+              />
+              <Typography>Page: {page}</Typography>
+            </Stack>
     </div>
   );
 }

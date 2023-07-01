@@ -144,7 +144,7 @@ const Eventdetails = ({ eventDetails, stateHandle_Event_Organiser_Preview, setSt
                 <select ref={(ref) => registerRef(ref, 5)} onKeyDown={(event) => handleKeyDown(event, 5)} name="mode" value={handleFormInput?.mode} required onChange={(e) => { handleChangeEventDetailsForm(e) }}>
                   <option>Select</option>
                   <option>Hybrid Event</option>
-                  <option>In person</option>
+                  <option>In Person</option>
                   <option>Online Event</option>
                 </select>
                 {checkReqierdField && !handleFormInput?.mode && <p style={{ color: 'red', fontSize: '13px' }}> Above field is required </p>}

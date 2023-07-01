@@ -9,7 +9,12 @@ import CreateCoupon from "../../components/Tables/CreateCoupon";
 import Trash1 from "../../components/Tables/Trash/Trash1";
 import Archived1 from "../../components/Tables/Archived/Archived1";
 import { useNavigate } from "react-router-dom";
+import ManageAdminMob from "../../components/Tables/ManageAdmin/ManageAdminMob";
 
+const adminEMail = 'durgeshrajak254@gmail.com'
+const isAdminStyle = {
+  display:'block'
+}
 const AdminMob = () => {
   const [select, setSelect] = useState("event");
 
@@ -36,7 +41,13 @@ const AdminMob = () => {
   const handleArchieved = () => {
     setSelect("archieved");
   };
-
+  const handleDownload = () => {
+    setSelect('download')
+  };
+  const handleAdmin = () => {
+    setSelect('admin')
+  };
+  
   useEffect(() => {
     axios({
       method: "get",
@@ -101,17 +112,26 @@ const AdminMob = () => {
               Team <span id="Span">Members</span>
             </button>
             <button
-              onClick={handleCoupon}
-              className={select == "coupon" ? "backgreen1" : ""}
+              style={adminEMail === profile?.email ? isAdminStyle : null}
+              onClick={handleAdmin}
+              id='nonadmin'
+              className={select == 'admin' ? "backgreen1" : ""}
             >
-              Coupons
+              Admins
             </button>
+            
           </div>
           <div
             className="subsbutton"
             id="Subsbutton"
             style={{ margin: "8px 20px" }}
           >
+          <button
+              onClick={handleCoupon}
+              className={select == "coupon" ? "backgreen1" : ""}
+            >
+              Coupons
+            </button>
             <button
               onClick={handleTrash}
               className={select == "trash" ? "backgreen1" : ""}
@@ -130,7 +150,21 @@ const AdminMob = () => {
             >
               Create Coupon
             </button>
+            
+            
           </div>
+          <div
+            className="subsbutton"
+            id="Subsbutton"
+            style={{ margin: "8px 20px" }}
+          ><button
+              style={adminEMail === profile?.email ? isAdminStyle : null}
+              onClick={handleDownload}
+              id='nonadmin'
+              className={select == 'download' ? "backgreen1" : ""}
+            >
+              Download
+            </button></div>
         </div>
         
       </div>
@@ -142,6 +176,7 @@ const AdminMob = () => {
         {select === "coupon" ? <CouponTable1 /> : ""}
         {select === "createCoupon" ? <CreateCoupon /> : ""}
         {select === "archieved" ? <Archived1 /> : ""}
+        {select === 'admin' ? <ManageAdminMob /> : ""}
       </div>
     </div>
   );

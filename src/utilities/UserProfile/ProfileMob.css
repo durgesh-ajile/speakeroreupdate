@@ -158,8 +158,9 @@
   }
   
  #subs-details {
-    text-align: center;
+    /* text-align: center; */
     margin-top: 20px;
+    padding-left: 20px;
   }
   
  #subs-details h2 {
@@ -167,7 +168,7 @@
   font-weight: 700;
     margin-bottom: 15px;
     text-align: left;
-    margin-left: 3rem
+    /* margin-left: 3rem */
   }
   
  #plan-head span {
