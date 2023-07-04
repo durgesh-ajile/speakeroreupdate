@@ -15,7 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ManageAdmin from "../../components/Tables/ManageAdmin/ManageAdmin";
 import Download from "../../components/Download/Download";
 
-const adminEMail = 'durgeshrajak254@gmail.com'
+const adminEMail = 'nikhilchaudhary86@gmail.com'
 const isAdminStyle = {
   display:'block'
 }

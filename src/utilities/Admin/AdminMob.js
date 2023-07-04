@@ -10,8 +10,9 @@ import Trash1 from "../../components/Tables/Trash/Trash1";
 import Archived1 from "../../components/Tables/Archived/Archived1";
 import { useNavigate } from "react-router-dom";
 import ManageAdminMob from "../../components/Tables/ManageAdmin/ManageAdminMob";
+import Download from "../../components/Download/Download";
 
-const adminEMail = 'durgeshrajak254@gmail.com'
+const adminEMail = 'nikhilchaudhary86@gmail.com'
 const isAdminStyle = {
   display:'block'
 }
@@ -177,6 +178,7 @@ const AdminMob = () => {
         {select === "createCoupon" ? <CreateCoupon /> : ""}
         {select === "archieved" ? <Archived1 /> : ""}
         {select === 'admin' ? <ManageAdminMob /> : ""}
+        {select === 'download' ? <Download /> : ""}
       </div>
     </div>
   );

@@ -187,6 +187,8 @@
     .Subscription_container_fluid_right_div>div>h4 {
         margin: 0px 10px 0px 0px;
         font-size: 14px;
+        display: flex;
+    align-items: center
     }
 
     .Subscription_container_fluid_right_div {

@@ -119,8 +119,13 @@ const Subscription = () => {
     setError('')
   };
 
-  
-  console.log('inputRefs',inputRefs)
+  const convertRupeesToDollars = (amountInRupees, exchangeRate) => {
+    // const exchangeRate = exchangeRatesState?.rates?.INR - exchangeRatesState?.rates?.USD
+    const amountInDollars = amountInRupees / exchangeRate;
+    return amountInDollars;
+  }
+  console.log(error)
+  console.log(checkCouponData);
 
   return (
     <div className="Subscription_container">{/* 100% */}
@@ -156,9 +161,9 @@ const Subscription = () => {
                     <h3>{value.name}</h3>
                     <p>{value.desc}</p>
                   </div>
-                  <div>
-                    <h4>₹ {value.showPrice}</h4>
-                   
+                  <div style={{display:'flex'}} >
+                    <h4>₹{value.showPrice},</h4>
+                    <h5>( ${convertRupeesToDollars(value.showPrice, 82.09).toFixed(2)} )</h5>
                   </div>
                 </div>
               )
@@ -181,7 +186,7 @@ const Subscription = () => {
                   setApplied(false)
                 }}
                 type="text" placeholder="Type Coupon Code Here" name="Apply_Coupon_Code" />
-              <button>APPLY</button>
+              <button onClick={handleApplyCoupon}>APPLY</button>
 
               {error ? (
                 <div>

@@ -15,7 +15,7 @@ const CouponTableMob = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/getallcoupons?${page}`,
+      url: `https://api.speakerore.com/api/getallcoupons?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -25,6 +25,20 @@ const CouponTableMob = () => {
         console.log(err);
       });
   }, [page]);
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: `https://api.speakerore.com/api/getallcoupons?page=${page}`,
+      withCredentials: true,
+    })
+      .then((res) => {
+        setCouponData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   function convertDate(e) {
     const date = new Date(e).toLocaleDateString();
