@@ -303,7 +303,7 @@ const EventAdmin = () => {
                         Approve Event
                       </button>
                     </div>
-                  </div>)) : searchKey ? (<div>
+                  </div>)) : searchKey ? (<div className="no-event">
           <h3>No Matching Events</h3>
         </div>) : 
                   eventsForApproval.savedEvents.map((e) => (

@@ -60,7 +60,7 @@ const Eventlist = () => {
 
   const handleInperson = () => {
     if (!inperson) {
-      setMode("Offline Event");
+      setMode("In Person");
       setInperson(true);
     } else {
       setMode("");
@@ -72,7 +72,7 @@ const Eventlist = () => {
 
   const handleHybrid = () => {
     if (!hybrid) {
-      setMode("Hybrid");
+      setMode("Hybrid Event");
       setHybrid(true);
     } else {
       setMode("");
@@ -456,7 +456,7 @@ const Eventlist = () => {
             </Stack>
         </div>
       ) : mode || category || filterdate || exclusive || searchKey ? (
-        <div>
+        <div className="no-event">
           <h3>No Matching Events</h3>
         </div>
       ) : approvedEvent ? (

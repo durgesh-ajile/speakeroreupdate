@@ -1,6 +1,8 @@
 .Navbar_coontainer {
     display: flex;
     justify-content: space-between;
+    position: relative;
+    z-index: 2;
 }
 #nav-select{
   color:#24754F

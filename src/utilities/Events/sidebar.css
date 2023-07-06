@@ -12,6 +12,10 @@
 .css-ahj2mt-MuiTypography-root{
     text-align: center;
 }
+.no-event{
+    color:#464545;
+    padding: 10px 30px
+}
 .topbar{
     display: flex;
     justify-content: space-between;
@@ -199,6 +203,8 @@ margin-bottom: 5px;
 }
 .filter-input input{
 width : 210px;
-height: 30px
+height: 30px;
+padding-left: 12px;
+
 }
 

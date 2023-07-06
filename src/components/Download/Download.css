@@ -2,3 +2,58 @@ CSVLink {
     text-decoration: none;
     color: white;
 }
+
+.Download_CSV_file_container_fluid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.Download_CSV_file_date_feild {
+    width: 25%;
+    padding: 10px;
+    margin: 20px 10px 10px 20px;
+    border-radius: 5px;
+    border: 2px solid rgba(0, 0, 0, 0.242);
+}
+
+.Download_CSV_file_button {
+    margin-top: 20px !important;
+    margin-left: 10px !important;
+    height: 40px;
+    background-color: blanchedalmond !important;
+    color: black !important;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+
+    .Download_CSV_file_container_fluid {
+        /* display: flex; */
+        /* flex-wrap: wrap; */
+        flex-direction: column;
+    }
+
+    .Download_CSV_file_date_feild {
+        width: 80%;
+        padding: 10px;
+        margin-top: 20px;
+        border-radius: 5px;
+        border: 2px solid rgba(0, 0, 0, 0.242);
+    }
+
+    .Download_CSV_file_button {
+        margin-top: 20px !important;
+        margin-left: 20px !important;
+        margin-bottom: 20px !important;
+        height: 40px;
+        background-color: blanchedalmond !important;
+        color: black !important;
+        padding: 10px;
+        border-radius: 5px;
+        width: 86%;
+    }
+    .select{
+        width: 87% !important;
+    }
+}

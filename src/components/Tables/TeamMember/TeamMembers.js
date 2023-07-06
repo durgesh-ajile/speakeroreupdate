@@ -304,7 +304,7 @@ console.log(searchKey)
                 </StyledTableRow>
                 ))
                 ) : searchKey ? (
-                  <div>
+                  <div className="no-event">
                     <h3>No Matching Team Member</h3>
                   </div>
                 ) : (

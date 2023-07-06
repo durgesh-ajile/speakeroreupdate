@@ -273,7 +273,7 @@ export default function TeamMembers() {
             </div>
           ))
         ) : searchKey ? (
-          <div>
+          <div className="no-event">
             <h3>No Matching Team Member</h3>
           </div>
         ) : (

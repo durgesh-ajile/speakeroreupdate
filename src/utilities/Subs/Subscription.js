@@ -7,6 +7,7 @@ import mic from "../../images/FINAL_07_1.png";
 // import orangeback from "../../images/Vector 10.png";
 import axios from "axios";
 import { Button } from "@mui/material";
+import LoginPopup from "../Pop/LoginPopup";
 
 
 const priceData = [
@@ -45,6 +46,8 @@ const Subscription = () => {
   const [checkCouponData, setCheckCouponData] = useState(null);
   const [error, setError] = useState(null);
   const [inputRefs, setInputRefs] = useState([]);
+  const [userData, setUserData] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   const selectedPriceData = priceData.find(
     (item) => item.type === selectedType
@@ -64,9 +67,6 @@ const Subscription = () => {
     }
   }, [selectedType, staticPrice]);
 
-  const handleChange = (e) => {
-    setSelectedType(e.target.value);
-  };
 
   const handleApplyCoupon = async (e) => {
     e.preventDefault();
@@ -88,7 +88,12 @@ const Subscription = () => {
       setError(error)
       console.log(error);
     }
+    if(!selectedType){
+      setError("Select a subscription plan")
+    }
+    
   };
+  
   const generateOrderId = () => {
     const currentDate = new Date();
     const hours = currentDate.getHours().toString().padStart(2, "0");
@@ -97,14 +102,37 @@ const Subscription = () => {
     return `${hours}${minutes}${seconds}`;
   };
 
+  useEffect(() => {
+      axios({
+        method: "get",
+        url: "https://api.speakerore.com/api/getprofile",
+        withCredentials: true,
+      })
+        .then((res) => {
+          if (res.data.status) {
+            setUserData(true);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setUserData(false);
+        });
+  }, []);
+
   const handlePayments = async (e) => {
     e.preventDefault();
     try {
-      if (selectedType && selectedPriceData) {
+      if (selectedType && selectedPriceData && userData) {
         window.location.href = `https://api.speakerore.com/api/paymentform?merchant_id=2560771&order_id=${generateOrderId()}&currency=INR&amount=${selectPrice}&merchant_param1=${selectedType}&merchant_param2=${couponCode}`
       }
     } catch (error) {
       console.log(error);
+    }
+    if(!selectedType){
+      setError("Select a subscription plan")
+    }
+    if(!userData){
+      setShowPopup(true)
     }
   };
 
@@ -124,11 +152,18 @@ const Subscription = () => {
     const amountInDollars = amountInRupees / exchangeRate;
     return amountInDollars;
   }
-  console.log(error)
-  console.log(checkCouponData);
+  console.log(userData)
+  console.log(showPopup);
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
 
   return (
     <div className="Subscription_container">{/* 100% */}
+      {showPopup && <LoginPopup onClose={handleClosePopup} />}
+
       <div className="Subscription_container_fluid">{/* 90% */}
         <div className="Subscription_container_fluid_left">{/* 50% */}
           <div className="Subscription_container_fluid_left_img">{/* 100% */}
@@ -163,7 +198,7 @@ const Subscription = () => {
                   </div>
                   <div style={{display:'flex'}} >
                     <h4>₹{value.showPrice},</h4>
-                    <h5>( ${convertRupeesToDollars(value.showPrice, 82.09).toFixed(2)} )</h5>
+                    <h4>( ${convertRupeesToDollars(value.showPrice, 82.09).toFixed(2)} )</h4>
                   </div>
                 </div>
               )
@@ -188,7 +223,12 @@ const Subscription = () => {
                 type="text" placeholder="Type Coupon Code Here" name="Apply_Coupon_Code" />
               <button onClick={handleApplyCoupon}>APPLY</button>
 
-              {error ? (
+              {error === 'Select a subscription plan' ? (
+                <div>
+                  <p>❌ {error}</p>
+                </div>
+              ) : error ?
+              (
                 <div>
                   <p>❌ {error.response.data.message}</p>
                 </div>

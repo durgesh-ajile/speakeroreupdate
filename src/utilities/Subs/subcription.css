@@ -74,6 +74,7 @@
 
 .Subscription_container_fluid_right_div>div {
     width: 100%;
+    justify-content: space-evenly;
 }
 .Subscription_container_fluid_right_div_HNP p{
     margin-top: 0;
@@ -83,10 +84,8 @@
 }
 
 .Subscription_container_fluid_right_div>div>h4 {
-    margin: 0px 30px 0px 0px;
-    float: right;
-    font-size: 24px;
-    color: #6e6d6d;
+    color: #6e6d6d; 
+    font-size: 18px;
 }
 
 /* ------------------------------------------------------------- */
@@ -185,7 +184,7 @@
     }
 
     .Subscription_container_fluid_right_div>div>h4 {
-        margin: 0px 10px 0px 0px;
+        /* margin: 0px 10px 0px 0px; */
         font-size: 14px;
         display: flex;
     align-items: center

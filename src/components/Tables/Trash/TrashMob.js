@@ -343,7 +343,7 @@ const TrashMob = () => {
               </div>
             ))
           ) : searchKey ? (
-            <div>
+            <div className="no-event">
               <h3>No Matching Events</h3>
             </div>
           ) : (

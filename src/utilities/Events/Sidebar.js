@@ -59,7 +59,7 @@ export default function Sidebar() {
 
   const handleInperson = () => {
     if(!inperson){
-      setMode("Offline Event");
+      setMode("In Person");
       setInperson(true);
     } else {
       setMode("");
@@ -71,7 +71,7 @@ export default function Sidebar() {
 
   const handleHybrid = () => {
     if(!hybrid){
-      setMode("Hybrid");
+      setMode("Hybrid Event");
       setHybrid(true);
     } else {
       setMode("");
@@ -381,7 +381,7 @@ export default function Sidebar() {
               <Typography>Page: {filterPage}</Typography>
             </Stack>
           </div>
-        ) : mode || category || filterdate || exclusive || searchKey ? (<div>
+        ) : mode || category || filterdate || exclusive || searchKey ? (<div className="no-event">
           <h3>No Matching Events</h3>
         </div>) : approvedEvent ? (
           <div>

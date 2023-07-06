@@ -315,7 +315,7 @@ const UsersWrapper = () => {
             <hr style={{ marginLeft: 0, width: "100vw" }} />
           </>))
             ) : searchKey ? (
-              <div>
+              <div className="no-event">
                 <h3>No Matching User</h3>
               </div>
             ) : (

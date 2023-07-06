@@ -339,7 +339,7 @@ export default function UserTable() {
                 </StyledTableRow>
               ))
             ) : searchKey ? (
-              <div>
+              <div className="no-event">
                 <h3>No Matching User</h3>
               </div>
             ) : (

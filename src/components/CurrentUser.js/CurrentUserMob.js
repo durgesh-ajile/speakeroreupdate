@@ -195,7 +195,7 @@ const CurrentUserMob = () => {
             ))
           ) : searchKey ? (
             <div>
-              <h3>No Matching Events</h3>
+              <h3 className="no-event">No Matching Events</h3>
             </div>
           ) : (
 

@@ -213,7 +213,6 @@ const Navbar = () => {
     setShowPopup(false);
   };
 
-  console.log(select);
 
   return (
     <div>
