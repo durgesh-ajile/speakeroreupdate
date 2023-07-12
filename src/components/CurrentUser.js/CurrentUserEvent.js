@@ -21,7 +21,7 @@ const CurrentUserEvent = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventforcurrentuser?${page}`,
+      url: `https://api.speakerore.com/api/geteventforcurrentuser?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -39,7 +39,7 @@ const CurrentUserEvent = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://api.speakerore.com/api/geteventforcurrentuser?${page}`,
+      url: `https://api.speakerore.com/api/geteventforcurrentuser?page=${page}`,
       withCredentials: true,
     })
       .then((res) => {
@@ -52,6 +52,8 @@ const CurrentUserEvent = () => {
   }, [page]);
 
   console.log(userEvent)
+  console.log(page)
+
 
   useEffect(() => {
     axios({
@@ -215,7 +217,7 @@ const CurrentUserEvent = () => {
             <Stack spacing={2}>
               <Pagination
                 style={{ justifyContent: "center", marginTop: "20px" }}
-                count={userEvent.totalPages}
+                count={userEvent.totalPage}
                 page={page}
                 onChange={handleChange}
               />
@@ -223,7 +225,7 @@ const CurrentUserEvent = () => {
             </Stack>
           </div>
         ) : noEvent ? <>
-          <div className="no-event">
+          <div>
           <div className="head-banner">
         <div className="banner-container">
           <div className="banner-text">
@@ -237,7 +239,7 @@ const CurrentUserEvent = () => {
           </div>
         </div>
       </div>
-      <div style={{padding:"40px 10%"}}>
+      <div style={{padding:"40px 5%"}}>
       <Link to='/createnewevent'><Button variant="contained" color="success" >
                       Create New Event
                     </Button></Link></div>

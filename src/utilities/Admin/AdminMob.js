@@ -13,8 +13,10 @@ import ManageAdminMob from "../../components/Tables/ManageAdmin/ManageAdminMob";
 import Download from "../../components/Download/Download";
 
 const adminEMail = 'nikhilchaudhary86@gmail.com'
-const isAdminStyle = {
-  display:'block'
+
+// const adminEMail = 'durgeshrajak254@gmail.com'
+const isRegularAdminStyle = {
+  display:'none'
 }
 const AdminMob = () => {
   const [select, setSelect] = useState("event");
@@ -67,7 +69,7 @@ const AdminMob = () => {
 
  
 
-  // console.log(eventsForApproval)
+  console.log(adminEMail === profile?.email)
   let navigate = useNavigate();
 
   console.log(profile);
@@ -113,9 +115,9 @@ const AdminMob = () => {
               Team <span id="Span">Members</span>
             </button>
             <button
-              style={adminEMail === profile?.email ? isAdminStyle : null}
+              id={adminEMail === profile?.email ? 'mainadmin' : null}
+              style={isRegularAdminStyle}
               onClick={handleAdmin}
-              id='nonadmin'
               className={select == 'admin' ? "backgreen1" : ""}
             >
               Admins
@@ -159,9 +161,8 @@ const AdminMob = () => {
             id="Subsbutton"
             style={{ margin: "8px 20px" }}
           ><button
-              style={adminEMail === profile?.email ? isAdminStyle : null}
-              onClick={handleDownload}
-              id='nonadmin'
+          id={adminEMail === profile?.email ? 'mainadmin' : null}
+              style={isRegularAdminStyle}              onClick={handleDownload}
               className={select == 'download' ? "backgreen1" : ""}
             >
               Download

@@ -10,8 +10,8 @@
 .dashboard{
     display:flex;
 }
-#nonadmin{
-    display: none;
+#mainadmin{
+    display: block !important;
 }
 .events-content {
     width:77%;

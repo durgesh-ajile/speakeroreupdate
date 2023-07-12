@@ -16,8 +16,10 @@ import ManageAdmin from "../../components/Tables/ManageAdmin/ManageAdmin";
 import Download from "../../components/Download/Download";
 
 const adminEMail = 'nikhilchaudhary86@gmail.com'
-const isAdminStyle = {
-  display:'block'
+// const adminEMail = 'durgeshrajak254@gmail.com'
+
+const isRegularAdminStyle = {
+  display:'none'
 }
 const Admin = () => {
   const [select, setSelect] = useState('event');
@@ -91,7 +93,7 @@ const Admin = () => {
 
   return (
     <div id='Admin' className="admin">
-      <div className="left-container" id='Left-container' >
+      <div className="left-container" id='Left-container' style={adminEMail === profile?.email ? {height:'780px'}: null}>
       {profile ? <div className="profile-pic" id='Profile-pic'>
           <div className="img"  id='Img'>{profile.first_name[0]}</div>
           <div className="name-deatils"  id='Name-deatils'>
@@ -127,9 +129,9 @@ const Admin = () => {
               Team <span id='Span'>Members</span> 
             </button>
             <button
-              style={adminEMail === profile?.email ? isAdminStyle : null}
+              id={adminEMail === profile?.email ? 'mainadmin' : null}
+              style={isRegularAdminStyle}
               onClick={handleAdmin}
-              id='nonadmin'
               className={select == 'admin' ? "backgreen" : ""}
             >
               Admins
@@ -162,9 +164,9 @@ const Admin = () => {
               Create Coupon
             </button>
             <button
-              style={adminEMail === profile?.email ? isAdminStyle : null}
+              id={adminEMail === profile?.email ? 'mainadmin' : null}
               onClick={handleDownload}
-              id='nonadmin'
+              style={isRegularAdminStyle}
               className={select == 'download' ? "backgreen" : ""}
             >
               Download

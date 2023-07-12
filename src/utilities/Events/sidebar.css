@@ -208,3 +208,8 @@ padding-left: 12px;
 
 }
 
+@media only screen and (max-height: 700px){
+    .filter-child{
+        padding-top: 0px;
+    }
+}

@@ -88,6 +88,18 @@ const Download = () => {
 
   const headers = [
     {
+      label: "alphaUnqiueId", key: "User.alphaUnqiueId"
+    },
+    {
+      label: "first_name", key: "User.first_name"
+    },
+    {
+      label: "last_name", key: "User.last_name"
+    },
+    {
+      label: "email", key: "User.email"
+    },
+    {
       label: "audienceSize", key: "AudienceSize"
     },
     {
@@ -101,9 +113,6 @@ const Download = () => {
     },
     {
       label: "country", key: "Country"
-    },
-    {
-      label: "detailedDescriptionOfTheEvent", key: "DetailedDescriptionOfTheEvent"
     },
     {
       label: "engagementTerm", key: "EngagementTerm"
@@ -138,9 +147,7 @@ const Download = () => {
     {
       label: "pincode", key: "Pincode"
     },
-    {
-      label: "shortDescriptionOfTheEvent", key: "ShortDescriptionOfTheEvent"
-    },
+    
     {
       label: "titleOfTheEvent", key: "TitleOfTheEvent"
     },
@@ -162,18 +169,6 @@ const Download = () => {
     {
       label: "Updated At", key: "updatedAt"
     },
-    {
-      label: "alphaUnqiueId", key: "User.alphaUnqiueId"
-    },
-    {
-      label: "first_name", key: "User.first_name"
-    },
-    {
-      label: "last_name", key: "User.last_name"
-    },
-    {
-      label: "email", key: "User.email"
-    }
   ]
 
   const eventLink = {
@@ -194,6 +189,8 @@ const Download = () => {
     headers: subHeaders,
     data: subData && subData?.savedData
   }
+
+  
   const getReport = (event) => {
     event.target.value === 'event' && getEventReport()
     event.target.value === 'coupon' && getCouponReport()
@@ -228,6 +225,7 @@ const Download = () => {
       .catch((err) => {
         console.log(err);
         setEventData('')
+        setSelector('')
         toast.error(err.response.data.message, successToast);
       });
   };
@@ -246,6 +244,7 @@ const Download = () => {
       .catch((err) => {
         console.log(err);
         setSubData('')
+        setSelector('')
         // toast.error(err.response.data.message, successToast);
       });
   };
@@ -265,6 +264,7 @@ const Download = () => {
       .catch((err) => {
         console.log(err);
         setCouponData('')
+        setSelector('')
         toast.error(err.response.data.message, successToast);
       });
   };
@@ -274,9 +274,9 @@ const Download = () => {
     <div className='download-component'>
       <ToastContainer />
       <div className='Download_CSV_file_container_fluid'>
-        <input className='Download_CSV_file_date_feild' type='date' onChange={(e) => { setStartDate(e.target.value); getReport2() }} />
-        <input className='Download_CSV_file_date_feild' type='date' onChange={(e) => { setEndDate(e.target.value); getReport2() }} />
-        <select onChange={handleChange} className='Download_CSV_file_date_feild select'>
+        <input className='Download_CSV_file_date_feild' value={startDate} type='date' onChange={(e) => { setStartDate(e.target.value); getReport2() }} />
+        <input className='Download_CSV_file_date_feild' value={endDate} type='date' onChange={(e) => { setEndDate(e.target.value); getReport2() }} />
+        <select onChange={handleChange} className='Download_CSV_file_date_feild select' value={selector}>
           <option selected >Select</option>
           <option value='event'>Event Report</option>
           <option value='coupon'>Coupon Report</option>

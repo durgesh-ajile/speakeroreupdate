@@ -310,11 +310,13 @@ const Eventlist = () => {
             <option value="Coaching">Coaching</option>
             <option value="Communication">Communication</option>
             <option value="Design Thinking">Design Thinking</option>
+            <option value="Digital Marketing">Digital Marketing</option>
             <option value="Education">Education</option>
             <option value="Finance">Finance</option>
             <option value="Fitness">Fitness</option>
             <option value="Health">Health</option>
             <option value="Human resource">Human resource </option>
+            <option value="Information Technology">Information Technology </option>
             <option value="Innovation">Innovation </option>
             <option value="Leadership">Leadership</option>
             <option value="LGBTQ">LGBTQ</option>
