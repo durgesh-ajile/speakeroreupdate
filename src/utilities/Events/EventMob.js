@@ -195,10 +195,8 @@ const Eventlist = () => {
 
   useEffect(() => {
     window.addEventListener('touchmove', handleScroll);
-    window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('touchmove', handleScroll);
-      window.removeEventListener('scroll', handleScroll);
     };
   }, [page]);
 
