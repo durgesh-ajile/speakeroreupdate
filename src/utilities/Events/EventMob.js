@@ -188,15 +188,15 @@ const Eventlist = () => {
   }
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-    if (scrollTop + clientHeight >= scrollHeight - 20) {
+    if (scrollTop + clientHeight >= scrollHeight - 10) {
       setPage((prevPage) => prevPage + 1);
     }
   };
 
   useEffect(() => {
-    window.addEventListener('touchmove', handleScroll);
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('touchmove', handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [page]);
 
