@@ -5,6 +5,7 @@ import { Button } from "@mui/material";
 import Archived from "../../components/Tables/Archived/Archived1";
 import CurrentUserEvent from "../../components/CurrentUser.js/CurrentUserEvent";
 import { Link } from "react-router-dom";
+import Affiliate from "../../components/Affiliate";
 
 const Member = () => {
   const [subs, setSubs] = useState("event");
@@ -190,23 +191,7 @@ const Member = () => {
                 </div>
               </div>
             ) : subs === 'affs' ? (
-              <>
-              {affiliatData ? <>
-                <div className="aff-form">
-                  <h2>Coupon Code: <span style={{color:'#24754F'}}>"{affiliatData.coupon_code}"</span></h2>
-                  <h3>Discount: <span style={{color:'#24754F'}}>{affiliatData.discount}%</span></h3>
-                </div>
-              </> : 
-              <div className="affiliate">
-                  <h3>Get Affiliate Coupon</h3>
-                  <div className="aff-btn">
-                    <Button variant="contained" color="success" onClick={handleAffiliateSubmit}>
-                      Get Coupon
-                    </Button>
-                  </div>
-                </div>
-              }
-              </>
+              <Affiliate/>
             ) : subs === 'archeived' ? (<>
                 <Archived/>
             </>) : <>

@@ -23,14 +23,13 @@ function Home() {
       <div className="bg-image">
         <div className="bg-text">
           <h1 className="bg-title">
-            Life Changing Opportunity
+          200,000+ Speaking Opportunities 
           </h1>
           <h1 className="bg-title">
-            could be Just ONE Event Away
+          for speakers, trainers, founders and experts.
           </h1>
           <p className="bg-para">
-            The World needs to Know your Message or You need the World To know
-            your Message. Don’t Hold Back! It will change Lives. Get Started!
+          Time is Precious, Opportunities vast. No more endless searchless, No more wasted time. Your Voice Matters: Amplify your influence, one gig at a time.
           </p>
           <button className="bg-button" onClick={goToTop}>See how it works</button>
         </div>

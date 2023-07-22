@@ -145,7 +145,13 @@ hr{
 .aff-form{
     padding: 20px 40px;
 }
+#new-banner h5{
+    text-align: left;
+}
 
+.affiliate p{
+    text-align: justify;
+}
 .create-coupon{
     padding: 20px 40px;
 }

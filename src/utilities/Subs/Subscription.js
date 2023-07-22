@@ -15,24 +15,24 @@ const priceData = [
  
   {
     type: "Quaterly",
-    name: "Quaterly",
+    name: "Monthly",
     price: 5000,
-    showPrice: 5000,
-    desc: "Find your Life Changing Event.",
+    showPrice: 1667,
+    desc: "Paid on Quarterly basis",
   },
   {
     type: "HalfYearly",
-    name: "Half Yearly",
+    name: "Monthly",
     price: 7000,
-    showPrice: 7000,
-    desc: "Find your Life Changing Event.",
+    showPrice: 1167,
+    desc: "Paid on Half Yearly basis",
   },
   {
     type: "Yearly",
     name: "Monthly",
     price: 9996,
     showPrice: 833,
-    desc: "Paid on annual basis.",
+    desc: "Paid on Yearly basis",
   },
 ];
 
@@ -171,13 +171,15 @@ const Subscription = () => {
           </div>
           <div className="Subscription_container_fluid_left_headingNp_tag_div">{/* 100% */}
             <h1>Speaker Ore</h1>
-            <h2>Goldmine Control Room</h2>
-            <p>Take Action, Ownership and Start Mining</p>
-            <div>
-              <p>Find your Life Changing Event. Speaking is a serious Business.</p>
-              <p>Every Expert must get noticed to build their empire of followers.</p>
-              <p> Knowledge within you wont help the world at large. </p>
-              <p>Your Time is the Most Expensive Opportunity Cost.</p>
+            <h2>Tap into the Gold Mine of Success</h2>
+            <div className="sub-hidescrol">
+              <p>Welcome to SpeakerOre, the ultimate platform designed to empower speakers and connect them with a multitude of speaking opportunities. Whether you're a seasoned speaker looking to expand your reach or a budding talent eager to make your mark, our subscription unlocks a world of possibilities.
+             <br/> <br/> Choose from our flexible subscription plans – quarterly, half-yearly, or yearly – tailored to fit your needs. With SpeakerOre, you'll gain access to over 200,000 speaking opportunities across various categories, ranging from conferences and webinars to panel discussions and workshops. The power to elevate your speaking career is just a subscription away.
+             <br/><br/>  Our platform connects you directly with event organizers, eliminating the need for intermediaries or agents. You'll have the freedom to engage in seamless communication, negotiate terms, and secure speaking engagements that align perfectly with your expertise and goals. Say goodbye to lengthy searches and hello to direct connections that open doors to success.
+             <br/><br/>  As a subscriber, you'll gain access to exclusive events that can significantly impact your career. Some of these events are not listed anywhere else, providing you with a competitive edge and unique speaking opportunities that can help you stand out in the crowd. Your subscription ensures you don't miss out on these exclusive chances to shine.
+             <br/><br/>  Subscribing to SpeakerOre is an investment in your speaking journey. With our platform, you'll save valuable time and effort that would have otherwise been spent on extensive research and networking. Focus on what you do best – captivating audiences, sharing your expertise, and making a lasting impact – while we handle the logistics of finding the right speaking gigs for you.
+             <br/><br/>  Choose from our quarterly, half-yearly, or yearly subscription plans, tailored to suit your needs. And now, with our no-cost EMI options, you can enjoy the benefits of SpeakerOre while managing your payments in convenient monthly installments without any additional interest. </p>
+            <p>Subscribe now and let your voice be heard!</p>
             </div>
           </div>
         </div>
@@ -197,8 +199,7 @@ const Subscription = () => {
                     <p>{value.desc}</p>
                   </div>
                   <div style={{display:'flex'}} >
-                    <h4>₹{value.showPrice},</h4>
-                    <h4>( ${convertRupeesToDollars(value.showPrice, 82.09).toFixed(2)} )</h4>
+                    <h4>₹{value.showPrice} / ${convertRupeesToDollars(value.showPrice, 82.2).toFixed(2)}</h4>
                   </div>
                 </div>
               )
@@ -240,6 +241,10 @@ const Subscription = () => {
               ) : <h3 style={{ marginTop: '15px', textAlign: 'center', fontSize: '15px' }}></h3>}
             </div>
             <button onClick={handlePayments}>CONTINUE</button>
+            <div className="emi-box">
+                <div className="emi">EMI</div>
+                <p>No cost EMI available*</p>
+            </div>
           </div>
         </div>
       </div>

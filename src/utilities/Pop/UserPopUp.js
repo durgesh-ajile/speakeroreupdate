@@ -9,10 +9,10 @@ const UserPopup = ({ onClose }) => {
             <div className="LoginSignupPopup_cuntent_ui">
             <div className="bg-logo" style={{margin:'20px auto'}}></div>
                 <h3>Subscribtion Required</h3>
-                <p>You need to subscribe to view the events page</p>
+                <p>Unlock a treasure trove of speaking opportunities.</p>
                 <div className="login-google">
                 <div className='LoginSignupPopup_button' style={{background:'#24754F'}}>
-                    <Link to='/subscription'><p style={{ color: 'white'}}>Subscribe Now</p></Link>
+                    <Link to='/subscription'><p style={{ color: 'white'}}>Join Now</p></Link>
                 </div>
                 </div>
                 {/* <p className="close-button" onClick={onClose}>Close</p> */}

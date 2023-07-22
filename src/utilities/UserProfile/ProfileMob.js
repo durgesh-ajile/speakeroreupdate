@@ -6,6 +6,7 @@ import AdminMob from "../Admin/AdminMob";
 import { Button } from "@mui/material";
 import CurrentUserMob from "../../components/CurrentUser.js/CurrentUserMob";
 import { Link } from "react-router-dom";
+import Affiliate from "../../components/Affiliate";
 
 
 const Profile = () => {
@@ -181,39 +182,7 @@ const Profile = () => {
               </div>
             </div>
           ) : (
-            <>
-              {affiliatData ? (
-                <>
-                  <div className="aff-form">
-                    <h2>
-                      Coupon Code:{" "}
-                      <span style={{ color: "#24754F" }}>
-                        "{affiliatData.coupon_code}"
-                      </span>
-                    </h2>
-                    <h3>
-                      Discount:{" "}
-                      <span style={{ color: "#24754F" }}>
-                        {affiliatData.discount}%
-                      </span>
-                    </h3>
-                  </div>
-                </>
-              ) : (
-                <div className="affiliate">
-                  <h3>Get Affiliate Coupon</h3>
-                  <div className="aff-btn">
-                    <Button
-                      variant="contained"
-                      color="success"
-                      onClick={handleAffiliateSubmit}
-                    >
-                      Get Coupon
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </>
+           <Affiliate/>
           )}
         </div>
         

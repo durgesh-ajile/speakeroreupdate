@@ -228,11 +228,11 @@ const CurrentUserEvent = () => {
           <div>
           <div className="head-banner">
         <div className="banner-container">
-          <div className="banner-text">
+          <div className="banner-text" style={{marginLeft:"6%"}}>
             
-            <p>
+            <h5>
             Create Your first Event
-            </p>
+            </h5>
           </div>
           <div className="banner-img">
             <img src={man} />

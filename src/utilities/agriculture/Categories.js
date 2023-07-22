@@ -83,7 +83,7 @@ const Categories = ({ data, text }) => {
                 {
                     text ?
                         <div className="Categories_container_fluid_text">
-                            <h1>Up to 2,00,000 Speaking slots in 4000-40000 worldwide opportunities across <span style={{ color: '#24754F' }}>categories</span> annually</h1>
+                            <h1>Unlock a global goldmine of up to 40,000 annual speaking events across <span style={{ color: '#24754F' }}>categories</span></h1>
                             
                         </div>
                         :

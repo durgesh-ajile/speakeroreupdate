@@ -295,21 +295,21 @@ const CurrentUserMob = () => {
           </Stack>
         </div>
         ) : noEvent ? <>
-          <div className="no-event">
+          <div className="no-event" style={{padding:"0"}}>
           <div className="head-banner">
         <div className="banner-container">
           <div className="banner-text">
             
-            <p>
+            <h6>
             Create Your first Event
-            </p>
+            </h6>
           </div>
           <div className="banner-img">
-            <img src={man} />
+            <img style={{width:"115%"}} src={man} />
           </div>
         </div>
       </div>
-      <div style={{padding:"40px 50px"}}>
+      <div style={{padding:"40px 7%"}}>
       <Link to='/createnewevent'><Button variant="contained" color="success" >
                       Create New Event
                     </Button></Link></div>

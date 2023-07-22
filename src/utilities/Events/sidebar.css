@@ -189,12 +189,8 @@ margin-bottom: 5px;
     width: 75%;
     padding: 7px;
 }
-.catogary{
-    
-}
-.calendar{
-   
-
+.filter-child h4{
+    margin-bottom: 12px;
 }
 .calendar input{
     padding: 12px;
@@ -206,6 +202,9 @@ width : 210px;
 height: 30px;
 padding-left: 12px;
 
+}
+#new-banner{
+    margin-left: 50px;
 }
 
 @media only screen and (max-height: 700px){

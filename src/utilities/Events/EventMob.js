@@ -194,11 +194,13 @@ const Eventlist = () => {
   };
 
   useEffect(() => {
+    window.addEventListener('touchmove', handleScroll);
     window.addEventListener('scroll', handleScroll);
     return () => {
+      window.removeEventListener('touchmove', handleScroll);
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [page]);
 
 
   const handleToggle = () => {
@@ -338,7 +340,11 @@ const Eventlist = () => {
               value={showdate}
               onChange={(e) => {
                 const date = new Date(e.target.value)
-                setFilterDate(date.toISOString())
+                if(e.target.value){
+                  setFilterDate(date.toISOString())
+                } else {
+                  setFilterDate('')
+                }
                 setShowDate(e.target.value)
               }}
             />

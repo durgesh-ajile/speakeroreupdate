@@ -152,6 +152,7 @@ const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Pre
               disabled={!true}
               required
               maxLength={10}
+              onWheel={(e) => e.target.blur()}
               value={handleOrganizerDetails?.organizerContactNumber}
             />
             {

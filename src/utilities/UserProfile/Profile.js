@@ -1,24 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "./profile.css";
-// import { MdLocationOn } from "react-icons/md";
-// import { MdWatchLater } from "react-icons/md";
 import { IoMdLogOut } from "react-icons/io";
 import axios from "axios";
-// import { useNavigate } from "react-router-dom";
 import Admin from "../Admin/Admin";
-// import exclusiveimg from '../../images/Group.png'
 import { Button } from "@mui/material";
 import Member from "../Member/Member";
 import CurrentUserEvent from "../../components/CurrentUser.js/CurrentUserEvent";
 import { Link } from "react-router-dom";
+import Affiliate from "../../components/Affiliate";
 
 const Profile = () => {
   const [subs, setSubs] = useState("event");
   const [userData, setUserData] = useState("");
-  // const [userEvent, setUserEvent] = useState("");
   const [affiliatData, setAffiliatData] = useState("");
   const [loading, setLoading] = useState(false);
-
 
   const [role, setRole] = useState("");
   useEffect(() => {
@@ -38,23 +33,9 @@ const Profile = () => {
       });
   }, []);
 
-  console.log(userData)
+  console.log(userData);
 
-  const handleAffiliateSubmit = () => {
-    axios({
-      method: "post",
-      url: "https://api.speakerore.com/api/createaffilatecoupon",
-      withCredentials: true,
-    })
-      .then((res) => {
-        if (res.data.status) {
-         setLoading(!loading)
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  
 
   useEffect(() => {
     axios({
@@ -69,54 +50,39 @@ const Profile = () => {
       .catch((err) => {
         console.log(err);
       });
-    }, [])
+  }, []);
 
-    useEffect(() => {
-      axios({
-        method: "get",
-        url: "https://api.speakerore.com/api/getaffilatecoupon",
-        withCredentials: true,
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "https://api.speakerore.com/api/getaffilatecoupon",
+      withCredentials: true,
+    })
+      .then((res) => {
+        setAffiliatData(res.data.affilateCoupon);
+        console.log(res.data);
       })
-        .then((res) => {
-          setAffiliatData(res.data.affilateCoupon);
-          console.log(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      }, [loading])
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [loading]);
 
-      const handleLogout = () => {
-        axios({
-          method: "get",
-          url: "https://api.speakerore.com/api/logout",
-          withCredentials: true,
-        })
-          .then((res) => {
-            window.location.reload()
-            console.log(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      };
+  const handleLogout = () => {
+    axios({
+      method: "get",
+      url: "https://api.speakerore.com/api/logout",
+      withCredentials: true,
+    })
+      .then((res) => {
+        window.location.reload();
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-  console.log(affiliatData)
-  // useEffect(() => {
-  //   axios({
-  //     method: "get",
-  //     url: "https://api.speakerore.com/api/geteventforcurrentuser",
-  //     withCredentials: true,
-  //   })
-  //     .then((res) => {
-  //       setUserEvent(res.data.savedEventsOfCurrentUser);
-  //       console.log(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
-
+  console.log(affiliatData);
 
   const handlesubs = () => {
     setSubs("subs");
@@ -181,69 +147,55 @@ const Profile = () => {
             </div>
             <hr />
             <div className="logout">
-               <span onClick={handleLogout}><IoMdLogOut /> Logout</span>
+              <span onClick={handleLogout}>
+                <IoMdLogOut /> Logout
+              </span>
             </div>
           </div>
         ) : (
           <></>
         )}
-          <div className="right-container">
-            {subs == "event" ? (
-              <CurrentUserEvent/>
-            ) : subs === "subs" ? (
-              <div className="subs-details">
-                <h2>Subscription Details</h2>
-                <div>
-                  
-                  {userData.subcription ? 
-                   ( 
-                    <>
+        <div className="right-container">
+          {subs == "event" ? (
+            <CurrentUserEvent />
+          ) : subs === "subs" ? (
+            <div className="subs-details">
+              <h2>Subscription Details</h2>
+              <div>
+                {userData.subcription ? (
+                  <>
                     <div className="plan-head">
-                    {" "}
-                    <span>Subscription Plan</span>
-                  </div>
+                      {" "}
+                      <span>Subscription Plan</span>
+                    </div>
                     <div className="plan">
-                    <h3>{userData.subcription.Subcription_Type}</h3>
-                  </div>
-                  <div className="billing date">
-                  <h5>Next Billing Date : {convertDate2(userData.subcription.EndDate)}</h5>
-                </div>
-                </>) : (<>
-                  <h3>No subscription plan please subscribe or renew the plan</h3>
-                  <Link to="/subscription" >
-                  <Button variant="contained" color="success" >
-                    Upgrade
-                  </Button>
-                </Link>
-                </>
-                 )
-                  }
-                  
-                </div>
-
-                
+                      <h3>{userData.subcription.Subcription_Type}</h3>
+                    </div>
+                    <div className="billing date">
+                      <h5>
+                        Next Billing Date :{" "}
+                        {convertDate2(userData.subcription.EndDate)}
+                      </h5>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <h3>
+                      No subscription plan please subscribe or renew the plan
+                    </h3>
+                    <Link to="/subscription">
+                      <Button variant="contained" color="success">
+                        Upgrade
+                      </Button>
+                    </Link>
+                  </>
+                )}
               </div>
-            ) : (
-              <>
-              {affiliatData ? <>
-                <div className="aff-form">
-                  <h2>Coupon Code: <span style={{color:'#24754F'}}>"{affiliatData.coupon_code}"</span></h2>
-                  <h3>Discount: <span style={{color:'#24754F'}}>{affiliatData.discount}%</span></h3>
-                </div>
-              </> : 
-              <div className="affiliate">
-                  <h3>Get Affiliate Coupon</h3>
-                  <div className="aff-btn">
-                    <Button variant="contained" color="success" onClick={handleAffiliateSubmit}>
-                      Get Coupon
-                    </Button>
-                  </div>
-                </div>
-              }
-              </>
-            )}
-          </div>
-       
+            </div>
+          ) : (
+            <Affiliate/>
+          )}
+        </div>
       </div>
     </>
   );

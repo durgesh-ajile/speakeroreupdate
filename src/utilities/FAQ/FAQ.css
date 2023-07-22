@@ -4,7 +4,7 @@
     justify-content: center;
     text-align: justify;
     text-justify: inter-word;
-
+    margin: 30px 0;
 }
 
 .FAQ_container_fluid {
@@ -15,7 +15,7 @@
     font-family: sans-serif;
     margin-top: 10px;
     border-radius: 5px;
-
+padding-bottom: 20px;
 }
 
 .FAQ_container>.FAQ_container_fluid>div>p,
@@ -25,8 +25,10 @@
 
 
 .FAQ_container>.FAQ_container_fluid>div>p {
-    font-size: 15px;
+    font-size: 17px;
     line-height: 18px;
+    margin:0;
+    color: #595959;
 }
 
 
@@ -43,7 +45,9 @@
 
 .FAQ_container_fluid_question {
     font-size: 20px !important;
-    color: rgb(0, 0, 0);
+    color: rgb(0, 0, 0) !important;
+    margin-bottom: 0;
+    margin-top: 10px !important;
 }
 .FAQ_container_fluid_innertext{
     margin: 0px 5% 0px 5%;

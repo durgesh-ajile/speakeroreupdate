@@ -20,7 +20,7 @@ const Eventdetails = ({ eventDetails, stateHandle_Event_Organiser_Preview, setSt
       handleFormInput?.pincode &&
       handleFormInput?.city &&
       handleFormInput?.location &&
-      handleFormInput?.eventWebsiteUrl &&
+      // handleFormInput?.eventWebsiteUrl &&
       handleFormInput?.longDescription &&
       handleFormInput?.Short_description &&
       handleFormInput?.mode &&
@@ -129,8 +129,8 @@ const Eventdetails = ({ eventDetails, stateHandle_Event_Organiser_Preview, setSt
 
             <div className="input-details">
               <label>Event website URL</label>
-              <input ref={(ref) => registerRef(ref, 3)} onKeyDown={(event) => handleKeyDown(event, 3)} placeholder='eg. https://www.google.com' name="eventWebsiteUrl" type="text" value={handleFormInput?.eventWebsiteUrl} required onChange={(e) => { handleChangeEventDetailsForm(e) }} />
-              {checkReqierdField && !handleFormInput?.eventWebsiteUrl && <p style={{ color: 'red', fontSize: '13px' }}> Above field is required </p>}
+              <input ref={(ref) => registerRef(ref, 3)} onKeyDown={(event) => handleKeyDown(event, 3)} placeholder='eg. https://www.google.com' name="eventWebsiteUrl" type="text" value={handleFormInput?.eventWebsiteUrl}  onChange={(e) => { handleChangeEventDetailsForm(e) }} />
+              {/* {checkReqierdField && !handleFormInput?.eventWebsiteUrl && <p style={{ color: 'red', fontSize: '13px' }}> Above field is required </p>} */}
               {!isValid && <p style={{ color: 'red', fontSize: '13px' }}>Invalid website link</p>}
             </div>
             <div className="event_details_inputbox_checkbox" >

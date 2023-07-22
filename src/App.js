@@ -19,6 +19,7 @@ import Privacy_Policy from './utilities/Policy/Policy';
 import './utilities/omResponsive.css'
 import Event1 from './utilities/Events/Event1';
 import Footer from './utilities/footer/Footer';
+import Contacts from './utilities/Contacts/Contacts';
 function App() {
   return (
     <BrowserRouter>
@@ -58,6 +59,7 @@ function App() {
         <Route path='/faq' element={<FAQ/>}></Route>
         <Route path='/termsandconditions' element={<Terms_N_Conditions/>}></Route>
         <Route path='/privacypolicy' element={<Privacy_Policy/>}></Route>
+        <Route path='/contact' element={<Contacts />}></Route>
       </Routes>
       <Footer/>
     </BrowserRouter>

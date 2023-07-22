@@ -83,6 +83,7 @@ const MobileNavbar = ({
           </div>
         ) : (
           <>
+          <div style={{display:'flex'}}>
             <Button
               variant="outlined"
               className="bg-sign-up"
@@ -91,6 +92,15 @@ const MobileNavbar = ({
               Sign Up
             </Button>
             {showPopup && <LoginPopup onClose={handleClosePopup} />}
+            <div
+            onClick={() => handleToggle()}
+            style={{ color: "#24754F", marginLeft:'20px' }}
+            className="Navbar_hambergure_icon"
+          >
+            {/* <h4 style={{ marginRight: "10px" }}>HI {userData}!</h4> */}
+            <GiHamburgerMenu />
+            </div>
+          </div>
           </>
         )}
       </div>
@@ -112,6 +122,7 @@ const MobileNavbar = ({
               <img src={logo} alt="" />
             </div>
             <div className="Navbar_inputfield">
+              {isAuthenticated ?  
               <div>
                 <Link to="/event" onClick={() => {
                   setSelect('event')
@@ -141,15 +152,41 @@ const MobileNavbar = ({
                     View Profile
                   </div>
                 </Link>
+              </div> : <>
+              <div>
+                <Link to="/event" onClick={handleSignInClick}>
+                  <div className="nav-select" id={select === 'event' ? 'side-select' :''} onClick={() => handleToggle()}>
+                    Events
+                  </div>
+                </Link>
+                <Link to="/createnewevent" onClick={handleSignInClick}>
+                  <div className="nav-select" id={select === 'create' ? 'side-select' :''} onClick={() => handleToggle()}>
+                    Create new event
+                  </div>
+                </Link>
+                <Link to="/subscription" onClick={handleSignInClick}>
+                  <div className="nav-select" id={select === 'subs' ? 'side-select' :''} onClick={() => handleToggle()}>
+                    Upgrade
+                  </div>
+                </Link>
+                <Link to="/profile" onClick={handleSignInClick}>
+                  <div className="nav-select" id={select === 'pro' ? 'side-select' :''} onClick={() => handleToggle()}>
+                    View Profile
+                  </div>
+                </Link>
               </div>
+              </>}
+             
             </div>
             <hr />
-            <div className="logout" style={{marginTop:'20px'}} >
+            {isAuthenticated ?
+              <div className="logout" style={{marginTop:'20px'}} >
               <Button variant="outlined" color="error" onClick={handleLogout}>
                 {" "}
                 <IoMdLogOut /> <span style={{margin:'2px 0 0 3px'}}>Logout</span>
               </Button>
-            </div>
+            </div>: null}
+            
           </div>
         </div>
       }
@@ -258,6 +295,17 @@ const Navbar = () => {
           )}
           {!isAuthenticated && (
             <>
+            <div className="bg-nav">
+              <Link onClick={handleSignInClick}>
+                <a className="bg-events" id={select === 'event' ? 'nav-select' :''}>Events</a>
+              </Link>
+              <Link onClick={handleSignInClick}>
+                <a className="bg-events" id={select === 'create' ? 'nav-select' :''}>Create New Event</a>
+              </Link>
+              <Link onClick={handleSignInClick}>
+                <button className="bg-btn">Upgrade</button>
+              </Link>
+            </div>
               <Button
                 variant="outlined"
                 className="bg-sign-up"

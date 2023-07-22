@@ -15,6 +15,7 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import exclusiveimg from "../../images/Group.png";
 import UserPopup from "../Pop/UserPopUp";
+import { Button } from "@mui/material";
 
 
 
@@ -130,7 +131,7 @@ export default function Sidebar() {
       const apiUrl = `https://api.speakerore.com/api/geteventsbyfilter?${getQueryParams()}&page=${filterPage}`;
       function getQueryParams() {
         const queryParams = [];
-
+        console.log(filterdate)
         if (mode) {
           queryParams.push(`mode=${mode}`);
         }
@@ -278,11 +279,19 @@ export default function Sidebar() {
               value={showdate}
               onChange={(e) => {
                 const date = new Date(e.target.value)
-                setFilterDate(date.toISOString())
+                if(e.target.value){
+                  setFilterDate(date.toISOString())
+                } else {
+                  setFilterDate('')
+                }
                 setShowDate(e.target.value)
               }}
               
             />
+            <Button onClick={(e) => {
+              setFilterDate('')
+                setShowDate('')
+            }}>Reset date</Button>
           </div>
           <div onClick={handleExclusive}>
             <h4>SpeakerOre</h4>
@@ -439,16 +448,7 @@ export default function Sidebar() {
                 </div>
               ))}
             </div>
-            {/* <Stack spacing={2}>
-              <Pagination
-                style={{ justifyContent: "center", marginTop: "20px" }}
-                count={approvedEvent.totalPages}
-                page={page}
-                onChange={handleChange}
-              />
-              <Typography>Page: {page}</Typography>
-            </Stack> */}
-            {/* <Footer/> */}
+           
           </div>
         ) : (
           ""

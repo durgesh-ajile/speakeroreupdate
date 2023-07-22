@@ -78,7 +78,11 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
       .catch((err) => {
         console.log(err);
         setIsDisabled(() => false)
-        toast.error(err.response.data.message, successToast);
+        if(err.response.data.message){
+          toast.error(err.response.data.message, successToast);
+        } else {
+          console.log(err)
+        }
       });
   };
 

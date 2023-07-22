@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from "react";
-
-import { IoMdLogOut } from "react-icons/io";
 import axios from "axios";
 import { Button } from "@mui/material";
-import Archived from "../../components/Tables/Archived/Archived1";
 import ArchivedMob from "../../components/Tables/Archived/ArchivedMob";
-import CurrentUserEvent from "../../components/CurrentUser.js/CurrentUserEvent";
 import CurrentUserMob from "../../components/CurrentUser.js/CurrentUserMob";
 import { Link } from "react-router-dom";
+import Affiliate from "../../components/Affiliate";
 
 const Member = () => {
   const [subs, setSubs] = useState("event");
   const [userData, setUserData] = useState("");
   const [userEvent, setUserEvent] = useState("");
   const [affiliatemail, setAffiliatemail] = useState("");
-  const [affiliatData, setAffiliatData] = useState("");
-  const [affiliatPost, setAffiliatPost] = useState(false);
-
   const [role, setRole] = useState("");
   useEffect(() => {
     axios({
@@ -37,53 +31,9 @@ const Member = () => {
 
   console.log(userData);
 
-  const handleAffiliateSubmit = () => {
-    axios({
-      method: "post",
-      url: "https://api.speakerore.com/api/createaffilatecoupon",
-      withCredentials: true,
-    })
-      .then((res) => {
-        if (res.data.status) {
-          setAffiliatPost(true);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: "https://api.speakerore.com/api/getaffilatecoupon",
-      withCredentials: true,
-    })
-      .then((res) => {
-        setAffiliatData(res.data.affilateCoupon);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
   
-  const handleLogout = () => {
-    axios({
-      method: "get",
-      url: "https://api.speakerore.com/api/logout",
-      withCredentials: true,
-    })
-      .then((res) => {
-        window.location.reload();
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  // console.log(userEvent);
+  
 
   const handlesubs = () => {
     setSubs("subs");
@@ -105,7 +55,7 @@ const Member = () => {
     const date = new Date(e).toLocaleDateString();
     return date;
   }
-  console.log(affiliatData);
+  // console.log(affiliatData);?
   console.log(userEvent);
 
   return (
@@ -197,39 +147,7 @@ const Member = () => {
                 </div>
             </div>
           ) : subs === "affs" ? (
-            <>
-              {affiliatData ? (
-                <>
-                  <div className="aff-form">
-                    <h2>
-                      Coupon Code:{" "}
-                      <span style={{ color: "#24754F" }}>
-                        "{affiliatData.coupon_code}"
-                      </span>
-                    </h2>
-                    <h3>
-                      Discount:{" "}
-                      <span style={{ color: "#24754F" }}>
-                        {affiliatData.discount}%
-                      </span>
-                    </h3>
-                  </div>
-                </>
-              ) : (
-                <div className="affiliate">
-                  <h3>Get Affiliate Coupon</h3>
-                  <div className="aff-btn">
-                    <Button
-                      variant="contained"
-                      color="success"
-                      onClick={handleAffiliateSubmit}
-                    >
-                      Get Coupon
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </>
+            <Affiliate/>
           ) : subs === "archeived" ? (
             <>
               <ArchivedMob />

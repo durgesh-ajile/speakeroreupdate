@@ -22,6 +22,7 @@ const Footer = () => {
         <Link to='/termsandconditions' target="_blank"><p>Terms and Conditions</p></Link>
         <Link to='/privacypolicy' target="_blank"><p>Privacy Policy</p></Link>
         <Link to='/faq' target="_blank"> <p>FAQ's</p></Link>
+        <Link to='/contact' target="_blank"> <p>Contact Us</p></Link>
       </div>
       <div className="copyright">
         <p>Copyright SpeakerOre@2023 | All rights reserved</p>

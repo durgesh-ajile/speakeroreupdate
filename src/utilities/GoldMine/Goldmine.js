@@ -36,15 +36,15 @@ const Goldmine = () => {
   }, []);
 
   const [cerousel, setCarousel] = useState([
-    ["Save Time to Focus Entirely on Content and Business", clock],
-    ["Get over 4000 to 40,000 online and in-person events, annually.", diverse],
+    ["Delegate the search for speaking gigs and focus on driving business innovation and success", clock],
+    ["Discover diverse speaking opportunities in endless categories", diverse],
     [
-      "Cut out middlemen, deal directly with decision makers/ Event organisers/ HRs",
+      "Connect directly, bypass unnecessary intermediaries",
       cut,
     ],
-    ["First Mover Advantage to freeze the deal.", handshake],
-    ["Establish your Authority as an Expert", authority],
-    ["Go global easily!", global],
+    ["Be a first mover, land impactful speaking gigs and stay ahead of the competition", handshake],
+    ["Speak to establish your authority, build credibility and recognition", authority],
+    ["Speak to global audiences, expand your reach worldwide", global],
   ]);
 
   useEffect(() => {
@@ -118,18 +118,17 @@ const Goldmine = () => {
                 <h1 style={{ color: "#24754F" }}>A GoldMine for Speakers</h1>
                 <div>
                   <ul>
-                    <li>Save Time to Focus Entirely on Content and Business</li>
+                    <li>Delegate the search for speaking gigs and focus on driving business innovation and success</li>
                     <li>
-                      Get over 4000 to 40,000 online and in-person events,
-                      annually.
+                    Discover diverse speaking opportunities in endless categories
                     </li>
                     <li>
-                      Cut out middlemen, deal directly with decision makers/
-                      Event organisers/ HRs
+                    Connect directly, bypass unnecessary intermediaries
+
                     </li>
-                    <li>First Mover Advantage to freeze the deal.</li>
-                    <li>Establish your Authority as an Expert</li>
-                    <li>Go global easily!</li>
+                    <li>Be a first mover, land impactful speaking gigs and stay ahead of the competition</li>
+                    <li>Speak to establish your authority, build credibility and recognition</li>
+                    <li>Speak to global audiences, expand your reach worldwide</li>
                   </ul>
                 </div>
                 <div className="joinowbtn">

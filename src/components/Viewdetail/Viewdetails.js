@@ -8,7 +8,7 @@ import { BsFillPersonFill } from "react-icons/bs";
 import { useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-
+import { AiOutlineMail } from 'react-icons/ai';
 
 const Viewdetails = () => {
 
@@ -46,6 +46,10 @@ const Viewdetails = () => {
   }, []);
   console.log(data)
   
+  const mailToUrl = (e) =>{
+    const mail = "mailto:"
+    return mail
+  }
   
 
   return (
@@ -71,11 +75,17 @@ const Viewdetails = () => {
 
       <div style={{ margin: "2rem 0 0 0" }}>
         <div className="mail">
-          
+        {data.isSpeakerOreExclusive?
+          <div className="web">
+            <AiOutlineMail/><span>email: </span>
+            <a href= {`mailto:${data.OrganizerEmail}`} id="website"> {data.OrganizerEmail}</a>
+          </div> :
           <div className="web">
             <img src={web} style={{ textAlign: "center" }} /><span>website: </span>
             <a href={data.EventWebsiteUrl} id="website"> {data.EventWebsiteUrl}</a>
           </div>
+        }
+          
         </div>
       </div>
 

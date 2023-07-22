@@ -36,18 +36,47 @@
 .Subscription_container_fluid_left_headingNp_tag_div>div {
     color: #666;
     font-weight: 500;
+    text-align: left;
 }
 
 .Subscription_container_fluid_left_headingNp_tag_div>div>p {
-    line-height: 8px;
+    /* line-height: 8px; */
+    text-align: justify;
+}
+.emi-box{
+    display: flex;
+    align-items: center;
+   
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.sub-hidescrol::-webkit-scrollbar {
+    display: none;
 }
 
+/* Hide scrollbar for IE, Edge and Firefox */
+.sub-hidescrol {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  overflow-y:scroll;
+   height:230px
+}
+.emi{
+    border: hsl(0, 0%, 30%) 1px solid;
+    font-size: 10px;
+    width: 20px;
+    height: 10px;
+    padding: 5px;
+    color: #4c4c4c;
+    border-radius: 4px;
+    margin-right: 10px;
+}
 /* ---------------------------------------------------------------------------------- */
 
 .Subscription_container_fluid_right {
     display: flex;
     justify-content: center;
     width: 50%;
+    align-items: center;
 }
 
 .Subscription_container_fluid_right_div_wrapper {

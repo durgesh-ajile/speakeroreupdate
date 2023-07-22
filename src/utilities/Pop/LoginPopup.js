@@ -22,7 +22,7 @@ const LoginPopup = ({ onClose }) => {
     <div  className='popup LoginSignupPopup_container'>
             <div className="LoginSignupPopup_cuntent_ui">
                 <h3>Sign Up!</h3>
-                <p>Signup to SpeakerOre using your gmail account</p>
+                <p>Signup to SpeakerOre </p>
                 <div className="login-google">
                 <div className='LoginSignupPopup_button' onClick={handleGoogleLogin}>
                     <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">

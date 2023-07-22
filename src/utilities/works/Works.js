@@ -57,8 +57,9 @@ const Works = () => {
   return (
     <div className="workcontainer">
       <div className="works-heading">
-        <h2> How SpeakerOre works</h2>
-        <span>Your GoldMine start Mining</span>
+        <h2>Unearth Your Speaking Success:
+</h2>
+        <span>Mining the Opportunities Ahead</span>
       </div>
       <div className="in-swap">
         <div className="swapbutton">
@@ -71,34 +72,34 @@ const Works = () => {
         <div className="works-container " >
           <div className="works-box1">
             <img alt="img" src={savetime} style={{ backgroundImage: { vector } }} />
-            <p> <b>Save time</b>, find Events <br />of your interest</p>
+            <p> Streamline your search to save<br /> time, effort & money</p>
           </div>
           <div className="works-box1">
-            <img alt="img" src={partnership} />
-            <p>Directly finalise with <br /> <b>organisers.</b> Speak to get<br /> noticed.</p>
+            <img alt="img" src={partnership} /> 
+            <p> Finalize directly with <br /> event organizers, eliminating middlemen<br /> and delays</p>
           </div>
           <div className="works-box1">
             <img alt="img" src={goal1} />
-            <p>Achieve your Professional <br /> and personal. <b>Goals - Fame, </b><br /><b>Power, Money & Peace</b></p>
+            <p>Speak to make an Impact: Achieve <br /> your goals, attract clients and investments,<br /> and become a powerful influencer</p>
           </div>
         </div>
         :
         <div className="works-container">
           <div className="works-box1">
             <img alt="img" src={list} style={{ backgroundImage: { vector } }} />
-            <p>
-              Post your event’s Speaker <br /> requirement for free.
+            <p> 
+            Effortlessly share event<br /> requirements for free
             </p>
           </div>
 
           <div className="works-box1">
             <img alt="img" src={debate} />
-            <p>Receive profiles directly from <br /> <bold>best speakers / Experts.</bold></p>
+            <p>Finalize with amongst speakers <br /> <bold> who match your vision</bold></p>
           </div>
 
           <div className="works-box1">
             <img alt="img" src={fan} />
-            <p>Happy Audience, Successful <br /> Event, <bold>Newer Opportunities.</bold></p>
+            <p>Create a remarkable <br /> event experience</p>
           </div>
         </div>}
 
