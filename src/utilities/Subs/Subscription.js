@@ -123,7 +123,6 @@ const Subscription = () => {
   }, []);
 
   const secretKey = process.env.REACT_APP_PAYMENT_SECRET;
-  console.log(secretKey)
 const encryptObject = (object, secretKey) => {
 const jsonString = JSON.stringify(object);
 const encrypted = CryptoJS.AES.encrypt(jsonString, secretKey).toString();
