@@ -130,7 +130,7 @@ const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Pre
               // onBlur={()=>handleValidateEmail()}
               name="organizerEmail"
               type="email"
-              placeholder="Enter the Organizer Name"
+              placeholder="Enter the Organizer Email"
               required
               value={handleOrganizerDetails?.organizerEmail}
             />

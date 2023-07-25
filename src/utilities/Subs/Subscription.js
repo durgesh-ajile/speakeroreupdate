@@ -8,7 +8,7 @@ import mic from "../../images/FINAL_07_1.png";
 import axios from "axios";
 import { Button } from "@mui/material";
 import LoginPopup from "../Pop/LoginPopup";
-
+import CryptoJS from "crypto-js";
 
 const priceData = [
   // if changing the price of the subscription you need to change it in input field also with classname apply-coupon-input in this file only
@@ -99,8 +99,11 @@ const Subscription = () => {
     const hours = currentDate.getHours().toString().padStart(2, "0");
     const minutes = currentDate.getMinutes().toString().padStart(2, "0");
     const seconds = currentDate.getSeconds().toString().padStart(2, "0");
-    return `${hours}${minutes}${seconds}`;
-  };
+    const milliseconds = currentDate.getMilliseconds().toString().padStart(3, "0");
+    // Concatenate the parts to create a unique orderId
+    const orderId = `${hours}${minutes}${seconds}${milliseconds}`;
+    return orderId;
+    };
 
   useEffect(() => {
       axios({
@@ -119,11 +122,33 @@ const Subscription = () => {
         });
   }, []);
 
+  const secretKey = process.env.REACT_APP_PAYMENT_SECRET;
+  console.log(secretKey)
+const encryptObject = (object, secretKey) => {
+const jsonString = JSON.stringify(object);
+const encrypted = CryptoJS.AES.encrypt(jsonString, secretKey).toString();
+const encryptedBase64 = CryptoJS.enc.Base64.stringify(
+CryptoJS.enc.Utf8.parse(encrypted)
+);
+return encryptedBase64;
+};
+
   const handlePayments = async (e) => {
     e.preventDefault();
     try {
+      const paymentObject = {
+        merchant_id: 2560771,
+        order_id: generateOrderId(),
+        currency: "INR",
+        amount: selectPrice,
+        merchant_param1: selectedType,
+        merchant_param2: couponCode || "No_Coupon_Code",
+      };
+
+      const encryptPaymentData = encryptObject(paymentObject, secretKey);
+
       if (selectedType && selectedPriceData && userData) {
-        window.location.href = `https://api.speakerore.com/api/paymentform?merchant_id=2560771&order_id=${generateOrderId()}&currency=INR&amount=${selectPrice}&merchant_param1=${selectedType}&merchant_param2=${couponCode}`
+        window.location.href = `https://api.speakerore.com/api/paymentform?encrypt=${encryptPaymentData}`;
       }
     } catch (error) {
       console.log(error);
