@@ -20,6 +20,7 @@ import './utilities/omResponsive.css'
 import Event1 from './utilities/Events/Event1';
 import Footer from './utilities/footer/Footer';
 import Contacts from './utilities/Contacts/Contacts';
+import Upgrade from './utilities/Upgrade/Upgrade';
 function App() {
   return (
     <BrowserRouter>
@@ -34,6 +35,10 @@ function App() {
         <Route
           path="/subscription"
           element={<Subscription />}
+        ></Route>
+        <Route
+          path="/upgrade"
+          element={<Upgrade />}
         ></Route>
         <Route
           path="/explore"
