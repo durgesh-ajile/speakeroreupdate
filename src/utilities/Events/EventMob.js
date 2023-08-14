@@ -188,7 +188,7 @@ const Eventlist = () => {
   }
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-    if (scrollTop + clientHeight >= scrollHeight - 10) {
+    if (scrollTop + clientHeight >= scrollHeight - 60) {
       setPage((prevPage) => prevPage + 1);
     }
   };
