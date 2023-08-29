@@ -89,7 +89,7 @@ const MobileNavbar = ({
               className="bg-sign-up"
               onClick={handleSignInClick}
             >
-              Sign Up
+              SignUp/ SignIn
             </Button>
             {showPopup && <LoginPopup onClose={handleClosePopup} />}
             <div
@@ -311,7 +311,7 @@ const Navbar = () => {
                 className="bg-sign-up"
                 onClick={handleSignInClick}
               >
-                Sign Up
+                SignUp/ SignIn
               </Button>
               {showPopup && <LoginPopup onClose={handleClosePopup} />}
             </>
