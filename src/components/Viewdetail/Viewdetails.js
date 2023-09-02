@@ -82,7 +82,7 @@ const Viewdetails = () => {
           </div> :
           <div className="web">
             <img src={web} style={{ textAlign: "center" }} /><span>website: </span>
-            <a href={data.EventWebsiteUrl} id="website"> {data.EventWebsiteUrl}</a>
+            <a href={data.EventWebsiteUrl} id="website"  target="_blank"> {data.EventWebsiteUrl}</a>
           </div>
         }
           
