@@ -34,6 +34,8 @@ const Trash = () => {
   const [searchKey, setSearchKey] = React.useState();
   const [filter, setFilter] = useState();
   const [open, setOpen] = React.useState(false);
+  const [filterPage, setFilterPage] = useState(1);
+
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -59,19 +61,19 @@ const Trash = () => {
     setPage(value);
   };
 
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: `https://api.speakerore.com/api/getalltrashevents?page=${page}`,
-      withCredentials: true,
-    })
-      .then((res) => {
-        setTrashData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios({
+  //     method: "get",
+  //     url: `https://api.speakerore.com/api/getalltrashevents?page=${page}`,
+  //     withCredentials: true,
+  //   })
+  //     .then((res) => {
+  //       setTrashData(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   useEffect(() => {
     axios({
@@ -80,6 +82,7 @@ const Trash = () => {
       withCredentials: true,
     })
       .then((res) => {
+        console.log(res.data)
         setTrashData(res.data);
       })
       .catch((err) => {
@@ -88,7 +91,7 @@ const Trash = () => {
           setTrashData("");
         }
       });
-  }, [loading]);
+  }, [loading, page]);
 
   useEffect(() => {
     axios({
@@ -99,6 +102,7 @@ const Trash = () => {
       .then((res) => {
         console.log(res);
         setFilter(res.data.queryResult);
+        setFilterPage(res.data.totalPage)
       })
       .catch((err) => {
         console.log(err);
@@ -436,7 +440,7 @@ const Trash = () => {
               <Stack spacing={2}>
                 <Pagination
                   style={{ justifyContent: "center", marginTop: "20px" }}
-                  count={trashData.totalPages}
+                  count={filter ? filterPage : trashData.totalPage}
                   page={page}
                   onChange={handleChange}
                 />

@@ -38,7 +38,7 @@ export default function Sidebar() {
 
 
   const handleChange = (event, value) => {
-    setPage(value);
+    setFilterPage(value);
   };
 
   let navigate = useNavigate();
@@ -115,7 +115,7 @@ export default function Sidebar() {
       .then((res) => {
         console.log(res);
         setFilter(res.data.queryResult);
-        setFilterTotalPage(res.data.totalPages)
+        setFilterTotalPage(res.data.totalPage)
       })
       .catch((err) => {
         console.log(err);
@@ -123,7 +123,7 @@ export default function Sidebar() {
           setFilter('')
         }
       });
-  }, [searchKey]);
+  }, [searchKey, filterPage]);
 
 
   useEffect(() => {

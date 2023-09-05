@@ -62,7 +62,9 @@ export default function UserTable() {
   const [page, setPage] = React.useState(1);
   const [searchKey, setSearchKey] = React.useState('');
   const [filter, setFilter] = useState();
+  const [filterPage, setFilterPage] = useState(1);
   const [open, setOpen] = React.useState(false);
+
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const handleChange = (event, value) => {
@@ -146,19 +148,19 @@ export default function UserTable() {
       });
   };
 
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: "https://api.speakerore.com/api/getallregularuser",
-      withCredentials: true,
-    })
-      .then((res) => {
-        setUserData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios({
+  //     method: "get",
+  //     url: "https://api.speakerore.com/api/getallregularuser",
+  //     withCredentials: true,
+  //   })
+  //     .then((res) => {
+  //       setUserData(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   React.useEffect(() => {
     axios({
@@ -185,6 +187,7 @@ export default function UserTable() {
     })
       .then((res) => {
         setFilter(res.data.queryResult);
+        setFilterPage(res.data.totalPage)
       })
       .catch((err) => {
         console.log(err);
@@ -460,7 +463,7 @@ export default function UserTable() {
       <Stack spacing={2}>
         <Pagination
           style={{ justifyContent: "center", marginTop: "20px" }}
-          count={userData.totalPages}
+          count={filter ? filterPage : userData.totalPages}
           page={page}
           onChange={handleChange}
         />
@@ -468,6 +471,6 @@ export default function UserTable() {
       </Stack>
     </div>
   ) : (
-    <Typography>No team member present</Typography>
+    <Typography>No user present</Typography>
   );
 }

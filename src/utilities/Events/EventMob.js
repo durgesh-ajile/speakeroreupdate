@@ -116,7 +116,7 @@ const Eventlist = () => {
       .then((res) => {
         console.log(res);
         setFilter(res.data.queryResult);
-        setFilterTotalPage(res.data.totalPages)
+        setFilterTotalPage(res.data.totalPage)
       })
       .catch((err) => {
         console.log(err);
@@ -124,7 +124,7 @@ const Eventlist = () => {
           setFilter("");
         }
       });
-  }, [searchKey]);
+  }, [searchKey, filterPage]);
 
 
   useEffect(() => {

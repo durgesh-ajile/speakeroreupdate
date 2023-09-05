@@ -34,6 +34,7 @@ const ArchivedMob = () => {
   const [loading, setLoading] = useState(false);
   const [searchKey, setSearchKey] = React.useState();
   const [filter, setFilter] = useState();
+  const [filterPage, setFilterPage] = useState(1);
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -94,6 +95,8 @@ const ArchivedMob = () => {
       .then((res) => {
         console.log(res);
         setFilter(res.data.queryResult);
+        setFilterPage(res.data.totalPage)
+
       })
       .catch((err) => {
         console.log(err);
@@ -107,20 +110,20 @@ const ArchivedMob = () => {
   console.log(archivedData);
   //   console.log(page)
 
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: `https://api.speakerore.com/api/getallarchievedevent?page=${page}`,
-      withCredentials: true,
-    })
-      .then((res) => {
-        console.log(res);
-        setArchivedData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios({
+  //     method: "get",
+  //     url: `https://api.speakerore.com/api/getallarchievedevent?page=${page}`,
+  //     withCredentials: true,
+  //   })
+  //     .then((res) => {
+  //       console.log(res);
+  //       setArchivedData(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   useEffect(() => {
     axios({
@@ -421,7 +424,7 @@ const ArchivedMob = () => {
           <Stack spacing={2}>
             <Pagination
               style={{ justifyContent: "center", marginTop: "20px" }}
-              count={archivedData.totalPages}
+              count={filter ? filterPage : archivedData.totalPages}
               page={page}
               onChange={handleChange}
             />

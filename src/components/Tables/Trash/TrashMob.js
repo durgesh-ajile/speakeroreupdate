@@ -36,6 +36,7 @@ const TrashMob = () => {
   const [filter, setFilter] = useState();
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
+  const [filterPage, setFilterPage] = useState(1);
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleClickOpen = () => {
@@ -60,19 +61,19 @@ const TrashMob = () => {
     setPage(value);
   };
 
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: `https://api.speakerore.com/api/getalltrashevents?page=${page}`,
-      withCredentials: true,
-    })
-      .then((res) => {
-        setTrashData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios({
+  //     method: "get",
+  //     url: `https://api.speakerore.com/api/getalltrashevents?page=${page}`,
+  //     withCredentials: true,
+  //   })
+  //     .then((res) => {
+  //       setTrashData(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   useEffect(() => {
     axios({
@@ -89,7 +90,7 @@ const TrashMob = () => {
           setTrashData("");
         }
       });
-  }, [loading]);
+  }, [loading, page]);
 
   useEffect(() => {
     axios({
@@ -100,6 +101,7 @@ const TrashMob = () => {
       .then((res) => {
         console.log(res);
         setFilter(res.data.queryResult);
+        setFilterPage(res.data.totalPage)
       })
       .catch((err) => {
         console.log(err);
@@ -505,7 +507,7 @@ const TrashMob = () => {
           <Stack spacing={2}>
             <Pagination
               style={{ justifyContent: "center", marginTop: "20px" }}
-              count={trashData.totalPages}
+              count={filter ? filterPage : trashData.totalPage}
               page={page}
               onChange={handleChange}
             />

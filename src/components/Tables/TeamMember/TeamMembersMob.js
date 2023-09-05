@@ -37,6 +37,8 @@ export default function TeamMembers() {
   const [page, setPage] = React.useState(1);
   const [searchKey, setSearchKey] = React.useState('');
   const [filter, setFilter] = useState();
+  const [filterPage, setFilterPage] = useState(1);
+
 
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
@@ -102,19 +104,19 @@ export default function TeamMembers() {
       });
   };
 
-  React.useEffect(() => {
-    axios({
-      method: "get",
-      url: "https://api.speakerore.com/api/getallteammembers",
-      withCredentials: true,
-    })
-      .then((res) => {
-        setTeamMemberData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // React.useEffect(() => {
+  //   axios({
+  //     method: "get",
+  //     url: "https://api.speakerore.com/api/getallteammembers",
+  //     withCredentials: true,
+  //   })
+  //     .then((res) => {
+  //       setTeamMemberData(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   React.useEffect(() => {
     axios({
@@ -141,6 +143,7 @@ export default function TeamMembers() {
     })
       .then((res) => {
         setFilter(res.data.queryResult);
+        setFilterPage(res.data.totalPage)
       })
       .catch((err) => {
         console.log(err);
@@ -388,7 +391,7 @@ export default function TeamMembers() {
       <Stack spacing={2}>
         <Pagination
           style={{ justifyContent: "center", marginTop: "20px" }}
-          count={teamMemberData.totalPages}
+          count={filter ? filterPage : teamMemberData.totalPages}
           page={page}
           onChange={handleChange}
         />

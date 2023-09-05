@@ -35,6 +35,8 @@ const UsersWrapper = () => {
   const [searchKey, setSearchKey] = React.useState('');
   const [filter, setFilter] = useState();
   const [open, setOpen] = React.useState(false);
+  const [filterPage, setFilterPage] = useState(1);
+
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const handleChange = (event, value) => {
@@ -117,24 +119,23 @@ const UsersWrapper = () => {
       });
   };
 
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: "https://api.speakerore.com/api/getallregularuser",
-      withCredentials: true,
-    })
-      .then((res) => {
-        setUserData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios({
+  //     method: "get",
+  //     url: "https://api.speakerore.com/api/getallregularuser",
+  //     withCredentials: true,
+  //   })
+  //     .then((res) => {
+  //       setUserData(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   
 
   React.useEffect(() => {
-    console.log('run')
     axios({
       method: "get",
       url: `https://api.speakerore.com/api/getallregularuser?page=${page}`,
@@ -159,6 +160,7 @@ const UsersWrapper = () => {
     })
       .then((res) => {
         setFilter(res.data.queryResult);
+        setFilterPage(res.data.totalPage)
       })
       .catch((err) => {
         console.log(err);
@@ -439,7 +441,7 @@ const UsersWrapper = () => {
       <Stack spacing={2}>
         <Pagination
           style={{ justifyContent: "center", marginTop: "20px" }}
-          count={userData.totalPages}
+          count={filter ? filterPage : userData.totalPages}
           page={page}
           onChange={handleChange}
         />
