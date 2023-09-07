@@ -50,8 +50,8 @@ const Footer = () => {
       <div className="social">
         <a rel="noreferrer" href='https://www.facebook.com/speakerore' target="_blank"><BsFacebook /></a>
         <a rel="noreferrer" href='https://www.instagram.com/speakerore/' target="_blank"><GrInstagram /></a>
-        <a rel="noreferrer" href='https://www.linkedin.com/in/speakerore' target="_blank"><AiFillLinkedin /></a>
-        <a rel="noreferrer" href='https://twitter.com/speakerore' target="_blank"><AiFillTwitterCircle /></a>
+        <a rel="noreferrer" href='https://www.linkedin.com/company/96904244/admin/feed/posts/' target="_blank"><AiFillLinkedin /></a>
+        <a rel="noreferrer" href='https://twitter.com/TheSpeakerOre' target="_blank"><AiFillTwitterCircle /></a>
       </div>
       <div className="events">
       {isAuthenticated ? (

@@ -112,8 +112,8 @@ letter-spacing: 1.5px;
 }
 .event-main{
     display: flex;
-    /* margin-top: 72px; */
-    margin-top: 53px;
+    margin-top: 72px;
+    /* margin-top: 53px; */
 }
 .filter-child{
     width: 280px;
