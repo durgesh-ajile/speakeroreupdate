@@ -8,7 +8,7 @@ const FAQ = () => {
           <h2 style={{ textAlign: "center", padding: "50px 0px 50px 0px" }}>
             Frequently Asked Questions
           </h2>
-          <h3>EMI</h3>
+          {/* <h3>EMI</h3>
           <p className="FAQ_container_fluid_question">
             Q: How does the no-cost EMI option work for Speakerore.com
             subscriptions?
@@ -41,7 +41,7 @@ const FAQ = () => {
           <p>
           A: You can manage or update your EMI payment details by contacting our support team or reaching out to our payment partners directly.
 
-          </p>
+          </p> */}
           <h3>SpeakerOre Platform</h3>
           <p className="FAQ_container_fluid_question">
           Q: What is Speakerore.com?

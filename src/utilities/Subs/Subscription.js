@@ -12,29 +12,32 @@ import CryptoJS from "crypto-js";
 
 const priceData = [
   // if changing the price of the subscription you need to change it in input field also with classname apply-coupon-input in this file only
- 
   {
-    type: "Quaterly",
+    type: "Yearly",
     name: "Monthly",
-    price: 5000,
-    showPrice: 1667,
-    desc: "Paid on Quarterly basis",
+    price: 9996,
+    showPrice: 833,
+    desc: "Yearly",
   },
   {
     type: "HalfYearly",
     name: "Monthly",
     price: 7000,
     showPrice: 1167,
-    desc: "Paid on Half Yearly basis",
+    desc: "Half Yearly",
   },
   {
-    type: "Yearly",
+    type: "Quaterly",
     name: "Monthly",
-    price: 9996,
-    showPrice: 833,
-    desc: "Paid on Yearly basis",
+    price: 5000,
+    showPrice: 1667,
+    desc: "Quarterly",
   },
 ];
+
+const descStart = "Paid on "
+const descEnd = " basis"
+
 
 const Subscription = () => {
   const [selectedType, setSelectedType] = useState("");
@@ -220,7 +223,7 @@ return encryptedBase64;
                   <input ref={inputRefs[index]}type="radio" name="amount"  style={{visibility:'hidden'}} />
                   <div className="Subscription_container_fluid_right_div_HNP">
                     <h3>{value.name}</h3>
-                    <p>{value.desc}</p>
+                    <p>{descStart}<span style={{fontWeight:'600'}}>{value.desc}</span>{descEnd}</p>
                   </div>
                   <div style={{display:'flex'}} >
                     <h4>₹{value.showPrice} / ${convertRupeesToDollars(value.showPrice, 82.2).toFixed(2)}</h4>
@@ -265,14 +268,14 @@ return encryptedBase64;
               ) : <h3 style={{ marginTop: '15px', textAlign: 'center', fontSize: '15px' }}></h3>}
             </div>
             <button onClick={handlePayments}>CONTINUE</button>
-            <div className="emi-box">
+            {/* <div className="emi-box">
                 <div className="emi">EMI</div>
                 <p>No cost EMI available*</p>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 
