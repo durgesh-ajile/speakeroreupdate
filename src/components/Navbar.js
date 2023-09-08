@@ -67,6 +67,7 @@ const MobileNavbar = ({
     setShowPopup(false);
   };
 
+
   return (
     <>
       <div className="Navbar_coontainer">
@@ -85,7 +86,6 @@ const MobileNavbar = ({
           >
             <h4 style={{ marginRight: "10px" }}>HI {userData}!</h4>
             <GiHamburgerMenu />
-            {showPopup && <LoginPopup onClose={handleClosePopup} />}
           </div>
           </>
         ) : (
@@ -106,6 +106,7 @@ const MobileNavbar = ({
             {/* <h4 style={{ marginRight: "10px" }}>HI {userData}!</h4> */}
             <GiHamburgerMenu />
             </div>
+            {showPopup && <LoginPopup onClose={handleClosePopup} />}
           </div>
           </>
         )}
@@ -253,7 +254,6 @@ const [emailExist, setEmailExist] = useState(true);
         });
     }
   }, [loading]);
-  console.log(emailExist)
 
   const handleSignInClick = () => {
     setShowPopup(true);
