@@ -76,6 +76,8 @@ const MobileNavbar = ({
           </div>
         </Link>
         {isAuthenticated ? (
+          <>
+          {!emailExist && <FacebookNoEmail setLoading={setLoading} />}
           <div
             onClick={() => handleToggle()}
             style={{ color: "#24754F" }}
@@ -85,6 +87,7 @@ const MobileNavbar = ({
             <GiHamburgerMenu />
             {showPopup && <LoginPopup onClose={handleClosePopup} />}
           </div>
+          </>
         ) : (
           <>
           <div style={{display:'flex'}}>
@@ -127,7 +130,6 @@ const MobileNavbar = ({
             <div className="Navbar_inputfield">
               {isAuthenticated ?  
               <div>
-              {!emailExist && <FacebookNoEmail setLoading={setLoading} />}
                 <Link to="/event" onClick={() => {
                   setSelect('event')
                 }}>
