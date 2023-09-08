@@ -16,7 +16,7 @@ const FacebookNoEmail = ({setLoading}) => {
 
     const [emailInput, setEmailInput] = useState('')
        const handleSubmit = () => axios({
-          method: "patch",
+          method: "put",
           url: "https://api.speakerore.com/api/updateemail",
           data: {email:emailInput},
           withCredentials: true,
