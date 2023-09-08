@@ -52,7 +52,7 @@ const LoginPopup = ({ onClose }) => {
           </div>
           <div
             className="LoginSignupPopup_button"
-            // onClick={handleFacebookLogin}
+            onClick={handleFacebookLogin}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +70,6 @@ const LoginPopup = ({ onClose }) => {
             </svg>{" "}
             <p>Continue with facebook</p>
           </div>
-          <p>(Facebook Coming Soon)</p>
         </div>
         <p className="close-button" onClick={onClose}>
           Close

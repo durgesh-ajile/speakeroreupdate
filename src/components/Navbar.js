@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Button } from "@mui/material";
 import { IoMdLogOut } from "react-icons/io";
+import FacebookNoEmail from "../utilities/Pop/FacebookNoEmail";
 
 // import logo from '../../assets/img/logo.jpg'
 // import hambergure_icon from '../../assets/img/hamburger_icon.jpg'
@@ -18,7 +19,9 @@ const MobileNavbar = ({
   showPopup,
   setShowPopup,
   select,
-  setSelect
+  setSelect,
+  setLoading,
+  emailExist
 }) => {
   const [sidebarToggle, setSidebarToggle] = useState(true);
   const NavbarboxRef = useRef(null);
@@ -80,6 +83,7 @@ const MobileNavbar = ({
           >
             <h4 style={{ marginRight: "10px" }}>HI {userData}!</h4>
             <GiHamburgerMenu />
+            {showPopup && <LoginPopup onClose={handleClosePopup} />}
           </div>
         ) : (
           <>
@@ -91,7 +95,6 @@ const MobileNavbar = ({
             >
               SignUp/ SignIn
             </Button>
-            {showPopup && <LoginPopup onClose={handleClosePopup} />}
             <div
             onClick={() => handleToggle()}
             style={{ color: "#24754F", marginLeft:'20px' }}
@@ -124,6 +127,7 @@ const MobileNavbar = ({
             <div className="Navbar_inputfield">
               {isAuthenticated ?  
               <div>
+              {!emailExist && <FacebookNoEmail setLoading={setLoading} />}
                 <Link to="/event" onClick={() => {
                   setSelect('event')
                 }}>
@@ -200,6 +204,7 @@ const Navbar = () => {
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState("");
   const [select, setSelect] = useState('');
+const [emailExist, setEmailExist] = useState(true);
 
   useEffect(() => {
     setLoading(true);
@@ -232,7 +237,13 @@ const Navbar = () => {
       })
         .then((res) => {
           if (res.data.status) {
+            console.log(res.data)
             setUserData(res.data.response.first_name);
+          }
+          if (res.data.response.email){
+            setEmailExist(true)
+          } else {
+            setEmailExist(false)
           }
         })
         .catch((err) => {
@@ -240,7 +251,7 @@ const Navbar = () => {
         });
     }
   }, [loading]);
-  // console.log(userData)
+  console.log(emailExist)
 
   const handleSignInClick = () => {
     setShowPopup(true);
@@ -260,6 +271,8 @@ const Navbar = () => {
         setShowPopup={setShowPopup}
         select={select}
         setSelect={setSelect}
+        setLoading={setLoading}
+        emailExist={emailExist}
       />
       <div className="bg-navbar">
         <Link to="/">
@@ -291,6 +304,7 @@ const Navbar = () => {
                   setSelect('pro')
                 }}> Hi {userData}!</span>
               </Link>
+              {!emailExist && <FacebookNoEmail setLoading={setLoading} />}
             </div>
           )}
           {!isAuthenticated && (
@@ -314,6 +328,7 @@ const Navbar = () => {
                 SignUp/ SignIn
               </Button>
               {showPopup && <LoginPopup onClose={handleClosePopup} />}
+
             </>
           )}
         </div>
