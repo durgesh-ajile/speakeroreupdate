@@ -17,6 +17,8 @@ const Works = () => {
   const [right, setRight] = useState(false);
   const [isAuthenticated, setIsAutheticated] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [subscribed, setSubscribed] = useState('')
+
 
   useEffect(() => {
     axios({
@@ -53,6 +55,21 @@ const Works = () => {
     setShowPopup(true);
   };
 
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "https://api.speakerore.com/api/getprofile",
+      withCredentials: true,
+    })
+      .then((res) => {
+        if (res.data.status) {
+          setSubscribed(res.data.response.subcription);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className="workcontainer">
@@ -104,7 +121,9 @@ const Works = () => {
         </div>}
 
       <div className="joinowbtn">
-        {isAuthenticated?<Link to='/subscription'><button>Join now</button></Link>:
+        {isAuthenticated && right ?<Link to='/createnewevent'><button>Join now</button></Link> :
+          isAuthenticated && subscribed ?<Link to='/event'><button>Join now</button></Link> :
+          isAuthenticated?<Link to='/subscription'><button>Join now</button></Link>:
         <><button onClick={handleSignInClick}>Join now</button>{showPopup && <LoginPopup onClose={handleClosePopup} />}</>}
       </div>
     </div>

@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import { useState } from "react";
 import "./sidebar.css";
@@ -15,9 +14,27 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import exclusiveimg from "../../images/Group.png";
 import UserPopup from "../Pop/UserPopUp";
-import { Button } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { adminEMail } from "../Admin/Admin";
 
-
+const successToast = {
+  position: "bottom-right",
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "light",
+};
 
 export default function Sidebar() {
   const [approvedEvent, setApprovedEvent] = useState();
@@ -32,10 +49,25 @@ export default function Sidebar() {
   const [searchKey, setSearchKey] = React.useState();
   const [filter, setFilter] = useState();
   const [showdate, setShowDate] = React.useState();
-  const [user, setUser] = useState('')
+  const [user, setUser] = useState("");
   const [filterPage, setFilterPage] = React.useState(1);
   const [filterTotalPage, setFilterTotalPage] = React.useState();
+  const [deleteevent, setDeleteevent] = React.useState("");
+  const [feedback, setFeedback] = React.useState("");
+  const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = useState(false);
+  const [role, setRole] = useState("");
 
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleChange = (event, value) => {
     setFilterPage(value);
@@ -47,7 +79,7 @@ export default function Sidebar() {
     setExclusive(!exclusive);
   };
   const handleOnline = () => {
-    if(!online){
+    if (!online) {
       setMode("Online Event");
       setOnline(true);
     } else {
@@ -59,7 +91,7 @@ export default function Sidebar() {
   };
 
   const handleInperson = () => {
-    if(!inperson){
+    if (!inperson) {
       setMode("In Person");
       setInperson(true);
     } else {
@@ -71,7 +103,7 @@ export default function Sidebar() {
   };
 
   const handleHybrid = () => {
-    if(!hybrid){
+    if (!hybrid) {
       setMode("Hybrid Event");
       setHybrid(true);
     } else {
@@ -81,7 +113,22 @@ export default function Sidebar() {
     setOnline(false);
     setInperson(false);
   };
- 
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "https://api.speakerore.com/api/getprofile",
+      withCredentials: true,
+    })
+      .then((res) => {
+        if (res.data.status) {
+          setRole(res.data.response.role);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   useEffect(() => {
     axios({
@@ -102,9 +149,9 @@ export default function Sidebar() {
       })
       .catch((err) => {
         console.log(err);
-        setUser(err.response.data.message)
+        setUser(err.response.data.message);
       });
-  }, [page]);
+  }, [page, loading]);
 
   useEffect(() => {
     axios({
@@ -115,23 +162,22 @@ export default function Sidebar() {
       .then((res) => {
         console.log(res);
         setFilter(res.data.queryResult);
-        setFilterTotalPage(res.data.totalPage)
+        setFilterTotalPage(res.data.totalPage);
       })
       .catch((err) => {
         console.log(err);
-        if(err.response.status === 422 || 404){
-          setFilter('')
+        if (err.response.status === 422 || 404) {
+          setFilter("");
         }
       });
-  }, [searchKey, filterPage]);
-
+  }, [searchKey, filterPage, loading]);
 
   useEffect(() => {
     if (mode || category || filterdate || exclusive) {
       const apiUrl = `https://api.speakerore.com/api/geteventsbyfilter?${getQueryParams()}&page=${filterPage}`;
       function getQueryParams() {
         const queryParams = [];
-        console.log(filterdate)
+        console.log(filterdate);
         if (mode) {
           queryParams.push(`mode=${mode}`);
         }
@@ -146,7 +192,6 @@ export default function Sidebar() {
 
         if (exclusive) {
           queryParams.push(`exclusive=${exclusive}`);
-          
         }
         return queryParams.join("&");
       }
@@ -158,18 +203,17 @@ export default function Sidebar() {
         .then((res) => {
           console.log(res);
           setFilter(res.data.savedEvents);
-          setFilterTotalPage(res.data.totalPages)
+          setFilterTotalPage(res.data.totalPages);
         })
         .catch((err) => {
           console.log(err);
           setFilter("");
         });
     }
-    if (!mode && !category && !filterdate && ! exclusive) {
-      setFilter('')
+    if (!mode && !category && !filterdate && !exclusive) {
+      setFilter("");
     }
-  }, [mode, category, filterdate, exclusive, filterPage]);
-
+  }, [mode, category, filterdate, exclusive, filterPage, loading]);
 
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
@@ -179,30 +223,59 @@ export default function Sidebar() {
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   function convertDate(e) {
     const dateObject = new Date(e);
     const year = dateObject.getUTCFullYear();
-    const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(dateObject);
+    const month = new Intl.DateTimeFormat("en-US", { month: "short" }).format(
+      dateObject
+    );
     const day = dateObject.getUTCDate();
     const hours = dateObject.getUTCHours();
     const minutes = dateObject.getUTCMinutes();
     const seconds = dateObject.getUTCSeconds();
-    const period = hours >= 12 ? 'PM' : 'AM';
+    const period = hours >= 12 ? "PM" : "AM";
     const formattedHours = hours % 12 || 12;
-  
+
     const dateTimeString = `${day} ${month} ${year} ${formattedHours}:${minutes}:${seconds} ${period}`;
     return dateTimeString;
   }
-  
+
+  const handleEventDelete = () => {
+    axios({
+      method: "patch",
+      url: "https://api.speakerore.com/api/makeeventdecline",
+      data: {
+        eventId: deleteevent,
+        feedback: feedback,
+      },
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log(res);
+        toast.success(res.data.Message, successToast);
+        setLoading(!loading);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.response.data.message, successToast);
+      });
+  };
+  const handleFeedbackSubmit = (event) => {
+    setFeedback(event.target.value);
+  };
+
   return (
     <div className="event-main">
-    {user === 'User is not subcribed to view this page' ? <UserPopup/> : null}
+      <ToastContainer />
+      {user === "User is not subcribed to view this page" ? (
+        <UserPopup />
+      ) : null}
       <div className="filter-sidebar">
         <div className="filter-child">
           <div>
@@ -213,15 +286,12 @@ export default function Sidebar() {
           </div>
           <div className="mode">
             <div onClick={handleOnline}>
-              <input type="radio" checked={online}  />
+              <input type="radio" checked={online} />
               <lable>Online</lable>
             </div>
 
             <div onClick={handleInperson}>
-              <input
-                type="radio"
-                checked={inperson}
-              />
+              <input type="radio" checked={inperson} />
               <lable>In-person</lable>
             </div>
 
@@ -256,7 +326,9 @@ export default function Sidebar() {
               <option value="Fitness">Fitness</option>
               <option value="Health">Health</option>
               <option value="Human resource">Human resource </option>
-              <option value="Information Technology">Information Technology </option>
+              <option value="Information Technology">
+                Information Technology{" "}
+              </option>
               <option value="Innovation">Innovation </option>
               <option value="Leadership">Leadership</option>
               <option value="LGBTQ">LGBTQ</option>
@@ -275,45 +347,49 @@ export default function Sidebar() {
           </div>
           <div className="calendar">
             <input
-            type="date"
+              type="date"
               value={showdate}
               onChange={(e) => {
-                const date = new Date(e.target.value)
-                if(e.target.value){
-                  setFilterDate(date.toISOString())
+                const date = new Date(e.target.value);
+                if (e.target.value) {
+                  setFilterDate(date.toISOString());
                 } else {
-                  setFilterDate('')
+                  setFilterDate("");
                 }
-                setShowDate(e.target.value)
+                setShowDate(e.target.value);
               }}
-              
             />
-            <Button onClick={(e) => {
-              setFilterDate('')
-                setShowDate('')
-            }}>Reset date</Button>
+            <Button
+              onClick={(e) => {
+                setFilterDate("");
+                setShowDate("");
+              }}
+            >
+              Reset date
+            </Button>
           </div>
           <div onClick={handleExclusive}>
             <h4>SpeakerOre</h4>
             <div className="speaker-exclusive">
-              <input
-                type="radio"
-                checked={exclusive}
-              />
+              <input type="radio" checked={exclusive} />
               <lable>Exclusive</lable>
             </div>
           </div>
 
           <div className="filter-input">
-          <h4>Search by keyword</h4>
-          <input placeholder=" Type here" value={searchKey} onChange={(e)=> {
-            setSearchKey(e.target.value)
-          }} />
+            <h4>Search by keyword</h4>
+            <input
+              placeholder=" Type here"
+              value={searchKey}
+              onChange={(e) => {
+                setSearchKey(e.target.value);
+              }}
+            />
           </div>
         </div>
       </div>
 
-      <div className="right-container-e" id='right-container-event'>
+      <div className="right-container-e" id="right-container-event">
         <div className="head-banner">
           <div className="banner-container">
             <div className="view-text">
@@ -378,6 +454,17 @@ export default function Sidebar() {
                     >
                       View Details
                     </button>
+                    {role === "admin" && (
+                      <button
+                        style={{ marginLeft: "5px" }}
+                        onClick={() => {
+                          setDeleteevent(e._id);
+                          handleClickOpen();
+                        }}
+                      >
+                        Delete Event
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
@@ -392,9 +479,11 @@ export default function Sidebar() {
               <Typography>Page: {filterPage}</Typography>
             </Stack>
           </div>
-        ) : mode || category || filterdate || exclusive || searchKey ? (<div className="no-event">
-          <h3>No Matching Events</h3>
-        </div>) : approvedEvent ? (
+        ) : mode || category || filterdate || exclusive || searchKey ? (
+          <div className="no-event">
+            <h3>No Matching Events</h3>
+          </div>
+        ) : approvedEvent ? (
           <div>
             <div className="card-container">
               {approvedEvent.map((e) => (
@@ -444,16 +533,64 @@ export default function Sidebar() {
                     >
                       View Details
                     </button>
+                    {role === "admin" && (
+                      <button
+                        style={{ marginLeft: "5px" }}
+                        onClick={() => {
+                          setDeleteevent(e._id);
+                          handleClickOpen();
+                        }}
+                      >
+                        Delete Event
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
             </div>
-           
           </div>
         ) : (
           ""
         )}
       </div>
+      <Dialog
+        fullScreen={fullScreen}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">
+          {"Please provide feedback"}
+        </DialogTitle>
+        <DialogContent>
+          <input
+            value={feedback}
+            type="text"
+            onChange={(e) => {
+              handleFeedbackSubmit(e);
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              handleClose();
+            }}
+            autoFocus
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              handleClose();
+              handleEventDelete();
+            }}
+            autoFocus
+          >
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

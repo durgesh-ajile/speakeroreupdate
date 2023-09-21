@@ -16,7 +16,6 @@ import ManageAdmin from "../../components/Tables/ManageAdmin/ManageAdmin";
 import Download from "../../components/Download/Download";
 
 const adminEMail = 'nikhilchaudhary86@gmail.com'
-// const adminEMail = 'durgeshrajak254@gmail.com'
 
 const isRegularAdminStyle = {
   display:'none'
@@ -194,3 +193,4 @@ const Admin = () => {
 };
 
 export default Admin;
+export {adminEMail}

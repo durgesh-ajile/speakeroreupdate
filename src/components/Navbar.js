@@ -242,6 +242,7 @@ const [emailExist, setEmailExist] = useState(true);
           if (res.data.status) {
             console.log(res.data)
             setUserData(res.data.response.first_name);
+            // setRole(res.data.response.role)
           }
           if (res.data.response.email){
             setEmailExist(true)

@@ -60,11 +60,7 @@ const Viewdetails = () => {
           <div className="banner-text">
             <span>{data.TitleOfTheEvent}</span>
             
-            <p>
-              Find your Life Changing Event. Speaking is a serious Business
-              .Every Expert must get
-              noticed to build their empire of followers. Knowledge
-              within you wont help the world at.
+            <p>{data.ShortDescriptionOfTheEvent}
             </p>
           </div>
           <div className="banner-img">

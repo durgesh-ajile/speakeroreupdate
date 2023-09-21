@@ -31,16 +31,16 @@ const successToast = {
   theme: "light",
   }
 
-  const failToast =  {
-    position: "bottom-right",
-    autoClose: 4000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "dark",
-    }
+  // const failToast =  {
+  //   position: "bottom-right",
+  //   autoClose: 4000,
+  //   hideProgressBar: false,
+  //   closeOnClick: true,
+  //   pauseOnHover: true,
+  //   draggable: true,
+  //   progress: undefined,
+  //   theme: "dark",
+  //   }
 
 const EventAdmin = () => {
   const [deleteevent, setDeleteevent] = React.useState("");
@@ -128,19 +128,19 @@ const EventAdmin = () => {
     geteventforapproval();
   }, [loading, page]);
 
-  const handleSingleView = () => {
-    axios({
-      method: "get",
-      url: `https://api.speakerore.com/api/getsingleevent/${eventId}`,
-      withCredentials: true,
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const handleSingleView = () => {
+  //   axios({
+  //     method: "get",
+  //     url: `https://api.speakerore.com/api/getsingleevent/${eventId}`,
+  //     withCredentials: true,
+  //   })
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   const handleEventDelete = () => {
     axios({

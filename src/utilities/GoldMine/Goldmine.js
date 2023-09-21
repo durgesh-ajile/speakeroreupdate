@@ -15,6 +15,7 @@ const Goldmine = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isAuthenticated, setIsAutheticated] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [subscribed, setSubscribed] = useState('')
 
   useEffect(() => {
     axios({
@@ -32,6 +33,22 @@ const Goldmine = () => {
         if (err.response.status === 401) {
           setIsAutheticated(false);
         }
+      });
+  }, []);
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "https://api.speakerore.com/api/getprofile",
+      withCredentials: true,
+    })
+      .then((res) => {
+        if (res.data.status) {
+          setSubscribed(res.data.response.subcription);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
 
@@ -72,7 +89,8 @@ const Goldmine = () => {
             <>
             <Categories data={cerousel} />
             <div className="joinowbtn">
-        {isAuthenticated?<Link to='/subscription'><button>Join now</button></Link>:
+        {isAuthenticated && subscribed ?<Link to='/event'><button>Join now</button></Link> :
+          isAuthenticated?<Link to='/subscription'><button>Join now</button></Link>:
         <><button onClick={handleSignInClick}>Join now</button>{showPopup && <LoginPopup onClose={handleClosePopup} />}</>}
       </div>
             </>
@@ -132,7 +150,8 @@ const Goldmine = () => {
                   </ul>
                 </div>
                 <div className="joinowbtn">
-                  {isAuthenticated ? (
+                  {isAuthenticated && subscribed ?<Link to='/event'><button>Join now</button></Link> :
+                    isAuthenticated ? (
                     <Link to="/subscription">
                       <button>Join now</button>
                     </Link>
