@@ -65,9 +65,7 @@ const Viewdetails = () => {
       <div style={{ margin: "2rem 0 0 0" }}>
         <div id="MAil" className="mail">
           <span>
-            Find your Life Changing Event. Speaking is a serious Business .Every
-            Expert must get noticed to build their empire of followers.
-            Knowledge within you wont help the world at.
+          {data.ShortDescriptionOfTheEvent}
           </span>
 
           {data.isSpeakerOreExclusive ? (

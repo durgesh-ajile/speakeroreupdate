@@ -60,8 +60,6 @@ const Viewdetails = () => {
           <div className="banner-text">
             <span>{data.TitleOfTheEvent}</span>
             
-            <p>{data.ShortDescriptionOfTheEvent}
-            </p>
           </div>
           <div className="banner-img">
             <img src={man} />
@@ -71,6 +69,9 @@ const Viewdetails = () => {
 
       <div style={{ margin: "2rem 0 0 0" }}>
         <div className="mail">
+        <span>
+        {data.ShortDescriptionOfTheEvent}
+          </span>
         {data.isSpeakerOreExclusive?
           <div className="web">
             <AiOutlineMail/><span>email: </span>
