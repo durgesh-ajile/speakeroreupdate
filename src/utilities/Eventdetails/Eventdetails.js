@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./Eventdetails.css";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const Eventdetails = ({ eventDetails, stateHandle_Event_Organiser_Preview, setStateHandle_Event_Organiser_Preview }) => {
 
@@ -8,8 +10,56 @@ const Eventdetails = ({ eventDetails, stateHandle_Event_Organiser_Preview, setSt
   const [loading, setLoading] = useState(false);
   const inputRefs = useRef([]);
   const [isValid, setIsValid] = useState(true);
+  const [isValid2, setIsValid2] = useState(true);
+
+  const {id} = useParams()
 
   eventDetails(handleFormInput);
+  var editData = {};
+  var editOrgData = {};
+
+  useEffect(() => {
+    if(id){
+      axios({
+      method: "get",
+      url: `https://api.speakerore.com/api/getsingleevent/${id}`,
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log(res.data.savedEvent);
+        editData.event = res.data.savedEvent?.TitleOfTheEvent;
+        editData.Short_description = res.data.savedEvent?.ShortDescriptionOfTheEvent;
+        editData.longDescription = res.data.savedEvent?.DetailedDescriptionOfTheEvent;
+        editData.eventWebsiteUrl = res.data.savedEvent?.EventWebsiteUrl;
+        editData.mode = res.data.savedEvent?.Mode
+        editData.engagementType = res.data.savedEvent?.EngagementTerm;
+        editData.eventType = res.data.savedEvent?.EventType
+        editData.audienceType = res.data.savedEvent?.AudienceType
+        editData.audienceSize = res.data.savedEvent?.AudienceSize
+        editData.category = res.data.savedEvent?.Category
+        editData.startdate = convertDate(res.data.savedEvent?.EventStartDateAndTime)
+        editData.enddate = convertDate(res.data.savedEvent?.EventEndDateAndTime)
+        editData.starttime = convertTime(res.data.savedEvent?.EventStartDateAndTime)
+        editData.endtime = convertTime(res.data.savedEvent?.EventEndDateAndTime)
+        editData.location = res.data.savedEvent?.Location
+        editData.city = res.data.savedEvent?.City
+        editData.pincode = res.data.savedEvent?.Pincode
+        editData.country = res.data.savedEvent?.Country
+        editData.contactEmailId = res.data.savedEvent?.ContactEmail
+        editData.exclusive = res.data.savedEvent?.isSpeakerOreExclusive
+        editOrgData.organizerName = res.data.savedEvent?.OrganizerName
+        editOrgData.organizerEmail = res.data.savedEvent?.OrganizerEmail
+        editOrgData.organizerContactNumber = String(res.data.savedEvent?.OrganizerContactNumber)
+        editOrgData.tags = res.data.savedEvent?.Tags
+        console.log(editData.startdate)
+        setHandleFormInput(editData)
+        localStorage.setItem('handleFormInput', JSON.stringify(editData))
+        localStorage.setItem('handleOrganizerDetails', JSON.stringify(editOrgData))
+      })
+      .catch((err) => {
+        console.log(err);
+      })}
+  }, []);
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -60,6 +110,16 @@ const Eventdetails = ({ eventDetails, stateHandle_Event_Organiser_Preview, setSt
         // localStorage.setItem('handleOrganizerDetails', JSON.stringify(tempprev))
         return { ...prev }
       });
+    } else if (e.target.name === 'contactEmailId') {
+      setHandleFormInput(prev => {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const isValidEmail = emailPattern.test(e.target.value);
+        setIsValid2(isValidEmail);
+        prev[e.target.name] = e.target.value
+        tempprev = prev
+        // localStorage.setItem('handleOrganizerDetails', JSON.stringify(tempprev))
+        return { ...prev }
+      });
     }
     else {
       setHandleFormInput(prev => {
@@ -104,6 +164,21 @@ const Eventdetails = ({ eventDetails, stateHandle_Event_Organiser_Preview, setSt
 
   }, [])
 
+  const convertDate = (date) => {
+    const dateObject = date.split('T')
+    return dateObject[0];
+  };
+
+  const convertTime = (date) => {
+    let time;
+    const dateObject = date.split('T')
+    time = dateObject[1].slice(0, 5)
+    return time;
+  };
+
+  console.log(handleFormInput)
+  console.log(handleFormInput?.endtime)
+
   return (
     <div className="listevent-container">
       <div>
@@ -132,6 +207,11 @@ const Eventdetails = ({ eventDetails, stateHandle_Event_Organiser_Preview, setSt
               <input ref={(ref) => registerRef(ref, 3)} onKeyDown={(event) => handleKeyDown(event, 3)} placeholder='eg. https://www.google.com' name="eventWebsiteUrl" type="text" value={handleFormInput?.eventWebsiteUrl}  onChange={(e) => { handleChangeEventDetailsForm(e) }} />
               {/* {checkReqierdField && !handleFormInput?.eventWebsiteUrl && <p style={{ color: 'red', fontSize: '13px' }}> Above field is required </p>} */}
               {!isValid && <p style={{ color: 'red', fontSize: '13px' }}>Invalid website link</p>}
+            </div>
+            <div className="input-details">
+              <label>Email Id</label>
+              <input ref={(ref) => registerRef(ref, 20)} onKeyDown={(event) => handleKeyDown(event, 20)} placeholder='eg. abc@mail.com' name="contactEmailId" type="text" value={handleFormInput?.contactEmailId}  onChange={(e) => { handleChangeEventDetailsForm(e) }} />
+              {!isValid2 && <p style={{ color: 'red', fontSize: '13px' }}>Invalid Email Id</p>}
             </div>
             <div className="event_details_inputbox_checkbox" >
               <input ref={(ref) => registerRef(ref, 4)} onKeyDown={(event) => handleKeyDown(event, 4)} type="checkbox" name="exclusive" checked={handleFormInput?.exclusive} onChange={(e) => { handleChangeEventDetailsForm(e) }}></input>

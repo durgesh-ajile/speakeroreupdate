@@ -145,6 +145,13 @@
 #website{
   color:#595959
 }
+
+.edit-detail{
+  display: flex;
+  justify-content: flex-end;
+  width: 80%;
+    margin: 3rem auto;
+}
 /* media query */
 
 

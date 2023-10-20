@@ -48,15 +48,14 @@ function App() {
           path="/createnewevent"
           element={<AuthHOC WrappedComponent={ListYourEvent} />}
         ></Route>
-        {/* <Route path="/categories" element={<Categories />}></Route> */}
+        <Route
+          path="/editevent/:id"
+          element={<AuthHOC WrappedComponent={ListYourEvent} />}
+        ></Route>
         <Route
           path="/event/:eventId"
           element={<AuthHOC WrappedComponent={Viewdetails1} />}
         ></Route>
-        {/* <Route
-          path="/admin"
-          element={<AuthHOC WrappedComponent={Admin} />}
-        ></Route> */}
         <Route
           path="/profile"
           element={<AuthHOC WrappedComponent={Profile1} />}

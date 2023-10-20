@@ -12,6 +12,7 @@ const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Pre
   const onSubmit = (e) => {
     e.preventDefault();
     setcheckReqierdField(true)
+
     if ((handleOrganizerDetails?.organizerName &&
       handleOrganizerDetails?.organizerEmail &&
       isValid &&

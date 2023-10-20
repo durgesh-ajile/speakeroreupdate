@@ -10,8 +10,8 @@ import Affiliate from "../../components/Affiliate";
 const Member = () => {
   const [subs, setSubs] = useState("event");
   const [userData, setUserData] = useState("");
-  const [affiliatData, setAffiliatData] = useState("");
-  const [affiliatPost, setAffiliatPost] = useState(false);
+  // const [affiliatData, setAffiliatData] = useState("");
+  // const [affiliatPost, setAffiliatPost] = useState(false);
 
   const [role, setRole] = useState("");
   useEffect(() => {
@@ -33,37 +33,37 @@ const Member = () => {
 
   console.log(userData)
 
-  const handleAffiliateSubmit = () => {
-    axios({
-      method: "post",
-      url: "https://api.speakerore.com/api/createaffilatecoupon",
-      withCredentials: true,
-    })
-      .then((res) => {
-        if (res.data.status) {
-         setAffiliatPost(true)
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  // const handleAffiliateSubmit = () => {
+  //   axios({
+  //     method: "post",
+  //     url: "https://api.speakerore.com/api/createaffilatecoupon",
+  //     withCredentials: true,
+  //   })
+  //     .then((res) => {
+  //       if (res.data.status) {
+  //        setAffiliatPost(true)
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
 
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: "https://api.speakerore.com/api/getaffilatecoupon",
-      withCredentials: true,
-    })
-      .then((res) => {
-        setAffiliatData(res.data.affilateCoupon);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    }, [])
-  console.log(affiliatData)
+  // useEffect(() => {
+  //   axios({
+  //     method: "get",
+  //     url: "https://api.speakerore.com/api/getaffilatecoupon",
+  //     withCredentials: true,
+  //   })
+  //     .then((res) => {
+  //       setAffiliatData(res.data.affilateCoupon);
+  //       console.log(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  //   }, [])
+  // console.log(affiliatData)
   
 
   const handleLogout = () => {
@@ -100,7 +100,7 @@ const Member = () => {
     const date = new Date(e).toLocaleDateString();
     return date;
   }
-  console.log(affiliatData);
+  // console.log(affiliatData);
   console.log(userData);
 
   return (

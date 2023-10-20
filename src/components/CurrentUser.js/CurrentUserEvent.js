@@ -147,13 +147,11 @@ const CurrentUserEvent = () => {
                       <p>{e.ShortDescriptionOfTheEvent}</p>
                     </div>
                     <div className="card-3">
-                      <button
-                        onClick={() => {
-                          navigate(`/event/${e._id}`);
-                        }}
-                      >
-                        View Details
-                      </button>
+                    <Link to={`/event/${e._id}`} target="_blank">
+                    <button>
+                      View Details
+                    </button>
+                    </Link>
                     </div>
                   </div>
                 ))
@@ -202,13 +200,11 @@ const CurrentUserEvent = () => {
                       <p>{e.ShortDescriptionOfTheEvent}</p>
                     </div>
                     <div className="card-3">
-                      <button
-                        onClick={() => {
-                          navigate(`/event/${e._id}`);
-                        }}
-                      >
-                        View Details
-                      </button>
+                    <Link to={`/event/${e._id}`} target="_blank">
+                    <button>
+                      View Details
+                    </button>
+                    </Link>
                     </div>
                   </div>
                 ))

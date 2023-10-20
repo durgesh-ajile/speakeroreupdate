@@ -7,7 +7,6 @@ import man from "../images/Group 11450.png";
 
 const Affiliate = () => {
     const [affiliatData, setAffiliatData] = useState("");
-    const [affiliatPost, setAffiliatPost] = useState(false);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -22,6 +21,7 @@ const Affiliate = () => {
           })
           .catch((err) => {
             console.log(err);
+            setAffiliatData(404)
           });
       }, [loading]);
 
@@ -43,7 +43,7 @@ const Affiliate = () => {
 
   return (
     <>
-              {affiliatData ? (
+              {affiliatData?.discount ? (
                 <>
                   <div className="aff-form">
                     <h2>
@@ -60,7 +60,7 @@ const Affiliate = () => {
                     </h3>
                   </div>
                 </>
-              ) : (
+              ) : affiliatData === 404 ? (
                 <div className="aff-main">
                   <div className="head-banner">
                     <div className="banner-container">
@@ -150,7 +150,7 @@ const Affiliate = () => {
                     </div>
                   </div>
                 </div>
-              )}
+              ) : <></>}
             </>
   )
 }

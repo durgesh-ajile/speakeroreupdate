@@ -4,9 +4,6 @@ import tech from "../../images/tech_support.png";
 import Eventdetails from "../../utilities/Eventdetails/Eventdetails";
 import Organizerdetails from "../../utilities/organizerdeatails/Organizerdetails";
 import Preview from "../../utilities/Preview/Preview";
-// import { Event } from "@mui/icons-material";
-// import pinkback from "../../images/Vector 9.png";
-// import orangeback from "../../images/Vector 10.png";
 
 const ListYourEvent = () => {
   const [handleFormInputListYourEvent, setHandleFormInputListYourEvent] =

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 // import Organizerdetails from "../organizerdeatails/Organizerdetails";
 import { TagsInput } from "react-tag-input-component";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 
 const successToast = {
@@ -21,10 +21,12 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
   const [isDisabled, setIsDisabled] = useState(false)
   const navigate = useNavigate();
 
+  const {id} = useParams()
+
   const { Short_description, audienceSize, audienceType, category, city, country,
     engagementType, event, eventType, eventWebsiteUrl, location, longDescription,
     mode, pincode, organizerName, organizerEmail, organizerContactNumber, tags,
-    startdate, enddate, endtime, starttime, exclusive } = stateData;
+    startdate, enddate, endtime, starttime, exclusive, contactEmailId } = stateData;
 
 
   const previous_Button = () => {
@@ -35,6 +37,58 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
   const handleCreateEvent = (e) => {
     e.preventDefault();
     setIsDisabled(() => true)
+    if (id) {
+      axios({
+        method: "patch",
+        url: `https://api.speakerore.com/api/updateevent?eventId=${id}`,
+        data: {
+          titleOfTheEvent: event,
+          shortDescriptionOfTheEvent: Short_description,
+          detailedDescriptionOfTheEvent: longDescription,
+          eventWebsiteUrl: eventWebsiteUrl,
+          mode: mode,
+          engageMentTerm: engagementType,
+          eventType: eventType,
+          audienceType: audienceType,
+          audienceSize: audienceSize,
+          category: category,
+          eventStartDate: startdate,
+          eventEndDate: enddate,
+          eventStartTime: starttime,
+          eventEndTime: endtime,
+          location: location,
+          city: city,
+          pincode: pincode,
+          country: country,
+          organizerName: organizerName,
+          organizerEmail: organizerEmail,
+          organizerContactNumber: organizerContactNumber,
+          tags: tags,
+          isSpeakeroreExclusive: exclusive,
+          contactEmail: contactEmailId
+        },
+        withCredentials: true,
+      })
+        .then((res) => {
+          console.log(res.data);
+          localStorage.removeItem("handleFormInput");
+          localStorage.removeItem("handleOrganizerDetails");
+          toast.success(res.data.message, successToast);
+          setTimeout(() => {
+            navigate('/profile');
+          }, 2000);
+          setIsDisabled(() => false)
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsDisabled(() => false)
+          if(err.response.data.message){
+            toast.error(err.response.data.message, successToast);
+          } else {
+            console.log(err)
+          }
+        });
+    } else{
     axios({
       method: "post",
       url: "https://api.speakerore.com/api/createEvent",
@@ -62,6 +116,7 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
         organizerContactNumber: organizerContactNumber,
         tags: tags,
         isSpeakeroreExclusive: exclusive,
+        contactEmail: contactEmailId
       },
       withCredentials: true,
     })
@@ -72,7 +127,7 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
         toast.success(res.data.message, successToast);
         setTimeout(() => {
           navigate('/profile');
-        }, 3000);
+        }, 2000);
         setIsDisabled(() => false)
       })
       .catch((err) => {
@@ -83,9 +138,10 @@ const Preview = ({ stateData, setStateHandle_Event_Organiser_Preview }) => {
         } else {
           console.log(err)
         }
-      });
+      })}
   };
 
+  // console.log(contactEmailId)
   const style = {
 
     float: 'right',

@@ -9,7 +9,7 @@ import { MdWatchLater } from "react-icons/md";
 import Calendar from "moedim";
 import { useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import exclusiveimg from "../../images/Group.png";
@@ -137,7 +137,6 @@ export default function Sidebar() {
       withCredentials: true,
     })
       .then((res) => {
-        console.log(res);
         if (approvedEvent) {
           setApprovedEvent((prevData) => [
             ...prevData,
@@ -154,7 +153,27 @@ export default function Sidebar() {
   }, [page, loading]);
 
   useEffect(() => {
-    axios({
+    if(searchKey){axios({
+      method: "get",
+      url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}&page=1`,
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log(res);
+        setFilter(res.data.queryResult);
+        setFilterTotalPage(res.data.totalPage);
+        setFilterPage(1)
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status === 422 || 404) {
+          setFilter("");
+        }
+      })}
+  }, [searchKey, loading]);
+
+  useEffect(() => {
+    if(searchKey){axios({
       method: "get",
       url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}&page=${filterPage}`,
       withCredentials: true,
@@ -169,8 +188,51 @@ export default function Sidebar() {
         if (err.response.status === 422 || 404) {
           setFilter("");
         }
-      });
-  }, [searchKey, filterPage, loading]);
+      })}
+  }, [filterPage]);
+
+  useEffect(() => {
+    if (mode || category || filterdate || exclusive) {
+      const apiUrl = `https://api.speakerore.com/api/geteventsbyfilter?${getQueryParams()}&page=1`;
+      function getQueryParams() {
+        const queryParams = [];
+        console.log(filterdate);
+        if (mode) {
+          queryParams.push(`mode=${mode}`);
+        }
+
+        if (category) {
+          queryParams.push(`category=${category}`);
+        }
+
+        if (filterdate) {
+          queryParams.push(`date=${filterdate}`);
+        }
+
+        if (exclusive) {
+          queryParams.push(`exclusive=${exclusive}`);
+        }
+        return queryParams.join("&");
+      }
+      axios({
+        method: "get",
+        url: apiUrl,
+        withCredentials: true,
+      })
+        .then((res) => {
+          setFilterPage(1)
+          setFilter(res.data.savedEvents);
+          setFilterTotalPage(res.data.totalPages);
+        })
+        .catch((err) => {
+          console.log(err);
+          setFilter("");
+        });
+    }
+    if (!mode && !category && !filterdate && !exclusive) {
+      setFilter("");
+    }
+  }, [mode, category, filterdate, exclusive, loading]);
 
   useEffect(() => {
     if (mode || category || filterdate || exclusive) {
@@ -201,7 +263,6 @@ export default function Sidebar() {
         withCredentials: true,
       })
         .then((res) => {
-          console.log(res);
           setFilter(res.data.savedEvents);
           setFilterTotalPage(res.data.totalPages);
         })
@@ -269,6 +330,7 @@ export default function Sidebar() {
   const handleFeedbackSubmit = (event) => {
     setFeedback(event.target.value);
   };
+
 
   return (
     <div className="event-main">
@@ -447,13 +509,11 @@ export default function Sidebar() {
                     <p>{e.ShortDescriptionOfTheEvent}</p>
                   </div>
                   <div className="card-3">
-                    <button
-                      onClick={() => {
-                        navigate(`/event/${e._id}`);
-                      }}
-                    >
+                  <Link to={`/event/${e._id}`} target="_blank">
+                    <button>
                       View Details
                     </button>
+                    </Link>
                     {role === "admin" && (
                       <button
                         style={{ marginLeft: "5px" }}
@@ -526,13 +586,11 @@ export default function Sidebar() {
                     <p>{e.ShortDescriptionOfTheEvent}</p>
                   </div>
                   <div className="card-3">
-                    <button
-                      onClick={() => {
-                        navigate(`/event/${e._id}`);
-                      }}
-                    >
+                  <Link to={`/event/${e._id}`} target="_blank">
+                    <button>
                       View Details
                     </button>
+                    </Link>
                     {role === "admin" && (
                       <button
                         style={{ marginLeft: "5px" }}

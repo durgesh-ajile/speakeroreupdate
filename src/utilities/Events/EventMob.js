@@ -10,7 +10,7 @@ import { MdWatchLater } from "react-icons/md";
 import Calendar from "moedim";
 import { useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import exclusiveimg from "../../images/Group.png";
@@ -436,13 +436,11 @@ const Eventlist = () => {
                         <p style={{ marginTop: "5px" }}>
                           {e.ShortDescriptionOfTheEvent}
                         </p>
-                        <button
-                          onClick={() => {
-                            navigate(`/event/${e._id}`);
-                          }}
-                        >
-                          View Details
-                        </button>
+                        <Link to={`/event/${e._id}`} target="_blank">
+                    <button>
+                      View Details
+                    </button>
+                    </Link>
                       </div>
                     </div>
                   </div>
@@ -536,13 +534,11 @@ const Eventlist = () => {
                         <p style={{ marginTop: "5px" }}>
                           {e.ShortDescriptionOfTheEvent}
                         </p>
-                        <button
-                          onClick={() => {
-                            navigate(`/event/${e._id}`);
-                          }}
-                        >
-                          View Details
-                        </button>
+                        <Link to={`/event/${e._id}`} target="_blank">
+                    <button>
+                      View Details
+                    </button>
+                    </Link>
                       </div>
                     </div>
                   </div>
