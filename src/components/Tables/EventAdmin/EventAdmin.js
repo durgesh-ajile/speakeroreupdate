@@ -19,6 +19,7 @@ import { useTheme } from "@mui/material/styles";
 import { BsArrowRightCircle } from "react-icons/bs";
 import { BiSearchAlt } from "react-icons/bi";
 import { ToastContainer, toast } from 'react-toastify';
+import { TbFlag2Filled } from 'react-icons/tb';
 
 const successToast = {
   position: "bottom-right",
@@ -31,16 +32,6 @@ const successToast = {
   theme: "light",
   }
 
-  // const failToast =  {
-  //   position: "bottom-right",
-  //   autoClose: 4000,
-  //   hideProgressBar: false,
-  //   closeOnClick: true,
-  //   pauseOnHover: true,
-  //   draggable: true,
-  //   progress: undefined,
-  //   theme: "dark",
-  //   }
 
 const EventAdmin = () => {
   const [deleteevent, setDeleteevent] = React.useState("");
@@ -128,19 +119,6 @@ const EventAdmin = () => {
     geteventforapproval();
   }, [loading, page]);
 
-  // const handleSingleView = () => {
-  //   axios({
-  //     method: "get",
-  //     url: `https://api.speakerore.com/api/getsingleevent/${eventId}`,
-  //     withCredentials: true,
-  //   })
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
 
   const handleEventDelete = () => {
     axios({
@@ -188,6 +166,8 @@ const EventAdmin = () => {
     setFeedback(event.target.value);
   };
 
+  console.log(eventsForApproval)
+
   return (
     <div>
         <ToastContainer/>
@@ -213,6 +193,7 @@ const EventAdmin = () => {
                         <bold>{e.OrganizerName}</bold>
                         <span>{e.City}</span>
                       </div>
+                      {e.Flag.isFlagged && <><TbFlag2Filled id="flag"/></>}
                       <div>
                         {e.isSpeakerOreExclusive ? (
                           <img src={exclusiveimg} />
@@ -323,6 +304,7 @@ const EventAdmin = () => {
                         <bold>{e.OrganizerName}</bold>
                         <span>{e.City}</span>
                       </div>
+                      {e.Flag.isFlagged && <><TbFlag2Filled id="flag"/></>}
                       <div>
                         {e.isSpeakerOreExclusive ? (
                           <img src={exclusiveimg} />
@@ -330,6 +312,7 @@ const EventAdmin = () => {
                       </div>
                     </div>
                     <div className="card-2">
+
                       <small>
                         <MdLocationOn color="grey" size={20} />
                         <h>{e.Mode}</h>

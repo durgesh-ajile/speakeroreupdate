@@ -12,7 +12,18 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { AiOutlineMail } from 'react-icons/ai';
 import { Button } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
 
+const successToast = {
+  position: "bottom-right",
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "light",
+};
 const Viewdetails = () => {
   const [data, setData] = useState();
   const { eventId } = useParams();
@@ -35,6 +46,24 @@ const Viewdetails = () => {
     return dateTimeString;
   }
 
+  const handleReport = () => {
+    axios({
+      method: "patch",
+      url: "https://api.speakerore.com/api/flagevent",
+      withCredentials: true,
+      data: {
+        eventId : eventId
+      }
+    })
+      .then((res) => {
+        console.log(res)
+        toast.success(res.data.message, successToast);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.response.data.message, successToast);
+      });
+  }
 
   useEffect(() => {
     axios({
@@ -70,6 +99,7 @@ const Viewdetails = () => {
 // cosnole.log(data.isSpeakerOreExclusive)
   return data ? (
     <div>
+      <ToastContainer/>
       <div id="HEad-banner" className="head-banner">
         <div id="BAnner-container" className="banner-container">
           <div id="BAnner-text" className="banner-text">
@@ -115,7 +145,7 @@ const Viewdetails = () => {
             style={{
               fontWeight: "600",
               fontSize: "medium",
-              padding: "1rem 0rem 1rem 0rem",
+              padding: "10px 0rem 9px 0rem",
             }}
           >
             When and where and who
@@ -158,8 +188,8 @@ const Viewdetails = () => {
             <div id="VIew-description" className="view-description">
               <bold>Audience</bold>
               <div id="IN-des" className="in-des">
-                <li>{data.AudienceSize}</li>
-                <li>{data.AudienceType}</li>
+                <li>Size : {data.AudienceSize}</li>
+                <li>Type : {data.AudienceType}</li>
               </div>
             </div>
           </div>
@@ -168,7 +198,7 @@ const Viewdetails = () => {
 
       <div id="ABoutevent" className="aboutevent">
         <div>
-          <h2 style={{ fontWeight: "700", fontSize: "medium" }}>
+          <h2 style={{ fontWeight: "700", fontSize: "20px" }}>
             About this event
           </h2>
         </div>
@@ -208,12 +238,14 @@ const Viewdetails = () => {
           })}
         </div>
       </div>
-      {role === "admin" && (
+      {role === "admin" ? (
       <div className="edit-detail">
         <a href={`/editevent/${eventId}`}>
           <Button>Edit details</Button>
         </a>
-      </div>)}
+      </div>) : <div className="edit-detail">
+          <Button color="error" onClick={handleReport}>Report Event</Button>
+      </div>}
     </div>
   ) : (
     <></>

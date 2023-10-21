@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useParams } from "react-router-dom";
 import { TagsInput } from "react-tag-input-component";
 
 const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Preview }) => {
@@ -102,8 +103,13 @@ const Organizerdetails = ({ organizerDetails, setStateHandle_Event_Organiser_Pre
     }
   }, [])
 
-  // console.log('handleOrganizerDetails?.organizerContactNumber', handleOrganizerDetails?.organizerContactNumber?.length)
+  let {id} = useParams()
 
+useEffect(()=>{
+if (id){let orgData = localStorage.getItem('handleOrganizerDetails')
+orgData = JSON.parse(orgData)
+setTags(orgData.tags)}
+}, [])
   return (
     <div className="Organizerdetails">
       <form>

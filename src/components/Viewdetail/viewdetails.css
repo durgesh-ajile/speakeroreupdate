@@ -54,12 +54,11 @@
 .mail span{
     color:
     #666666;
-    /* margin-left: 108px; */
-    /* font-size: 20px; */
 }
 #mail-icon{
   color:#24754F;
 }
+
 .web{
   min-width: 60%;
   padding: 13px;
@@ -166,7 +165,7 @@
 .tag{
   display:grid;
   gap: 2rem;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto auto;
 }
 .tags span{
     color: white;
@@ -190,7 +189,9 @@
 #website{
   color: #ef7676;
 }
-
+#WEb a{
+  color: #ef7676;
+}
 .edit-detail{
   display: flex;
   justify-content: flex-end;
@@ -216,7 +217,8 @@
       #MAil span{
         color: #666666;
         text-align: start;
-        font-size: small;
+        font-size: medium;
+        font-family: 'Montserrat', sans-serif;
       }
       #BOx bold {
         color: #000000ad;
@@ -230,11 +232,14 @@
         border-radius: 5px;
         height: fit-content;
       }
+      .tags h3 {
+        font-size: 22px;
+    }
       
       .box {
         width: 300px;
         display: flex;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
       }
       
       .box bold{
@@ -419,7 +424,8 @@
   }
 
   #VEnue-details {
-    margin: 1.5rem auto;
+    margin: 0rem auto;
+    font-family: 'Merriweather', sans-serif;
   }
 
   #VEnue-details-container {
@@ -433,7 +439,7 @@
   }
 
   #ABoutevent {
-    margin: 1.5rem auto;
+    margin: 1rem auto;
   }
 
   #EVenttype {

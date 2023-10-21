@@ -19,6 +19,7 @@ import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import exclusiveimg from "../../../images/Group.png";
 import { ToastContainer, toast } from "react-toastify";
+import { TbFlag2Filled } from "react-icons/tb";
 
 const successToast = {
   position: "bottom-right",
@@ -292,8 +293,10 @@ const EventAdmin = () => {
                         {e.City}
                       </span>
                     </div>
+
                   </div>
                   <div>
+                    {e.Flag.isFlagged && <><TbFlag2Filled id="flag"/></>}
                     {e.isSpeakerOreExclusive ? (
                       <img src={exclusiveimg} />
                     ) : null}

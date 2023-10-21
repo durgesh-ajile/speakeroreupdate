@@ -1,5 +1,15 @@
+.allevent .card-1{
+  align-items: center;
+}
+#flag{
+  color: red;
+  font-size: 30px;
+}
 @media (max-width: 700px) {
 
+  #flag{
+    margin-right: 10px;
+  }
   .card-1{
     padding-top: 0;
   }

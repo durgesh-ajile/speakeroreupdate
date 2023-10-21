@@ -10,7 +10,18 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { AiOutlineMail } from "react-icons/ai";
 import { Button } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
 
+const successToast = {
+  position: "bottom-right",
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "light",
+};
 const Viewdetails = () => {
   const [data, setData] = useState();
   const { eventId } = useParams();
@@ -64,6 +75,25 @@ const Viewdetails = () => {
       });
   }, []);
 
+  const handleReport = () => {
+    axios({
+      method: "patch",
+      url: "https://api.speakerore.com/api/flagevent",
+      withCredentials: true,
+      data: {
+        eventId : eventId
+      }
+    })
+      .then((res) => {
+        console.log(res)
+        toast.success(res.data.message, successToast);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.response.data.message, successToast);
+      });
+  }
+
   const mailToUrl = (e) => {
     const mail = "mailto:";
     return mail;
@@ -71,6 +101,7 @@ const Viewdetails = () => {
 
   return data ? (
     <div className="view-detail">
+        <ToastContainer/>
       <div className="head-banner">
         <div className="banner-container">
           <div className="banner-text">
@@ -193,12 +224,14 @@ const Viewdetails = () => {
           })}
         </div>
       </div>
-      {role === "admin" && (
+      {role === "admin" ? (
       <div className="edit-detail">
         <a href={`/editevent/${eventId}`}>
           <Button>Edit details</Button>
         </a>
-      </div>)}
+      </div>) : <div className="edit-detail">
+          <Button color="error" onClick={handleReport}>Report Event</Button>
+      </div>}
     </div>
   ) : (
     <></>

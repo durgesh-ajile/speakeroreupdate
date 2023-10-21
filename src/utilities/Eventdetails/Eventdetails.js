@@ -51,7 +51,7 @@ const Eventdetails = ({ eventDetails, stateHandle_Event_Organiser_Preview, setSt
         editOrgData.organizerEmail = res.data.savedEvent?.OrganizerEmail
         editOrgData.organizerContactNumber = String(res.data.savedEvent?.OrganizerContactNumber)
         editOrgData.tags = res.data.savedEvent?.Tags
-        console.log(editData.startdate)
+        console.log(editOrgData.tags)
         setHandleFormInput(editData)
         localStorage.setItem('handleFormInput', JSON.stringify(editData))
         localStorage.setItem('handleOrganizerDetails', JSON.stringify(editOrgData))
