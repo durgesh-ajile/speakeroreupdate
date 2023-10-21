@@ -75,6 +75,7 @@ const Viewdetails = () => {
         <div className="banner-container">
           <div className="banner-text">
             <span>{data.TitleOfTheEvent}</span>
+            <p>{data.ShortDescriptionOfTheEvent}</p>
           </div>
           <div className="banner-img">
             <img src={man} />
@@ -84,10 +85,10 @@ const Viewdetails = () => {
 
       <div style={{ margin: "2rem 0 0 0" }}>
         <div className="mail">
-          <span>{data.ShortDescriptionOfTheEvent}</span>
+        <h3>Apply here</h3>
           {data.isSpeakerOreExclusive ? (
             <div className="web">
-              <AiOutlineMail />
+              <AiOutlineMail id='mail-icon' />
               <span>email: </span>
               <a href={`mailto:${data.OrganizerEmail}`} id="website">
                 {" "}
@@ -108,10 +109,10 @@ const Viewdetails = () => {
       </div>
 
       {data.ContactEmail && (
-        <div style={{ margin: "2rem 0 0 0" }}>
+        <div style={{ margin: "0.9rem 0 0 0" }}>
           <div className="mail">
             <div className="web">
-              <AiOutlineMail />
+              <AiOutlineMail id='mail-icon'/>
               <span>Contact email: </span>
               <a href={`mailto:${data.ContactEmail}`} id="website">
                 {" "}
@@ -124,7 +125,7 @@ const Viewdetails = () => {
 
       <div className="venue-details">
         <div>
-          <h2 style={{ fontWeight: "800" }}>When and where and who</h2>
+          <h2 className="three-w" style={{ fontWeight: "800" }}>When and where and who</h2>
         </div>
         <div className="venue-details-container">
           <div className="dateandtime box">
@@ -147,7 +148,7 @@ const Viewdetails = () => {
               <bold>Location</bold>
               <div className="in-des">
                 {data.Location}
-                <br /> {data.Pincode} {data.City},<br /> {data.Country}{" "}
+                {" "} {data.Pincode} {data.City},<br /> {data.Country}{" "}
               </div>
             </div>
           </div>
@@ -159,8 +160,8 @@ const Viewdetails = () => {
             <div className="view-description">
               <bold>Audience</bold>
               <div className="in-des">
-                <li>{data.AudienceSize}</li>
-                <li>{data.AudienceType}</li>
+                <li>Size : {data.AudienceSize}</li>
+                <li>Type : {data.AudienceType}</li>
               </div>
             </div>
           </div>
@@ -169,11 +170,11 @@ const Viewdetails = () => {
 
       <div className="aboutevent">
         <div>
-          <h2 style={{ fontWeight: "800" }}>About this Event</h2>
+          <h2 style={{ fontWeight: "800" }} className="about-event">About this Event</h2>
         </div>
         <div className="eventtype">
-          <small>{data.Category}</small>
-          <span>{data.EngagementTerm}</span>
+          <small>Category : <span className="type-content">{data.Category}</span></small>
+          <span>Engagement Term : <span className="type-content">{data.EngagementTerm}</span></span>
         </div>
         <div className="aboutevent-para">
           <span>{data.DetailedDescriptionOfTheEvent}</span>

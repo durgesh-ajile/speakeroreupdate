@@ -11,10 +11,12 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { AiOutlineMail } from 'react-icons/ai';
+import { Button } from "@mui/material";
 
 const Viewdetails = () => {
   const [data, setData] = useState();
   const { eventId } = useParams();
+  const [role, setRole] = useState("");
 
   function convertDate(e) {
     const dateObject = new Date(e);
@@ -33,6 +35,7 @@ const Viewdetails = () => {
     return dateTimeString;
   }
 
+
   useEffect(() => {
     axios({
       method: "get",
@@ -42,6 +45,22 @@ const Viewdetails = () => {
       .then((res) => {
         console.log(res);
         setData(res.data.savedEvent);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "https://api.speakerore.com/api/getprofile",
+      withCredentials: true,
+    })
+      .then((res) => {
+        if (res.data.status) {
+          setRole(res.data.response.role);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -189,6 +208,12 @@ const Viewdetails = () => {
           })}
         </div>
       </div>
+      {role === "admin" && (
+      <div className="edit-detail">
+        <a href={`/editevent/${eventId}`}>
+          <Button>Edit details</Button>
+        </a>
+      </div>)}
     </div>
   ) : (
     <></>
