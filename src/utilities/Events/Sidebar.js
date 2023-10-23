@@ -53,8 +53,8 @@ export default function Sidebar() {
   const [filterPage, setFilterPage] = React.useState(1);
   const [filterTotalPage, setFilterTotalPage] = React.useState();
   const [deleteevent, setDeleteevent] = React.useState("");
-  const [feedback, setFeedback] = React.useState("");
   const [open, setOpen] = React.useState(false);
+  const [feedback, setFeedback] = React.useState("");
   const [loading, setLoading] = useState(false);
   const [role, setRole] = useState("");
 
@@ -153,7 +153,7 @@ export default function Sidebar() {
   }, [page, loading]);
 
   useEffect(() => {
-    if(searchKey){axios({
+   axios({
       method: "get",
       url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}&page=1`,
       withCredentials: true,
@@ -169,11 +169,11 @@ export default function Sidebar() {
         if (err.response.status === 422 || 404) {
           setFilter("");
         }
-      })}
+      })
   }, [searchKey, loading]);
 
   useEffect(() => {
-    if(searchKey){axios({
+    axios({
       method: "get",
       url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}&page=${filterPage}`,
       withCredentials: true,
@@ -188,7 +188,7 @@ export default function Sidebar() {
         if (err.response.status === 422 || 404) {
           setFilter("");
         }
-      })}
+      })
   }, [filterPage]);
 
   useEffect(() => {
@@ -371,37 +371,44 @@ export default function Sidebar() {
               onChange={(e) => setCategory(e.target.value)}
             >
               <option value="">Select</option>
-              <option value="Advertising">Advertising</option>
-              <option value="Agriculture">Agriculture</option>
-              <option value="Artificial Intelligence">
-                Artificial Intelligence{" "}
-              </option>
-              <option value="Automobile">Automobile</option>
-              <option value="Banking">Banking </option>
-              <option value="Business">Business</option>
-              <option value="Coaching">Coaching</option>
-              <option value="Communication">Communication</option>
-              <option value="Design Thinking">Design Thinking</option>
-              <option value="Digital Marketing">Digital Marketing</option>
-              <option value="Education">Education</option>
-              <option value="Finance">Finance</option>
-              <option value="Fitness">Fitness</option>
-              <option value="Health">Health</option>
-              <option value="Human resource">Human resource </option>
-              <option value="Information Technology">
-                Information Technology{" "}
-              </option>
-              <option value="Innovation">Innovation </option>
-              <option value="Leadership">Leadership</option>
-              <option value="LGBTQ">LGBTQ</option>
-              <option value="Manufacturing">Manufacturing</option>
-              <option value="Marketing">Marketing</option>
-              <option value="Oil Gas">Oil Gas</option>
-              <option value="Parenting">Parenting</option>
-              <option value="Presentation Skill">Presentation Skill</option>
-              <option value="Retails">Retails</option>
-              <option value="Sales"> Sales</option>
-              <option value="Soft Skill">Soft Skill</option>
+                  <option value="Advertising">Advertising</option>
+                  <option value="Agriculture">Agriculture</option>
+                  <option value="Artificial Intelligence">
+                    Artificial Intelligence
+                  </option>
+                  <option value="Automobile">Automobile</option>
+                  <option value="Business">Business </option>
+                  <option value="Banking">Banking </option>
+                  <option value="Coaching">Coaching</option>
+                  <option value="Communication">Communication</option>
+                  <option value="Data Analysis">Data Analysis</option>
+                  <option value="Design Thinking">Design Thinking</option>
+                  <option value="Digital Marketing">Digital Marketing</option>
+                  <option value="Education">Education</option>
+                  <option value="Environment">Environment</option>
+                  <option value="E commerce">E commerce</option>
+                  <option value="Finance">Finance</option>
+                  <option value="Fitness">Fitness</option>
+                  <option value="Health">Health</option>
+                  <option value="Human resource">Human resource </option>
+                  <option value="Information Technology">
+                    Information Technology{" "}
+                  </option>
+                  <option value="Innovation">Innovation </option>
+                  <option value="Leadership">Leadership</option>
+                  <option value="LGBTQ">LGBTQ</option>
+                  <option value="Manufacturing">Manufacturing</option>
+                  <option value="Medical">Medical</option>
+                  <option value="Musician"> Musician</option>
+                  <option value="Marketing">Marketing</option>
+                  <option value="Oil Gas">Oil Gas</option>
+                  <option value="Parenting">Parenting</option>
+                  <option value="Presentation Skill">Presentation Skill</option>
+                  <option value="Retails">Retails</option>
+                  <option value="Sales"> Sales</option>
+                  <option value="Soft Skill">Soft Skill</option>
+                  <option value="Sustainability">Sustainability</option>
+                  <option value="Tedx Food">Tedx Food</option>
             </select>
           </div>
           <div>

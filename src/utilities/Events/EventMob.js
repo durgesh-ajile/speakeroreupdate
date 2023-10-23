@@ -16,9 +16,21 @@ import Stack from "@mui/material/Stack";
 import exclusiveimg from "../../images/Group.png";
 import { BiSearchAlt } from "react-icons/bi";
 import UserPopup from "../Pop/UserPopUp";
-import { Button } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, useMediaQuery } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
+import { styled, useTheme } from "@mui/material/styles";
 
-  
+const successToast = {
+  position: "bottom-right",
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "light",
+};
+
 const Eventlist = () => {
   const [filterToggle, setFilterToggle] = useState(true);
   const NavbarboxRefFilter = useRef(null);
@@ -34,12 +46,31 @@ const Eventlist = () => {
   const [filter, setFilter] = useState();
   const [showdate, setShowDate] = React.useState();
   const [filterdate, setFilterDate] = React.useState();
-  const [user, setUser] = useState('')
+  const [user, setUser] = useState("");
   const [filterPage, setFilterPage] = React.useState(1);
   const [filterTotalPage, setFilterTotalPage] = React.useState();
+  const [deleteevent, setDeleteevent] = React.useState("");
+  const [open, setOpen] = React.useState(false);
+  const [role, setRole] = useState("");
+  const [feedback, setFeedback] = React.useState("");
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (event, value) => {
     setFilterPage(value);
   };
+
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
 
   let navigate = useNavigate();
 
@@ -82,6 +113,42 @@ const Eventlist = () => {
     setInperson(false);
   };
 
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "https://api.speakerore.com/api/getprofile",
+      withCredentials: true,
+    })
+      .then((res) => {
+        if (res.data.status) {
+          setRole(res.data.response.role);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const handleEventDelete = () => {
+    axios({
+      method: "patch",
+      url: "https://api.speakerore.com/api/makeeventdecline",
+      data: {
+        eventId: deleteevent,
+        feedback: feedback,
+      },
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log(res);
+        toast.success(res.data.Message, successToast);
+        setLoading(!loading);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.response.data.message, successToast);
+      });
+  };
 
   useEffect(() => {
     axios({
@@ -102,87 +169,147 @@ const Eventlist = () => {
       })
       .catch((err) => {
         console.log(err);
-        setUser(err.response.data.message)
-
+        setUser(err.response.data.message);
       });
-  }, [page]);
+  }, [page, loading]);
 
   useEffect(() => {
     axios({
-      method: "get",
-      url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}&page=${filterPage}`,
-      withCredentials: true,
-    })
-      .then((res) => {
-        console.log(res);
-        setFilter(res.data.queryResult);
-        setFilterTotalPage(res.data.totalPage)
-      })
-      .catch((err) => {
-        console.log(err);
-        if (err.response.status === 422 || 404) {
-          setFilter("");
-        }
-      });
-  }, [searchKey, filterPage]);
-
-
-  useEffect(() => {
-    if (mode || category || filterdate || exclusive) {
-      const apiUrl = `https://api.speakerore.com/api/geteventsbyfilter?${getQueryParams()}&page=${filterPage}`;
-      function getQueryParams() {
-        const queryParams = [];
-
-        if (mode) {
-          queryParams.push(`mode=${mode}`);
-        }
-
-        if (category) {
-          queryParams.push(`category=${category}`);
-        }
-
-        if (filterdate) {
-          queryParams.push(`date=${filterdate}`);
-        }
-
-        if (exclusive) {
-          queryParams.push(`exclusive=${exclusive}`);
-        }
-        
-        return queryParams.join("&");
-      }
-
-      axios({
-        method: "get",
-        url: apiUrl,
-        withCredentials: true,
-      })
-        .then((res) => {
-          console.log(res);
-          setFilter(res.data.savedEvents);
-          setFilterTotalPage(res.data.totalPages)
-        })
-        .catch((err) => {
-          console.log(err);
-          setFilter("");
-        });
-    }
-    if (!mode && !category && !filterdate && !exclusive) {
-      setFilter("");
-    }
-  }, [mode, category, filterdate, exclusive, filterPage]);
+       method: "get",
+       url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}&page=1`,
+       withCredentials: true,
+     })
+       .then((res) => {
+         console.log(res);
+         setFilter(res.data.queryResult);
+         setFilterTotalPage(res.data.totalPage);
+         setFilterPage(1)
+       })
+       .catch((err) => {
+         console.log(err);
+         if (err.response.status === 422 || 404) {
+           setFilter("");
+         }
+       })
+   }, [searchKey, loading]);
+ 
+   useEffect(() => {
+     axios({
+       method: "get",
+       url: `https://api.speakerore.com/api/geteventbyquery?keyword=${searchKey}&page=${filterPage}`,
+       withCredentials: true,
+     })
+       .then((res) => {
+         console.log(res);
+         setFilter(res.data.queryResult);
+         setFilterTotalPage(res.data.totalPage);
+       })
+       .catch((err) => {
+         console.log(err);
+         if (err.response.status === 422 || 404) {
+           setFilter("");
+         }
+       })
+   }, [filterPage]);
+ 
+   useEffect(() => {
+     if (mode || category || filterdate || exclusive) {
+       const apiUrl = `https://api.speakerore.com/api/geteventsbyfilter?${getQueryParams()}&page=1`;
+       function getQueryParams() {
+         const queryParams = [];
+         console.log(filterdate);
+         if (mode) {
+           queryParams.push(`mode=${mode}`);
+         }
+ 
+         if (category) {
+           queryParams.push(`category=${category}`);
+         }
+ 
+         if (filterdate) {
+           queryParams.push(`date=${filterdate}`);
+         }
+ 
+         if (exclusive) {
+           queryParams.push(`exclusive=${exclusive}`);
+         }
+         return queryParams.join("&");
+       }
+       axios({
+         method: "get",
+         url: apiUrl,
+         withCredentials: true,
+       })
+         .then((res) => {
+           setFilterPage(1)
+           setFilter(res.data.savedEvents);
+           setFilterTotalPage(res.data.totalPages);
+         })
+         .catch((err) => {
+           console.log(err);
+           setFilter("");
+         });
+     }
+     if (!mode && !category && !filterdate && !exclusive) {
+       setFilter("");
+     }
+   }, [mode, category, filterdate, exclusive, loading]);
+ 
+   useEffect(() => {
+     if (mode || category || filterdate || exclusive) {
+       const apiUrl = `https://api.speakerore.com/api/geteventsbyfilter?${getQueryParams()}&page=${filterPage}`;
+       function getQueryParams() {
+         const queryParams = [];
+         console.log(filterdate);
+         if (mode) {
+           queryParams.push(`mode=${mode}`);
+         }
+ 
+         if (category) {
+           queryParams.push(`category=${category}`);
+         }
+ 
+         if (filterdate) {
+           queryParams.push(`date=${filterdate}`);
+         }
+ 
+         if (exclusive) {
+           queryParams.push(`exclusive=${exclusive}`);
+         }
+         return queryParams.join("&");
+       }
+       axios({
+         method: "get",
+         url: apiUrl,
+         withCredentials: true,
+       })
+         .then((res) => {
+           setFilter(res.data.savedEvents);
+           setFilterTotalPage(res.data.totalPages);
+         })
+         .catch((err) => {
+           console.log(err);
+           setFilter("");
+         });
+     }
+     if (!mode && !category && !filterdate && !exclusive) {
+       setFilter("");
+     }
+   }, [mode, category, filterdate, exclusive, filterPage, loading]);
 
   function convertDate(e) {
     const dateObject = new Date(e);
     const year = dateObject.getUTCFullYear();
-    const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(dateObject);
+    const month = new Intl.DateTimeFormat("en-US", { month: "short" }).format(
+      dateObject
+    );
     const day = dateObject.getUTCDate();
     const hours = dateObject.getUTCHours();
     const minutes = dateObject.getUTCMinutes();
     const seconds = dateObject.getUTCSeconds();
-    const period = hours >= 12 ? 'PM' : 'AM';
+    const period = hours >= 12 ? "PM" : "AM";
     const formattedHours = hours % 12 || 12;
-  
+
     const dateTimeString = `${day} ${month} ${year} ${formattedHours}:${minutes}:${seconds} ${period}`;
     return dateTimeString;
   }
@@ -194,12 +321,11 @@ const Eventlist = () => {
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [page]);
-
 
   const handleToggle = () => {
     const box = NavbarboxRefFilter.current;
@@ -219,24 +345,31 @@ const Eventlist = () => {
     }, 200);
     setFilterToggle(!filterToggle);
   };
-
+  
+  const handleFeedbackSubmit = (event) => {
+    setFeedback(event.target.value);
+  };
+console.log(role)
   return (
     <>
-        {user === 'User is not subcribed to view this page' ? <UserPopup /> : null}
-    <div className="head-banner">
-          <div className="banner-container" >
-            <div className="view-text">
-              <h3>Gold Deposits - Events Exploration Page </h3>
-              <h5>
-                Explore, Map, Analyse, Mine &amp; Extract. For best results,
-                <br /> Choose events from your category and focus!
-              </h5>
-            </div>
-            <div>
-              <img src={man} style={{ width: "100%" }} />
-            </div>
+      {user === "User is not subcribed to view this page" ? (
+        <UserPopup />
+      ) : null}
+      <ToastContainer />
+      <div className="head-banner">
+        <div className="banner-container">
+          <div className="view-text">
+            <h3>Gold Deposits - Events Exploration Page </h3>
+            <h5>
+              Explore, Map, Analyse, Mine &amp; Extract. For best results,
+              <br /> Choose events from your category and focus!
+            </h5>
+          </div>
+          <div>
+            <img src={man} style={{ width: "100%" }} />
           </div>
         </div>
+      </div>
       <div className="Eventlist_container">
         <div className="Eventlist_container_left">
           <h4 style={{ margin: "10px" }}>Events list</h4>
@@ -254,7 +387,7 @@ const Eventlist = () => {
       <div className="input-div" style={{ marginTop: "20px" }}>
         <BiSearchAlt style={{ top: "13px" }} className="ico" />
         <input
-        style={{ width: "80%" }}
+          style={{ width: "80%" }}
           placeholder="Search via keyword"
           className="dash-input"
           value={searchKey}
@@ -302,25 +435,32 @@ const Eventlist = () => {
             <option value="Advertising">Advertising</option>
             <option value="Agriculture">Agriculture</option>
             <option value="Artificial Intelligence">
-              Artificial Intelligence{" "}
+              Artificial Intelligence
             </option>
             <option value="Automobile">Automobile</option>
+            <option value="Business">Business </option>
             <option value="Banking">Banking </option>
-            <option value="Business">Business</option>
             <option value="Coaching">Coaching</option>
             <option value="Communication">Communication</option>
+            <option value="Data Analysis">Data Analysis</option>
             <option value="Design Thinking">Design Thinking</option>
             <option value="Digital Marketing">Digital Marketing</option>
             <option value="Education">Education</option>
+            <option value="Environment">Environment</option>
+            <option value="E commerce">E commerce</option>
             <option value="Finance">Finance</option>
             <option value="Fitness">Fitness</option>
             <option value="Health">Health</option>
             <option value="Human resource">Human resource </option>
-            <option value="Information Technology">Information Technology </option>
+            <option value="Information Technology">
+              Information Technology{" "}
+            </option>
             <option value="Innovation">Innovation </option>
             <option value="Leadership">Leadership</option>
             <option value="LGBTQ">LGBTQ</option>
             <option value="Manufacturing">Manufacturing</option>
+            <option value="Medical">Medical</option>
+            <option value="Musician"> Musician</option>
             <option value="Marketing">Marketing</option>
             <option value="Oil Gas">Oil Gas</option>
             <option value="Parenting">Parenting</option>
@@ -328,28 +468,34 @@ const Eventlist = () => {
             <option value="Retails">Retails</option>
             <option value="Sales"> Sales</option>
             <option value="Soft Skill">Soft Skill</option>
+            <option value="Sustainability">Sustainability</option>
+            <option value="Tedx Food">Tedx Food</option>
           </select>
 
           <p>Select a date</p>
 
           <div className="calendar">
             <input
-            type="date"
+              type="date"
               value={showdate}
               onChange={(e) => {
-                const date = new Date(e.target.value)
-                if(e.target.value){
-                  setFilterDate(date.toISOString())
+                const date = new Date(e.target.value);
+                if (e.target.value) {
+                  setFilterDate(date.toISOString());
                 } else {
-                  setFilterDate('')
+                  setFilterDate("");
                 }
-                setShowDate(e.target.value)
+                setShowDate(e.target.value);
               }}
             />
-            <Button onClick={(e) => {
-              setFilterDate('')
-                setShowDate('')
-            }}>Reset date</Button>
+            <Button
+              onClick={(e) => {
+                setFilterDate("");
+                setShowDate("");
+              }}
+            >
+              Reset date
+            </Button>
           </div>
 
           <p>SpeakerOre</p>
@@ -372,47 +518,49 @@ const Eventlist = () => {
               <>
                 <div className="EventlistInfo_container">
                   <div className="EventlistInfo_container_fluid">
-                  <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <div id="Card-1" className="card-1">
-                    <small  style={{
-                          marginLeft: "5px",
-                        }}>
-                      {e.Category}{" "}
-                    </small>
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <strong
-                        style={{
-                          marginLeft: "5px",
-                          marginTop: "8px",
-                          marginBottom: "8px",
-                          color: "black",
-                        }}
-                      >
-                        {e.OrganizerName},
-                      </strong>
-                      <span
-                        style={{
-                          marginLeft: "5px",
-                          marginTop: "8px",
-                          marginBottom: "8px",
-                        }}
-                      >
-                        {e.City}
-                      </span>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <div id="Card-1" className="card-1">
+                        <small
+                          style={{
+                            marginLeft: "5px",
+                          }}
+                        >
+                          {e.Category}{" "}
+                        </small>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <strong
+                            style={{
+                              marginLeft: "5px",
+                              marginTop: "8px",
+                              marginBottom: "8px",
+                              color: "black",
+                            }}
+                          >
+                            {e.OrganizerName},
+                          </strong>
+                          <span
+                            style={{
+                              marginLeft: "5px",
+                              marginTop: "8px",
+                              marginBottom: "8px",
+                            }}
+                          >
+                            {e.City}
+                          </span>
+                        </div>
+                      </div>
+                      <div>
+                        {e.isSpeakerOreExclusive ? (
+                          <img src={exclusiveimg} />
+                        ) : null}
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    {e.isSpeakerOreExclusive ? (
-                      <img src={exclusiveimg} />
-                    ) : null}
-                  </div>
-                </div>
 
                     <div>
                       <div
@@ -437,10 +585,19 @@ const Eventlist = () => {
                           {e.ShortDescriptionOfTheEvent}
                         </p>
                         <Link to={`/event/${e._id}`} target="_blank">
-                    <button>
-                      View Details
-                    </button>
-                    </Link>
+                          <button>View Details</button>
+                        </Link>
+                        {role === "admin" && (
+                      <button
+                        style={{ marginLeft: "5px", background:"red" }}
+                        onClick={() => {
+                          setDeleteevent(e._id);
+                          handleClickOpen();
+                        }}
+                      >
+                        Delete Event
+                      </button>
+                    )}
                       </div>
                     </div>
                   </div>
@@ -450,14 +607,14 @@ const Eventlist = () => {
             ))}
           </div>
           <Stack spacing={2}>
-              <Pagination
-                style={{ justifyContent: "center", marginTop: "20px" }}
-                count={filterTotalPage}
-                page={filterPage}
-                onChange={handleChange}
-              />
-              <Typography>Page: {filterPage}</Typography>
-            </Stack>
+            <Pagination
+              style={{ justifyContent: "center", marginTop: "20px" }}
+              count={filterTotalPage}
+              page={filterPage}
+              onChange={handleChange}
+            />
+            <Typography>Page: {filterPage}</Typography>
+          </Stack>
         </div>
       ) : mode || category || filterdate || exclusive || searchKey ? (
         <div className="no-event">
@@ -470,47 +627,49 @@ const Eventlist = () => {
               <>
                 <div className="EventlistInfo_container">
                   <div className="EventlistInfo_container_fluid">
-                  <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <div id="Card-1" className="card-1">
-                    <small  style={{
-                          marginLeft: "5px",
-                        }}>
-                      {e.Category}{" "}
-                    </small>
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <strong
-                        style={{
-                          marginLeft: "5px",
-                          marginTop: "8px",
-                          marginBottom: "8px",
-                          color: "black",
-                        }}
-                      >
-                        {e.OrganizerName},
-                      </strong>
-                      <span
-                        style={{
-                          marginLeft: "5px",
-                          marginTop: "8px",
-                          marginBottom: "8px",
-                        }}
-                      >
-                        {e.City}
-                      </span>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <div id="Card-1" className="card-1">
+                        <small
+                          style={{
+                            marginLeft: "5px",
+                          }}
+                        >
+                          {e.Category}{" "}
+                        </small>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <strong
+                            style={{
+                              marginLeft: "5px",
+                              marginTop: "8px",
+                              marginBottom: "8px",
+                              color: "black",
+                            }}
+                          >
+                            {e.OrganizerName},
+                          </strong>
+                          <span
+                            style={{
+                              marginLeft: "5px",
+                              marginTop: "8px",
+                              marginBottom: "8px",
+                            }}
+                          >
+                            {e.City}
+                          </span>
+                        </div>
+                      </div>
+                      <div>
+                        {e.isSpeakerOreExclusive ? (
+                          <img src={exclusiveimg} />
+                        ) : null}
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    {e.isSpeakerOreExclusive ? (
-                      <img src={exclusiveimg} />
-                    ) : null}
-                  </div>
-                </div>
 
                     <div>
                       <div
@@ -535,10 +694,19 @@ const Eventlist = () => {
                           {e.ShortDescriptionOfTheEvent}
                         </p>
                         <Link to={`/event/${e._id}`} target="_blank">
-                    <button>
-                      View Details
-                    </button>
-                    </Link>
+                          <button>View Details</button>
+                        </Link>
+                        {role === "admin" && (
+                      <button
+                        style={{ marginLeft: "5px", background:"red" }}
+                        onClick={() => {
+                          setDeleteevent(e._id);
+                          handleClickOpen();
+                        }}
+                      >
+                        Delete Event
+                      </button>
+                    )}
                       </div>
                     </div>
                   </div>
@@ -561,6 +729,44 @@ const Eventlist = () => {
       ) : (
         ""
       )}
+      <Dialog
+        fullScreen={fullScreen}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">
+          {"Please provide feedback"}
+        </DialogTitle>
+        <DialogContent>
+          <input
+            value={feedback}
+            type="text"
+            onChange={(e) => {
+              handleFeedbackSubmit(e);
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              handleClose();
+            }}
+            autoFocus
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              handleClose();
+              handleEventDelete();
+            }}
+            autoFocus
+          >
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
