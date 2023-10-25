@@ -198,7 +198,7 @@ const Trash = () => {
                           >
                             {e.Category}{" "}
                           </small>
-                          <bold>{e.OrganizerName}</bold>
+                          <bold>{e.TitleOfTheEvent}</bold>
                           <span>{e.City}</span>
                         </div>
                         <div>
@@ -326,7 +326,7 @@ const Trash = () => {
                           >
                             {e.Category}{" "}
                           </small>
-                          <bold>{e.OrganizerName}</bold>
+                          <bold>{e.TitleOfTheEvent}</bold>
                           <span>{e.City}</span>
                         </div>
                         <div>

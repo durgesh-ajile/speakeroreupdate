@@ -281,7 +281,7 @@ const EventAdmin = () => {
                           color: "black",
                         }}
                       >
-                        {e.OrganizerName},
+                        {e.TitleOfTheEvent},
                       </strong>
                       <span
                         style={{

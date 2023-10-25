@@ -389,6 +389,7 @@ export default function Sidebar() {
                   <option value="E commerce">E commerce</option>
                   <option value="Finance">Finance</option>
                   <option value="Fitness">Fitness</option>
+                  <option value="Food">Food</option>
                   <option value="Health">Health</option>
                   <option value="Human resource">Human resource </option>
                   <option value="Information Technology">
@@ -408,7 +409,7 @@ export default function Sidebar() {
                   <option value="Sales"> Sales</option>
                   <option value="Soft Skill">Soft Skill</option>
                   <option value="Sustainability">Sustainability</option>
-                  <option value="Tedx Food">Tedx Food</option>
+                  <option value="Tedx">Tedx</option>
             </select>
           </div>
           <div>
@@ -490,7 +491,7 @@ export default function Sidebar() {
                       >
                         {e.Category}{" "}
                       </small>
-                      <bold>{e.OrganizerName}</bold>
+                      <bold>{e.TitleOfTheEvent}</bold>
                       <span>{e.City}</span>
                     </div>
                     <div>
@@ -567,7 +568,7 @@ export default function Sidebar() {
                       >
                         {e.Category}{" "}
                       </small>
-                      <bold>{e.OrganizerName}</bold>
+                      <bold>{e.TitleOfTheEvent}</bold>
                       <span>{e.City}</span>
                     </div>
                     <div>

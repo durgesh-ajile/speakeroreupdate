@@ -474,7 +474,7 @@ const Eventdetails = ({
                     handleChangeEventDetailsForm(e);
                   }}
                 >
-                  <option value="">Select</option>
+                 <option value="">Select</option>
                   <option value="Advertising">Advertising</option>
                   <option value="Agriculture">Agriculture</option>
                   <option value="Artificial Intelligence">
@@ -493,6 +493,7 @@ const Eventdetails = ({
                   <option value="E commerce">E commerce</option>
                   <option value="Finance">Finance</option>
                   <option value="Fitness">Fitness</option>
+                  <option value="Food">Food</option>
                   <option value="Health">Health</option>
                   <option value="Human resource">Human resource </option>
                   <option value="Information Technology">
@@ -512,7 +513,7 @@ const Eventdetails = ({
                   <option value="Sales"> Sales</option>
                   <option value="Soft Skill">Soft Skill</option>
                   <option value="Sustainability">Sustainability</option>
-                  <option value="Tedx Food">Tedx Food</option>
+                  <option value="Tedx">Tedx</option>
                 </select>
                 {checkReqierdField && !handleFormInput?.category && (
                   <p style={{ color: "red", fontSize: "13px" }}>

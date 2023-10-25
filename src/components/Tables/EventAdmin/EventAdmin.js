@@ -190,7 +190,7 @@ const EventAdmin = () => {
                         >
                           {e.Category}{" "}
                         </small>
-                        <bold>{e.OrganizerName}</bold>
+                        <bold>{e.TitleOfTheEvent}</bold>
                         <span>{e.City}</span>
                       </div>
                       {e.Flag.isFlagged && <><TbFlag2Filled id="flag"/></>}
@@ -301,7 +301,7 @@ const EventAdmin = () => {
                         >
                           {e.Category}{" "}
                         </small>
-                        <bold>{e.OrganizerName}</bold>
+                        <bold>{e.TitleOfTheEvent}</bold>
                         <span>{e.City}</span>
                       </div>
                       {e.Flag.isFlagged && <><TbFlag2Filled id="flag"/></>}

@@ -217,7 +217,7 @@ const TrashMob = () => {
                           color: "black",
                         }}
                       >
-                        {e.OrganizerName},
+                        {e.TitleOfTheEvent},
                       </strong>
                       <span
                         style={{
@@ -376,7 +376,7 @@ const TrashMob = () => {
                           color: "black",
                         }}
                       >
-                        {e.OrganizerName},
+                        {e.TitleOfTheEvent},
                       </strong>
                       <span
                         style={{

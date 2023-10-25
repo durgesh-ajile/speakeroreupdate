@@ -171,7 +171,7 @@ const Archived = () => {
                           >
                             {e.Category}{" "}
                           </small>
-                          <bold>{e.OrganizerName}</bold>
+                          <bold>{e.TitleOfTheEvent}</bold>
                           <span>{e.City}</span>
                         </div>
                         <div>
@@ -257,7 +257,7 @@ const Archived = () => {
                           >
                             {e.Category}{" "}
                           </small>
-                          <bold>{e.OrganizerName}</bold>
+                          <bold>{e.TitleOfTheEvent}</bold>
                           <span>{e.City}</span>
                         </div>
                         <div>

@@ -141,7 +141,7 @@ const CurrentUserMob = () => {
                         fontWeight: "bold",
                       }}
                     >
-                      {e.OrganizerName},
+                      {e.TitleOfTheEvent},
                       <span
                         style={{
                           marginLeft: "5px",
@@ -223,7 +223,7 @@ const CurrentUserMob = () => {
                         fontWeight: "bold",
                       }}
                     >
-                      {e.OrganizerName},
+                      {e.TitleOfTheEvent},
                       <span
                         style={{
                           marginLeft: "5px",

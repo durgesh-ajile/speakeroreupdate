@@ -196,7 +196,7 @@ const ArchivedMob = () => {
                           color: "black",
                         }}
                       >
-                        {e.OrganizerName},
+                        {e.TitleOfTheEvent},
                       </strong>
                       <span
                         style={{
@@ -324,7 +324,7 @@ const ArchivedMob = () => {
                           color: "black",
                         }}
                       >
-                        {e.OrganizerName},
+                        {e.TitleOfTheEvent},
                       </strong>
                       <span
                         style={{
