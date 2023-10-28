@@ -243,6 +243,7 @@ export default function Sidebar() {
         if (mode) {
           queryParams.push(`mode=${mode}`);
         }
+        
 
         if (category) {
           queryParams.push(`category=${category}`);
